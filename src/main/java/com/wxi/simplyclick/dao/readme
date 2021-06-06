@@ -1,0 +1,13 @@
+数据访问层
+具体到对于某个表的增删改查
+只做原子操作，增删改查
+
+注释
+@Repository
+基本的调用
+jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(想封装的实体类.class), 参数……);
+例子：
+public List<User> queryByUsername(String username) {
+    String sql = "select * from user where username=?";
+    return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), username);
+}
