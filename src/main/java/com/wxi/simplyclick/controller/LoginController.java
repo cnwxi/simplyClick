@@ -2,7 +2,7 @@ package com.wxi.simplyclick.controller;
 
 
 import com.wxi.simplyclick.bean.User;
-import com.wxi.simplyclick.service.LoginService;
+import com.wxi.simplyclick.service.UserLRFService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class LoginController {
     @Autowired
-    LoginService loginService;
+    UserLRFService loginService;
 
     @RequestMapping("/user/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
