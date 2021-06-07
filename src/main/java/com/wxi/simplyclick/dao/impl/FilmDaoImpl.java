@@ -16,7 +16,9 @@ public class FilmDaoImpl implements FilmDao {
     @Override
     public List<Film> queryFilm() {
         String sql="select * from film";
-        return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>((Film.class)));
+        jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Film.class));
+        return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Film.class));
+
     }
 
     @Override

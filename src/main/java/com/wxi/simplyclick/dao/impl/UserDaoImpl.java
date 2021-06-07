@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -21,13 +20,6 @@ public class UserDaoImpl implements UserDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 
-//    @Override
-//    public List<Map<String, Object>> queryByUsername(String username) {
-//        String sql = "select * from user where username=?";
-//
-//        return jdbcTemplate.queryForList(sql, username);
-//
-//    }
 
     @Override
     public List<User> queryByUsername(String username) {
@@ -37,16 +29,24 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean addUser(User user) {
-        return false;
+        String sql = "insert into user values(?,?,?,?,?,?)";
+        Object[] objects = {user.getUsername(), user.getNickname(), user.getPassword(), user.getBirthday(), user.getSex(), user.getPassword()};
+        int update = jdbcTemplate.update(sql, objects);
+        return update > 0;
     }
 
     @Override
     public boolean delUser(String username) {
-        return false;
+        String sql = "delete from user where username = ?";
+        int update = jdbcTemplate.update(sql, username);
+        return update > 0;
     }
 
     @Override
     public boolean updateUser(User user) {
-        return false;
+        String sql = "replace into user values(?,?,?,?,?,?)";
+        Object[] objects = {user.getUsername(), user.getNickname(), user.getPassword(), user.getBirthday(), user.getSex(), user.getPassword()};
+        int update = jdbcTemplate.update(sql, objects);
+         return update > 0;
     }
 }

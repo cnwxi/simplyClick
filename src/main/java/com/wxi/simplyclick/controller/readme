@@ -2,6 +2,7 @@
 常用注释
 @Controller         ——调用mvc返回网页
 @RestController     ——返回字符串
+
 @RequestMapping     ——映射请求
 @RequestParam       ——请求参数
 返回参数 Model
