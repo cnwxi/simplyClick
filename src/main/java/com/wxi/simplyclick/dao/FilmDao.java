@@ -10,6 +10,12 @@ public interface FilmDao {
     // 列出所有电影信息
     List<Film> queryFilm();
 
+    //根据电影的id查询电影信息
+    List<Film> queryFilmById(int filmId);
+
+    //根据电影的类型查询电影的信息
+    // List<Film> queryFilmByType(int type);
+
     // 随机列出n条电影记录
     List<Film> queryFilmRand(int n);
 
@@ -21,5 +27,4 @@ public interface FilmDao {
 
     // 更新电影记录
     boolean updateFilm(Film film);
-
 }
