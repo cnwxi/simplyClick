@@ -1,9 +1,7 @@
 package com.wxi.simplyclick.dao.impl;
 
 import com.wxi.simplyclick.bean.Comment;
-import com.wxi.simplyclick.bean.Film;
 import com.wxi.simplyclick.dao.CommentDao;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

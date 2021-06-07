@@ -17,14 +17,13 @@ public class BelongDaoImpl implements BelongDao {
 
     @Override
     public List<Belong> queryByFilmId(Integer filmId) {
-        String sql = "select * from belong where filmId=?";
+        String sql = "select * from belong where filmId = ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Belong.class), filmId);
 
     }
 
     @Override
     public boolean addBelong(Belong belong) {
-
         String sql = "insert into belong values(?,?)";
         int flag = jdbcTemplate.update(sql, belong.getFilmId(), belong.getFilmType());
         return flag > 0;
