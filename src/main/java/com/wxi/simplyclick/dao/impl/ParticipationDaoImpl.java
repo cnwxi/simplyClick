@@ -59,8 +59,9 @@ public class ParticipationDaoImpl implements ParticipationDao {
 
     @Override
     public boolean updateParticipation(Participation participation) {
-        String sql = "replace into participation values(?,?,?)";
-        Object[] objects = {participation.getFilmId(), participation.getCastId(), participation.getRole()};
+//        String sql = "replace into participation values(?,?,?)";
+        String sql="update  Participation set role=? where filmId=? && castId=?";
+        Object[] objects = {participation.getRole(),participation.getFilmId(), participation.getCastId() };
         int update = jdbcTemplate.update(sql, objects);
         return update > 0;
     }

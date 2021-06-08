@@ -23,9 +23,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> queryByUsername(String username) {
-        String sql = "select * from user where username = ?";
-        Object[] objects = {username};
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), objects);
+        String sql = "select * from user where username=?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), username);
     }
 
     @Override
@@ -45,9 +44,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updateUser(User user) {
-        String sql = "replace into user values(?,?,?,?,?,?)";
-        Object[] objects = {user.getUsername(), user.getNickname(), user.getPassword(), user.getBirthday(), user.getSex(), user.getPassword()};
+//        String sql = "replace into user values(?,?,?,?,?,?)";
+        String sql="update User set nickname=?,password=?,birthday=?,sex=?,permission=? where username=?";
+        Object[] objects = { user.getNickname(),
+                            user.getPassword(), user.getBirthday(),
+                            user.getSex(), user.getPermission(),user.getUsername()};
         int update = jdbcTemplate.update(sql, objects);
-        return update > 0;
+         return update > 0;
     }
 }

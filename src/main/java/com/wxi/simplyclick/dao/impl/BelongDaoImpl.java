@@ -39,8 +39,9 @@ public class BelongDaoImpl implements BelongDao {
     @Override
     public boolean updateBelong(Belong belong) {
 
-        String sql = "replace into belong values(?,?)";
-        int flag = jdbcTemplate.update(sql, belong.getFilmId(), belong.getFilmType());
+//        String sql = "replace into belong values(?,?)";
+        String sql="update Belong set filmType=? where filmId=?";
+        int flag = jdbcTemplate.update(sql, belong.getFilmType(), belong.getFilmId());
         return flag > 0;
     }
 
