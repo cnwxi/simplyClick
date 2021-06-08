@@ -16,7 +16,6 @@ class SimplyClickApplicationTests {
 
     @Test
     void contextLoads() {
-
         System.out.println(commentService.queryCommentByUsername("admin"));
     }
 }
