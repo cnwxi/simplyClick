@@ -11,6 +11,9 @@ public interface CastDao {
     // 根据演职人员编号查询演职人员信息
     List<Cast> queryById(Integer castId);
 
+    //根据演职人员的姓名得到演职人员信息;
+    List<Cast> queryByCastName(String castName);
+
     // 增加一条演职信息
     boolean addCast(Cast cast);
 

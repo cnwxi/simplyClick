@@ -10,6 +10,9 @@ public interface BelongDao {
     // 根据电影编号查询所属信息
     List<Belong> queryByFilmId(Integer filmId);
 
+    //根据电影的类型得到电影信息
+    List<Belong> queryByFilmType(String filmType);
+
     // 增加所属信息
     boolean addBelong(Belong belong);
 

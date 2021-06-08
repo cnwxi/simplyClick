@@ -16,7 +16,6 @@ public class UserLRFServiceImpl implements UserLRFService {
     @Override
     public int login(String username, String password) {
         List<User> list = userDao.queryByUsername(username);
-
         if (list.isEmpty()) {
             return -1;
         } else {
@@ -31,7 +30,6 @@ public class UserLRFServiceImpl implements UserLRFService {
     @Override
     public boolean register(User user) {
         List<User> list = userDao.queryByUsername(user.getUsername());
-
         if (list.isEmpty()) {
             return userDao.addUser(user);
         } else {
@@ -42,24 +40,16 @@ public class UserLRFServiceImpl implements UserLRFService {
     @Override
     public boolean forget(User user) {
         List<User> list = userDao.queryByUsername(user.getUsername());
-
         if (list.isEmpty()) {
             return false;
         } else {
-
-            if (list.get(0).getBirthday().getTime() == user.getBirthday().getTime()) {
-                return true;
-            } else {
-                return false;
-            }
-
+            return list.get(0).getBirthday().getTime() == user.getBirthday().getTime();
         }
     }
 
     @Override
     public boolean resetPassword(String username, String password) {
         List<User> list = userDao.queryByUsername(username);
-
         if (list.isEmpty()) {
             return false;
         } else {
@@ -68,6 +58,4 @@ public class UserLRFServiceImpl implements UserLRFService {
             return userDao.updateUser(newUser);
         }
     }
-
-
 }

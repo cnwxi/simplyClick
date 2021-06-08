@@ -1,8 +1,7 @@
 package com.wxi.simplyclick.service;
 
-import com.wxi.simplyclick.bean.Belong;
-import com.wxi.simplyclick.bean.Cast;
 import com.wxi.simplyclick.bean.Film;
+import com.wxi.simplyclick.bean.Participation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,14 +25,12 @@ public interface FilmService {
     List<Film> queryFilmByCastName(String castName);
 
     // 列出电影信息
-    Film queryFilmByFilmId(int filmId);
+    List<Film> queryFilmByFilmId(int filmId);
 
     // 列出参演信息
     // 查part……表，查cast表
-    List<Cast> queryCastByFilmId(int filmId);
+    List<Participation> queryCastByFilmId(int filmId);
 
     // 类型查询
     List<Film> queryFilmByType(String type);
-
-
 }

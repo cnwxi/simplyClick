@@ -1,32 +1,22 @@
 package com.wxi.simplyclick;
 
 import com.wxi.simplyclick.dao.UserDao;
-import com.wxi.simplyclick.service.CommentService;
 import com.wxi.simplyclick.service.impl.CommentServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-
 @SpringBootTest
 class SimplyClickApplicationTests {
     @Autowired
-    DataSource dataSource;
-    @Autowired
     UserDao userDao;
     //    CommentService commentService;
+    @Autowired
     CommentServiceImpl commentService;
 
     @Test
-    void contextLoads() throws SQLException {
-        // 查看默认数据源
-//        System.out.println(dataSource.getClass());
-//        Connection connection = dataSource.getConnection();
-//        System.out.println(connection);
-//        connection.close();
-        System.out.println(commentService.queryCommentByFilmId(1));
+    void contextLoads() {
+
+        System.out.println(commentService.queryCommentByUsername("admin"));
     }
 }

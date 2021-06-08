@@ -12,7 +12,7 @@ public interface ParticipationDao {
     List<Participation> queryByFilmId(Integer filmId);
 
     // 根据电影编号、职务查询参演信息
-    List<Participation> queryByRole(Integer filmId,String role);
+    List<Participation> queryByRole(Integer filmId, String role);
 
     // 查询某个演职人员的所有参演信息
     List<Participation> queryByCastId(Integer castId);

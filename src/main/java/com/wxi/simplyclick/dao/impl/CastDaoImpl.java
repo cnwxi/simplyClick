@@ -5,11 +5,11 @@ import com.wxi.simplyclick.dao.CastDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class CastDaoImpl implements CastDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -18,6 +18,13 @@ public class CastDaoImpl implements CastDao {
     public List<Cast> queryById(Integer castId) {
         String sql = "select * from cast where castId=?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Cast.class), castId);
+    }
+
+    @Override
+    //根据演职人员的姓名得到演职人员信息;
+    public List<Cast> queryByCastName(String castName) {
+        String sql = "select * from cast where castName=?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Cast.class), castName);
     }
 
     @Override

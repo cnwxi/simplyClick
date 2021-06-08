@@ -54,6 +54,7 @@ public class CommentServiceImpl implements CommentService {
             data.put("score", comment.getScore());
             data.put("filmName", film.getFilmName());
             data.put("filmId", filmId);
+            data.put("modified", comment.getModified());
             list.add(data);
         }
         return list;

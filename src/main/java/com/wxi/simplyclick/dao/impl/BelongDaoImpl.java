@@ -5,11 +5,11 @@ import com.wxi.simplyclick.dao.BelongDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class BelongDaoImpl implements BelongDao {
 
     @Autowired
@@ -20,6 +20,13 @@ public class BelongDaoImpl implements BelongDao {
         String sql = "select * from belong where filmId = ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Belong.class), filmId);
 
+    }
+
+    @Override
+    //根据电影的类型得到电影信息
+    public List<Belong> queryByFilmType(String filmType) {
+        String sql = "select * from belong where filmType=?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Belong.class), filmType);
     }
 
     @Override
@@ -40,7 +47,7 @@ public class BelongDaoImpl implements BelongDao {
     public boolean updateBelong(Belong belong) {
 
 //        String sql = "replace into belong values(?,?)";
-        String sql="update Belong set filmType=? where filmId=?";
+        String sql = "update Belong set filmType=? where filmId=?";
         int flag = jdbcTemplate.update(sql, belong.getFilmType(), belong.getFilmId());
         return flag > 0;
     }

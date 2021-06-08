@@ -16,8 +16,14 @@ public interface FilmDao {
     //根据电影的类型查询电影的信息
     // List<Film> queryFilmByType(int type);
 
+    //根据电影的名称得到电影信息
+    List<Film> queryFilmByFilmName(String filmName);
+
     // 随机列出n条电影记录
     List<Film> queryFilmRand(int n);
+
+    //显示评分最高的前n部电影
+    List<Film> queryFilmTopN(int n);
 
     // 增加一条电影记录
     boolean addFilm(Film film);

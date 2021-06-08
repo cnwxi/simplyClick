@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User userInfo(String username) {
-        List<User> list=userDao.queryByUsername(username);
+        List<User> list = userDao.queryByUsername(username);
         return list.get(0);
     }
 
