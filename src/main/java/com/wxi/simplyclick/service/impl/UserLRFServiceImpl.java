@@ -6,7 +6,6 @@ import com.wxi.simplyclick.service.UserLRFService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,37 +14,60 @@ public class UserLRFServiceImpl implements UserLRFService {
     UserDao userDao;
 
     @Override
-    public boolean login(String username, String password) {
-        List<User> users = userDao.queryByUsername(username);
-        if (users.size() == 0) return false;
-        return users.get(0).getPassword().equals(password);
+    public int login(String username, String password) {
+        List<User> list = userDao.queryByUsername(username);
+
+        if (list.isEmpty()) {
+            return -1;
+        } else {
+            if (list.get(0).getPassword().equals(password))
+                return list.get(0).getPermission();
+            else
+                return -1;
+        }
     }
+
 
     @Override
     public boolean register(User user) {
-        // 是否已经存在相同用户名
-        List<User> users = userDao.queryByUsername(user.getUsername());
-        if (users.size() > 0) return false;
-        // 否则进行添加
-        return userDao.addUser(user);
+        List<User> list = userDao.queryByUsername(user.getUsername());
+
+        if (list.isEmpty()) {
+            return userDao.addUser(user);
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public boolean forget(String username, Date birthday) {
-        List<User> users = userDao.queryByUsername(username);
-        if (users.size() == 0) return false;
-        return users.get(0).getBirthday() == birthday;
+    public boolean forget(User user) {
+        List<User> list = userDao.queryByUsername(user.getUsername());
+
+        if (list.isEmpty()) {
+            return false;
+        } else {
+
+            if (list.get(0).getBirthday().getTime() == user.getBirthday().getTime()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
     }
 
     @Override
     public boolean resetPassword(String username, String password) {
-        User user = userDao.queryByUsername(username).get(0);
-        user.setPassword(password);
-        return userDao.updateUser(user);
+        List<User> list = userDao.queryByUsername(username);
+
+        if (list.isEmpty()) {
+            return false;
+        } else {
+            User newUser = list.get(0);
+            newUser.setPassword(password);
+            return userDao.updateUser(newUser);
+        }
     }
 
-    @Override
-    public List<User> queryByUsername(String username) {
-        return userDao.queryByUsername(username);
-    }
+
 }

@@ -17,21 +17,21 @@ public class CommentDaoImpl implements CommentDao{
     @Override
     // 根据电影的编号查询某部电影的评论
     public  List<Comment> queryByFilmId(Integer filmId){
-        String sql="select content from comment where filmId=? ";
+        String sql="select * from comment where filmId=? ";
         return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Comment.class),filmId);
     }
 
     @Override
     //根据电影id查询某部电影的评分
     public List<Comment> queryScoreByFilmId( Integer filmId){
-        String sql="select score from comment where filmId=?";
+        String sql="select * from comment where filmId=?";
         return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Comment.class),filmId);
     }
 
     @Override
     // 查询某个用户的所有评价----return
    public  List<Comment> queryByUsername(String username){
-        String sql="select content from comment where username=?";
+        String sql="select * from comment where username=?";
         return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Comment.class),username);
     }
 

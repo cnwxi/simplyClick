@@ -1,16 +1,26 @@
 package com.wxi.simplyclick.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
+import com.wxi.simplyclick.dao.UserDao;
+import com.wxi.simplyclick.service.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+import java.util.Map;
+
+@RestController
 public class TestController {
-    @RequestMapping("/test")
-    public String test(Model model){
-        model.addAttribute("msg","my first springboot");
-        return "test";
+    @Autowired
+    CommentService commentService;
+    @Autowired
+    UserDao userDao;
+
+    @RequestMapping("/test/{filmId}")
+    public List<Map<String, Object>> test(@PathVariable int filmId) {
+        return commentService.queryCommentByFilmId(filmId);
     }
 }
 
