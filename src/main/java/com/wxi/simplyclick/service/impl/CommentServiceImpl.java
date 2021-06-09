@@ -3,6 +3,7 @@ package com.wxi.simplyclick.service.impl;
 import com.wxi.simplyclick.bean.Comment;
 import com.wxi.simplyclick.bean.Film;
 import com.wxi.simplyclick.bean.User;
+import com.wxi.simplyclick.bean.extend.ExtendComment;
 import com.wxi.simplyclick.dao.CommentDao;
 import com.wxi.simplyclick.dao.FilmDao;
 import com.wxi.simplyclick.dao.UserDao;
@@ -11,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -26,36 +25,29 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public List<Map<String, Object>> queryCommentByFilmId(int filmId) {
+    public List<ExtendComment> queryCommentByFilmId(int filmId) {
+        String filmName = filmDao.queryFilmById(filmId).get(0).getFilmName();
         List<Comment> comments = commentDao.queryByFilmId(filmId);
-        List<Map<String, Object>> list = new ArrayList<>();
+        List<ExtendComment> list = new ArrayList<>();
         for (Comment comment : comments) {
-            Map<String, Object> data = new HashMap<>();
             String username = comment.getUsername();
             User theUser = userDao.queryByUsername(username).get(0);
-            data.put("nickname", theUser.getNickname());
-            data.put("score", comment.getScore());
-            data.put("content", comment.getContent());
-            data.put("modified", comment.getModified());
-            list.add(data);
+            ExtendComment extendComment = new ExtendComment(comment, theUser.getNickname(), filmName);
+            list.add(extendComment);
         }
         return list;
     }
 
     @Override
-    public List<Map<String, Object>> queryCommentByUsername(String username) {
+    public List<ExtendComment> queryCommentByUsername(String username) {
+        String nickname = userDao.queryByUsername(username).get(0).getNickname();
         List<Comment> comments = commentDao.queryByUsername(username);
-        List<Map<String, Object>> list = new ArrayList<>();
+        List<ExtendComment> list = new ArrayList<>();
         for (Comment comment : comments) {
-            Map<String, Object> data = new HashMap<>();
             int filmId = comment.getFilmId();
             Film film = filmDao.queryFilmById(filmId).get(0);
-            data.put("content", comment.getContent());
-            data.put("score", comment.getScore());
-            data.put("filmName", film.getFilmName());
-            data.put("filmId", filmId);
-            data.put("modified", comment.getModified());
-            list.add(data);
+            ExtendComment extendComment = new ExtendComment(comment, nickname, film.getFilmName());
+            list.add(extendComment);
         }
         return list;
     }
