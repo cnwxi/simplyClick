@@ -4,14 +4,13 @@ import com.wxi.simplyclick.bean.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface UserDao {
 
     // 列出所有用户
     List<User> queryUser();
-
+    List<User> queryAdmin();
     // 按用户名查询用户
     // List<Map<String, Object>> queryByUsername(String username);
     List<User> queryByUsername(String username);

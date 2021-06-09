@@ -21,9 +21,10 @@ public class CastDaoImpl implements CastDao {
     }
 
     @Override
-    //根据演职人员的姓名得到演职人员信息;
+    //根据演职人员的姓名得到演   职人员信息;
     public List<Cast> queryByCastName(String castName) {
-        String sql = "select * from cast where castName=?";
+        castName = '%' + castName + '%';
+        String sql = "select * from cast where castName like ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Cast.class), castName);
     }
 

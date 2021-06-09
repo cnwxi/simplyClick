@@ -25,6 +25,8 @@ public interface CommentDao {
     // 删除一条评价
     boolean delComment(Comment comment);
 
+    boolean delCommentByFilmId(int filmId);
+
     // 更新一条评价
     boolean updateComment(Comment comment);
 }

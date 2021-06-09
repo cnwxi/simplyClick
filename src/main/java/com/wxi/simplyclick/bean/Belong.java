@@ -1,9 +1,6 @@
 package com.wxi.simplyclick.bean;
 
-import com.sun.istack.NotNull;
 import lombok.*;
-
-import javax.persistence.Table;
 
 @Data
 @AllArgsConstructor

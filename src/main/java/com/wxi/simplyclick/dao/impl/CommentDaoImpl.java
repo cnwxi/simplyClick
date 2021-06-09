@@ -17,21 +17,21 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     // 根据电影的编号查询某部电影的评论
     public List<Comment> queryByFilmId(Integer filmId) {
-        String sql = "select * from comment where filmId=? ";
+        String sql = "select * from comment where filmId=? ORDER BY modified desc";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Comment.class), filmId);
     }
 
     @Override
     //根据电影id查询某部电影的评分
     public List<Comment> queryScoreByFilmId(Integer filmId) {
-        String sql = "select * from comment where filmId=?";
+        String sql = "select * from comment where filmId=? ORDER BY modified desc";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Comment.class), filmId);
     }
 
     @Override
     // 查询某个用户的所有评价----return
     public List<Comment> queryByUsername(String username) {
-        String sql = "select * from comment where username=?";
+        String sql = "select * from comment where username=? ORDER BY modified desc";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Comment.class), username);
     }
 
@@ -51,6 +51,12 @@ public class CommentDaoImpl implements CommentDao {
         Object[] objects = {comment.getUsername(), comment.getFilmId()};
         int result = jdbcTemplate.update(sql, objects);
         return result > 0;
+    }
+
+    @Override
+    public boolean delCommentByFilmId(int filmId) {
+        String sql = "delete from comment where filmId=?";
+        return jdbcTemplate.update(sql, filmId) > 0;
     }
 
     @Override

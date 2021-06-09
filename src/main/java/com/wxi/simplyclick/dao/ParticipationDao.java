@@ -23,6 +23,10 @@ public interface ParticipationDao {
     // 删除参演信息
     boolean delParticipation(Participation participation);
 
+    boolean delParticipationByCastId(Integer castId);
+
+    boolean delParticipationByFilmId(Integer filmId);
+
     // 更新某部电影某个人员的参演信息
     boolean updateParticipation(Participation participation);
 }
