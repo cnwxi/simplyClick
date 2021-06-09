@@ -16,8 +16,12 @@ public interface BelongDao {
     // 增加所属信息
     boolean addBelong(Belong belong);
 
-    // 根据电影编号删除所属信息
-    boolean delBelong(Integer filmId);
+    // 删除所属信息
+    boolean delBelongByFilmId(Integer filmId);
+
+    boolean delBelongByFilmType(String type);
+
+    boolean delBelongByFT(Integer filmId, String type);
 
     // 更新电影所属信息
     boolean updateBelong(Belong belong);

@@ -30,16 +30,27 @@ public class BelongDaoImpl implements BelongDao {
     }
 
     @Override
-    public boolean addBelong(Belong belong) {
-        String sql = "insert into belong values(?,?)";
-        int flag = jdbcTemplate.update(sql, belong.getFilmId(), belong.getFilmType());
-        return flag > 0;
+    public boolean delBelongByFilmId(Integer filmId) {
+        String sql = "delete from belong where filmId=?";
+        return jdbcTemplate.update(sql, filmId) > 0;
     }
 
     @Override
-    public boolean delBelong(Integer filmId) {
-        String sql = "delete from belong where filmId=?";
-        int flag = jdbcTemplate.update(sql, filmId);
+    public boolean delBelongByFilmType(String filmType) {
+        String sql = "delete from belong where filmType=?";
+        return jdbcTemplate.update(sql, filmType) > 0;
+    }
+
+    @Override
+    public boolean delBelongByFT(Integer filmId, String filmType) {
+        String sql = "delete from belong where  filmId=? and filmType=?";
+        return jdbcTemplate.update(sql, filmId, filmType) > 0;
+    }
+
+    @Override
+    public boolean addBelong(Belong belong) {
+        String sql = "insert into belong values(?,?)";
+        int flag = jdbcTemplate.update(sql, belong.getFilmId(), belong.getFilmType());
         return flag > 0;
     }
 

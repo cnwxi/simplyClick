@@ -35,8 +35,8 @@ public class ParticipationDaoImpl implements ParticipationDao {
 
     @Override
     public boolean addParticipation(Participation participation) {
-        String sql = "insert into participation values(?,?,?)";
-        Object[] objects = {participation.getFilmId(), participation.getCastId(), participation.getRole()};
+        String sql = "insert into participation values(?,?,?,?)";
+        Object[] objects = {participation.getFilmId(), participation.getCastId(), participation.getRole(), participation.getCharacter()};
         int update = jdbcTemplate.update(sql, objects);
         return update > 0;
     }
@@ -60,10 +60,22 @@ public class ParticipationDaoImpl implements ParticipationDao {
     }
 
     @Override
+    public boolean delParticipationByCastId(Integer castId) {
+        String sql = "delete from participation where castId = ?";
+        return jdbcTemplate.update(sql, castId) > 0;
+    }
+
+    @Override
+    public boolean delParticipationByFilmId(Integer filmId) {
+        String sql = "delete from participation where filmId = ?";
+        return jdbcTemplate.update(sql, filmId) > 0;
+    }
+
+    @Override
     public boolean updateParticipation(Participation participation) {
 //        String sql = "replace into participation values(?,?,?)";
-        String sql="update  Participation set role=? where filmId=? && castId=?";
-        Object[] objects = {participation.getRole(),participation.getFilmId(), participation.getCastId() };
+        String sql = "update  Participation set role=? where filmId=? && castId=?";
+        Object[] objects = {participation.getRole(), participation.getFilmId(), participation.getCastId()};
         int update = jdbcTemplate.update(sql, objects);
         return update > 0;
     }

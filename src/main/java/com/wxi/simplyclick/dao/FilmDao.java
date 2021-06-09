@@ -11,7 +11,7 @@ public interface FilmDao {
     List<Film> queryFilm();
 
     //根据电影的id查询电影信息
-    List<Film> queryFilmById(int filmId);
+    List<Film> queryFilmById(Integer filmId);
 
     //根据电影的类型查询电影的信息
     // List<Film> queryFilmByType(int type);
@@ -20,16 +20,16 @@ public interface FilmDao {
     List<Film> queryFilmByFilmName(String filmName);
 
     // 随机列出n条电影记录
-    List<Film> queryFilmRand(int n);
+    List<Film> queryFilmRand(Integer n);
 
     //显示评分最高的前n部电影
-    List<Film> queryFilmTopN(int n);
+    List<Film> queryFilmTopN(Integer n);
 
     // 增加一条电影记录
     boolean addFilm(Film film);
 
     // 删除一条电影记录
-    boolean delFilmById(Integer id);
+    boolean delFilmById(Integer filmId);
 
     // 更新电影记录
     boolean updateFilm(Film film);

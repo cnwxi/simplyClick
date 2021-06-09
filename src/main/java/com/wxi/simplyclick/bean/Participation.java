@@ -13,4 +13,5 @@ public class Participation {
     private Integer filmId;     // 电影编号
     private Integer castId;     // 演职人员编号
     private String role;        // 职务
+    private String character;   // 角色
 }

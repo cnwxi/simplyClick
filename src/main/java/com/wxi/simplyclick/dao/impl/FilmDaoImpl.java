@@ -23,14 +23,15 @@ public class FilmDaoImpl implements FilmDao {
 
     @Override
     //根据电影的id查询电影信息
-    public List<Film> queryFilmById(int filmId) {
+    public List<Film> queryFilmById(Integer filmId) {
         String sql = "select * from film where filmId=?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Film.class), filmId);
     }
 
     @Override
     public List<Film> queryFilmByFilmName(String filmName) {
-        String sql = "select * from film where filmName=?";
+        filmName = '%' + filmName + '%';
+        String sql = "select * from film where filmName like ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Film.class), filmName);
     }
 
@@ -43,13 +44,13 @@ public class FilmDaoImpl implements FilmDao {
 
     @Override
     //随机抽取n条电影记录
-    public List<Film> queryFilmRand(int n) {
+    public List<Film> queryFilmRand(Integer n) {
         String sql = "SELECT * FROM film ORDER BY rand() LIMIT ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Film.class), n);
     }
 
     @Override
-    public List<Film> queryFilmTopN(int n) {
+    public List<Film> queryFilmTopN(Integer n) {
         String sql = "SELECT * FROM film ORDER BY avgScore desc LIMIT 0, ?;";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Film.class), n);
     }
@@ -64,6 +65,8 @@ public class FilmDaoImpl implements FilmDao {
         int result = jdbcTemplate.update(sql, objects);
         return result > 0;
     }
+
+
 
     @Override
     //根据电影的id删除电影所有信息；
