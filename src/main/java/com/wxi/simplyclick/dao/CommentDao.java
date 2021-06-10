@@ -11,9 +11,6 @@ public interface CommentDao {
     // 查询某部电影所有评论
     List<Comment> queryByFilmId(Integer filmId);
 
-    //查询某部电影的评分
-    List<Comment> queryScoreByFilmId(Integer filmId);
-
     // 查询某个用户的所有评价
     List<Comment> queryByUsername(String username);
 
@@ -28,7 +25,7 @@ public interface CommentDao {
 
     boolean delCommentByFilmId(int filmId);
 
-    boolean delCommentBtusername(String username);
+    boolean delCommentByUsername(String username);
 
     // 更新一条评价
     boolean updateComment(Comment comment);

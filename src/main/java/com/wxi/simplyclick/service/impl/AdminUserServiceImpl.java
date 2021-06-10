@@ -24,6 +24,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public Integer delUser(String username) {
         if (userDao.queryByUsername(username).isEmpty()) return -1;//没有这样的记录
+        commentDao.delCommentByUsername(username);
         if (userDao.delUser(username)) return 1;
         return 0;
     }

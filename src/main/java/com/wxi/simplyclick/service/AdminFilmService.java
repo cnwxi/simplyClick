@@ -34,6 +34,4 @@ public interface AdminFilmService {
     Integer delParticipation(Participation participation);
 
     Integer updateParticipation(Participation oldParticipation, Participation newParticipation);
-
-
 }
