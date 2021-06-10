@@ -14,21 +14,21 @@ public class AdminCommentServiceImpl implements AdminCommentService {
 
     @Override
     // 删除用户评论
-    public boolean delComment(String username,int filmId) {
-        Comment comment = new Comment();
-        comment.setUsername(username);
-        comment.setFilmId(filmId);
-        return commentDao.delComment(comment);
+    public Integer delComment(String username, int filmId) {
+        if (commentDao.queryByUsernameFilmId(username, filmId).isEmpty()) return -1;// 没有这样的评论
+        if (commentDao.delComment(filmId,username)) return 1;//删除成功
+        return 0;//删除失败
     }
 
     @Override
     // 屏蔽用户评论内容，修改content为“此评论已被屏蔽”
-    public boolean banComment(String username, int filmId, Float score) {
+    public Integer banComment(String username, int filmId) {
+        if (commentDao.queryByUsernameFilmId(username, filmId).isEmpty()) return -1;//没有对应记录
         Comment comment = new Comment();
         comment.setUsername(username);
         comment.setFilmId(filmId);
-        comment.setScore(score);
         comment.setContent("此评论已被屏蔽");
-        return commentDao.updateComment(comment);
+        if (commentDao.updateComment(comment)) return 1;//屏蔽成功
+        return 0;//屏蔽失败
     }
 }

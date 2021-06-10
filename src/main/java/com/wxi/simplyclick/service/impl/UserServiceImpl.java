@@ -30,7 +30,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserInfo(User user) {
-        return userDao.updateUser(user);
+    public Integer updateUserInfo(User user) {
+        if (userDao.queryByUsername(user.getUsername()).isEmpty()) return -1;//没有这样的账户
+        if (userDao.updateUser(user)) return 1;
+        return 0;
     }
 }

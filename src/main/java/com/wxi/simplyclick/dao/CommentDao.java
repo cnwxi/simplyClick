@@ -18,14 +18,17 @@ public interface CommentDao {
     List<Comment> queryByUsername(String username);
 
     //查询某个用户对某部电影的评分
+    List<Comment> queryByUsernameFilmId(String username, Integer filmId);
 
     // 添加一条评价
     boolean addComment(Comment comment);
 
     // 删除一条评价
-    boolean delComment(Comment comment);
+    boolean delComment(Integer filmId,String username);
 
     boolean delCommentByFilmId(int filmId);
+
+    boolean delCommentBtusername(String username);
 
     // 更新一条评价
     boolean updateComment(Comment comment);

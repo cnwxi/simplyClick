@@ -21,6 +21,13 @@ public class ParticipationDaoImpl implements ParticipationDao {
     }
 
     @Override
+    public List<Participation> queryByParticipation(Participation participation) {
+        String sql = "select * from participation where filmId=? and castId=? and role=? and `character`=?";
+        Object[] objects = {participation.getFilmId(), participation.getCastId(), participation.getRole(), participation.getCharacter()};
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Participation.class), objects);
+    }
+
+    @Override
     public List<Participation> queryByRole(Integer filmId, String role) {
         String sql = "select * from participation where filmId= ? and role = ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Participation.class), filmId, role);
@@ -43,20 +50,9 @@ public class ParticipationDaoImpl implements ParticipationDao {
 
     @Override
     public boolean delParticipation(Participation participation) {
-        String sql1 = "delete from participation where filmId = ? and castId = ? and role =?";
-        String sql2 = "delete from participation where filmId = ? and castId =?";
-        String sql3 = "delete from participation where filmId = ?";
-        int update = 0;
-        if (participation.getCastId() != null && participation.getRole() != null) {
-            Object[] objects = {participation.getFilmId(), participation.getCastId(), participation.getRole()};
-            update = jdbcTemplate.update(sql1, objects);
-        } else if (participation.getCastId() != null && participation.getRole() == null) {
-            Object[] objects = {participation.getFilmId(), participation.getCastId()};
-            update = jdbcTemplate.update(sql2, objects);
-        } else if (participation.getCastId() == null && participation.getRole() == null) {
-            update = jdbcTemplate.update(sql3, participation.getFilmId());
-        }
-        return update > 0;
+        String sql1 = "delete from participation where filmId = ? and castId = ? and role =? and `character`= ?";
+        Object[] objects = {participation.getFilmId(), participation.getCastId(), participation.getRole(), participation.getCharacter()};
+        return jdbcTemplate.update(sql1, objects) > 0;
     }
 
     @Override
@@ -72,10 +68,10 @@ public class ParticipationDaoImpl implements ParticipationDao {
     }
 
     @Override
-    public boolean updateParticipation(Participation participation) {
+    public boolean updateParticipation(Participation oldParticipation, Participation newParticipation) {
 //        String sql = "replace into participation values(?,?,?)";
-        String sql = "update  Participation set role=? where filmId=? && castId=?";
-        Object[] objects = {participation.getRole(), participation.getFilmId(), participation.getCastId()};
+        String sql = "update  Participation set role=? ,`character`=? where filmId=? and castId=? and  role=? and `character`=?";
+        Object[] objects = {newParticipation.getRole(), newParticipation.getCharacter(), oldParticipation.getFilmId(), oldParticipation.getCastId(), oldParticipation.getRole(), oldParticipation.getCharacter()};
         int update = jdbcTemplate.update(sql, objects);
         return update > 0;
     }

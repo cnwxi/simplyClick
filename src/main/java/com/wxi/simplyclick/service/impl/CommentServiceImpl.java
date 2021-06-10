@@ -53,17 +53,23 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public boolean addComment(Comment comment) {
-        return commentDao.addComment(comment);
+    public Integer addComment(Comment comment) {
+        if (!commentDao.queryByUsernameFilmId(comment.getUsername(), comment.getFilmId()).isEmpty()) return -1;
+        if (commentDao.addComment(comment)) return 1;
+        return 0;
     }
 
     @Override
-    public boolean delComment(Comment comment) {
-        return commentDao.delComment(comment);
+    public Integer delComment(Integer filmId, String username) {
+        if (commentDao.queryByUsernameFilmId(username, filmId).isEmpty()) return -1;
+        if (commentDao.delComment(filmId, username)) return 1;
+        return 0;
     }
 
     @Override
-    public boolean updateComment(Comment comment) {
-        return commentDao.updateComment(comment);
+    public Integer updateComment(Comment comment) {
+        if (commentDao.queryByUsernameFilmId(comment.getUsername(), comment.getFilmId()).isEmpty()) return -1;//没有这样的记录
+        if (commentDao.updateComment(comment)) return 1;
+        return 0;
     }
 }

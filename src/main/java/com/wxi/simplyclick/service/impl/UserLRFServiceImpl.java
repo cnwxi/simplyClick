@@ -14,7 +14,7 @@ public class UserLRFServiceImpl implements UserLRFService {
     UserDao userDao;
 
     @Override
-    public int login(String username, String password) {
+    public Integer login(String username, String password) {
         List<User> list = userDao.queryByUsername(username);
         if (list.isEmpty()) {
             return -1;
@@ -28,34 +28,28 @@ public class UserLRFServiceImpl implements UserLRFService {
 
 
     @Override
-    public boolean register(User user) {
-        List<User> list = userDao.queryByUsername(user.getUsername());
-        if (list.isEmpty()) {
-            return userDao.addUser(user);
-        } else {
-            return false;
-        }
+    public Integer register(User user) {
+        if (!userDao.queryByUsername(user.getUsername()).isEmpty()) return -1;//主键用户名重复
+        if (userDao.addUser(user)) return 1;
+        return 0;
     }
 
     @Override
-    public boolean forget(User user) {
+    public Integer checkAcount(User user) {
         List<User> list = userDao.queryByUsername(user.getUsername());
-        if (list.isEmpty()) {
-            return false;
-        } else {
-            return list.get(0).getBirthday().getTime() == user.getBirthday().getTime();
-        }
+        if (list.isEmpty()) return -1;//没有对应账户
+        if (list.get(0).getBirthday().getTime() == user.getBirthday().getTime()) return 1;//验证成功
+        return 0;//验证失败
     }
 
     @Override
-    public boolean resetPassword(String username, String password) {
+    public Integer resetPassword(String username, String password) {
+
         List<User> list = userDao.queryByUsername(username);
-        if (list.isEmpty()) {
-            return false;
-        } else {
-            User newUser = list.get(0);
-            newUser.setPassword(password);
-            return userDao.updateUser(newUser);
-        }
+        if (list.isEmpty()) return -1; //没有这样的账户
+        User newUser = list.get(0);
+        newUser.setPassword(password);
+        if (userDao.updateUser(newUser)) return 1;
+        return 0;
     }
 }

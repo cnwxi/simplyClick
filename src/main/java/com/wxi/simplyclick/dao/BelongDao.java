@@ -13,6 +13,8 @@ public interface BelongDao {
     //根据电影的类型得到电影信息
     List<Belong> queryByFilmType(String filmType);
 
+    List<Belong> queryByFilmTypeFilmId(Integer filmId, String filmType);
+
     // 增加所属信息
     boolean addBelong(Belong belong);
 
@@ -23,6 +25,5 @@ public interface BelongDao {
 
     boolean delBelongByFT(Integer filmId, String type);
 
-    // 更新电影所属信息
-    boolean updateBelong(Belong belong);
+    boolean updateBelong(Integer filmId,String oldType,String newType);
 }

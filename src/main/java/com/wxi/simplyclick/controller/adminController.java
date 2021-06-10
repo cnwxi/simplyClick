@@ -24,13 +24,13 @@ public class adminController {
      */
     @RequestMapping("/admin/delFilm/{filmId}")
     public boolean delFilm(@PathVariable Integer filmId, Model model) {
-        boolean flag = adminFilmService.delFilm(filmId);
-        if (flag) {
+        Integer flag = adminFilmService.delFilm(filmId);
+        if (flag == 0) {
             model.addAttribute("msg", "成功");
         } else {
             model.addAttribute("msg", "失败");
         }
-        return flag;
+        return false;
     }
 
     @RequestMapping("/admin/addFilm")
@@ -45,13 +45,13 @@ public class adminController {
                            Model model
     ) {
         Film film = new Film(filmId, filmName, area, language, footage, posterPath, profile, avgScore);
-        boolean flag = adminFilmService.addFilm(film);
-        if (flag) {
+        Integer flag = adminFilmService.addFilm(film);
+        if (flag == 0) {
             model.addAttribute("msg", "成功");
         } else {
             model.addAttribute("msg", "失败");
         }
-        return flag;
+        return false;
     }
 
     @RequestMapping("/admin/updFilm")
@@ -65,10 +65,10 @@ public class adminController {
                            @RequestParam("avgScore") Float avgScore,
                            Model model) {
         Film film = new Film(filmId, filmName, area, language, footage, posterPath, profile, avgScore);
-        boolean flag = adminFilmService.updateFilm(film);
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.updateFilm(film);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return false;
     }
 
     /*
@@ -79,18 +79,18 @@ public class adminController {
                              @RequestParam("filmType") String filmType,
                              Model model) {
         Belong belong = new Belong(filmId, filmType);
-        boolean flag = adminFilmService.addBelong(belong);
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.addBelong(belong);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return false;
     }
 
     @RequestMapping("/admin/delBelong/{filmId}&{filmTpye}")
     public boolean delBelong(@PathVariable Integer filmId, @PathVariable String filmTpye, Model model) {
-        boolean flag = adminFilmService.delBelong(new Belong(filmId, filmTpye));
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.delBelong(filmId, filmTpye);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return false;
     }
 
     @RequestMapping("/admin/updBelong")
@@ -98,11 +98,10 @@ public class adminController {
                              @RequestParam("filmType") String filmType,
                              @RequestParam("newFilmType") String newFilmType,
                              Model model) {
-        Belong oldBelong = new Belong(filmId, filmType);
-        boolean flag = adminFilmService.updateBelong(oldBelong, newFilmType);
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.updateBelong(filmId, filmType, newFilmType);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return false;
     }
 
     /*
@@ -110,28 +109,28 @@ public class adminController {
      */
     @RequestMapping("/admin/addType/{type}")
     public boolean addType(@PathVariable String type, Model model) {
-        boolean flag = adminFilmService.addType(type);
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.addType(type);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return false;
     }
 
     @RequestMapping("/admin/delType/{type}")
     public boolean delType(@PathVariable String type, Model model) {
-        boolean flag = adminFilmService.delType(type);
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.delType(type);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return false;
     }
 
     @RequestMapping("/admin/updType")
     public boolean updType(@RequestParam("oldType") String oldType,
                            @RequestParam("newType") String newType,
                            Model model) {
-        boolean flag = adminFilmService.updateType(oldType, newType);
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.updateType(oldType, newType);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return false;
     }
 
     /*
@@ -144,10 +143,10 @@ public class adminController {
                                     @RequestParam("character") String character,
                                     Model model) {
         Participation participation = new Participation(filmId, castId, role, character);
-        boolean flag = adminFilmService.addParticipation(participation);
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.addParticipation(participation);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return false;
     }
 
     @RequestMapping("/admin/delParticipation/{filmId}&{castId}&{role}&{character}")
@@ -157,8 +156,8 @@ public class adminController {
                                     @PathVariable String character,
                                     Model model) {
         Participation participation = new Participation(filmId, castId, role, character);
-        boolean flag = adminFilmService.delParticipation(participation);
-        if (flag) model.addAttribute("msg", "成功");
+        Integer flag = adminFilmService.delParticipation(participation);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
         return false;
     }
@@ -166,13 +165,16 @@ public class adminController {
     @RequestMapping("/admin/updParticipation")
     public boolean updParticipation(@RequestParam("filmId") Integer filmId,
                                     @RequestParam("castId") Integer castId,
-                                    @RequestParam("role") String role,
-                                    @RequestParam("character") String character,
+                                    @RequestParam("oldRole") String oldRole,
+                                    @RequestParam("newRole") String newRole,
+                                    @RequestParam("oldCharacter") String oldCharacter,
+                                    @RequestParam("newCharacter") String newCharacter,
                                     Model model) {
-        Participation participation = new Participation(filmId, castId, role, character);
-        boolean flag = adminFilmService.updateParticipation(participation);
-        if (flag) model.addAttribute("msg", "成功");
+        Participation oldParticipation = new Participation(filmId, castId, oldRole, oldCharacter);
+        Participation newParticipation = new Participation(filmId, castId, newRole, newCharacter);
+        Integer flag = adminFilmService.updateParticipation(oldParticipation, newParticipation);
+        if (flag == 0) model.addAttribute("msg", "成功");
         else model.addAttribute("msg", "失败");
-        return flag;
+        return flag == 0;
     }
 }

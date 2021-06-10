@@ -9,32 +9,31 @@ import org.springframework.stereotype.Service;
 public interface AdminFilmService {
 
     // 增加电影信息
-    boolean addFilm(Film film);
+    Integer addFilm(Film film);
 
     // 删除电影，要对应先删除评论、参演、belong
-    boolean delFilm(int filmId);
+    Integer delFilm(int filmId);
 
     // 修改电影信息
-    boolean updateFilm(Film film);
+    Integer updateFilm(Film film);
 
-    boolean addType(String type);
+    Integer addType(String type);
 
-    boolean delType(String type);
+    Integer delType(String type);
 
-    boolean updateType(String oldType, String newType);
+    Integer updateType(String oldType, String newType);
 
-    boolean addBelong(Belong belong);
+    Integer addBelong(Belong belong);
 
-    boolean delBelong(Belong belong);
+    Integer delBelong(Integer filmId, String type);
 
-    boolean updateBelong(Belong oldBelong, String newType);//
+    Integer updateBelong(Integer filmId, String oldType, String newType);//
 
+    Integer addParticipation(Participation participation);
 
-    boolean addParticipation(Participation participation);
+    Integer delParticipation(Participation participation);
 
-    boolean delParticipation(Participation participation);
-
-    boolean updateParticipation(Participation participation);
+    Integer updateParticipation(Participation oldParticipation, Participation newParticipation);
 
 
 }

@@ -16,5 +16,5 @@ public interface UserService {
     List<Comment> userComment(String username);
 
     // 修改个人信息
-    boolean updateUserInfo(User user);
+    Integer updateUserInfo(User user);
 }

@@ -36,21 +36,32 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
+    public List<Comment> queryByUsernameFilmId(String username, Integer filmId) {
+        String sql = "select * from comment where username=? and filmId = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Comment.class), username, filmId);
+    }
+
+    @Override
     // 添加一条评价
     public boolean addComment(Comment comment) {
-        String sql = "insert into comment(username,filmId,content,score) values(?,?,?,?)";
-        Object[] objects = {comment.getContent(), comment.getUsername(), comment.getFilmId()};
+        String sql = "insert into comment(username,filmId,content,score,modified) values(?,?,?,?,?)";
+        Object[] objects = {comment.getContent(), comment.getUsername(), comment.getFilmId(), comment.getModified()};
         int result = jdbcTemplate.update(sql, objects);
         return result > 0;
     }
 
     @Override
     // 根据用户名和电影id删除一条评价
-    public boolean delComment(Comment comment) {
-        String sql = "delete from comment where username=? && filmId=?";
-        Object[] objects = {comment.getUsername(), comment.getFilmId()};
-        int result = jdbcTemplate.update(sql, objects);
-        return result > 0;
+    public boolean delComment(Integer filmId, String username) {
+        String sql = "delete from comment where filmId =? and username=?";
+        Object[] objects = {filmId, username};
+        return jdbcTemplate.update(sql, objects) > 0;
+    }
+
+    @Override
+    public boolean delCommentBtusername(String username) {
+        String sql = "delete from comment where username=?";
+        return jdbcTemplate.update(sql, username) > 0;
     }
 
     @Override
@@ -62,8 +73,8 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     // 根据用户名和电影id更新一条评价
     public boolean updateComment(Comment comment) {
-        String sql = "update comment set content=? where username=? && filmId=?";
-        Object[] objects = {comment.getContent(), comment.getUsername(), comment.getFilmId()};
+        String sql = "update comment set content=?,modified=? where username=? and filmId=? ";
+        Object[] objects = {comment.getContent(), comment.getModified(), comment.getUsername(), comment.getFilmId()};
         int result = jdbcTemplate.update(sql, objects);
         return result > 0;
     }

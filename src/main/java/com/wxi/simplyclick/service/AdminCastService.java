@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AdminCastService {
     // 添加演员信息
-    boolean addCast(Cast cast);
+    Integer addCast(Cast cast);
 
     // 修改演员信息
-    boolean updateCast(Cast cast);
+    Integer updateCast(Cast cast);
 
     // 删除演员信息，要先删除对应所有的参演信息
-    boolean delCast(int castId);
+    Integer delCast(int castId);
 }

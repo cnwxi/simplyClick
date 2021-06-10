@@ -23,6 +23,12 @@ public class BelongDaoImpl implements BelongDao {
     }
 
     @Override
+    public List<Belong> queryByFilmTypeFilmId(Integer filmId, String filmType) {
+        String sql = "select * from belong where filmId=? and filmType = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Belong.class), filmId, filmType);
+    }
+
+    @Override
     //根据电影的类型得到电影信息
     public List<Belong> queryByFilmType(String filmType) {
         String sql = "select * from belong where filmType=?";
@@ -55,11 +61,9 @@ public class BelongDaoImpl implements BelongDao {
     }
 
     @Override
-    public boolean updateBelong(Belong belong) {
-
-//        String sql = "replace into belong values(?,?)";
-        String sql = "update Belong set filmType=? where filmId=?";
-        int flag = jdbcTemplate.update(sql, belong.getFilmType(), belong.getFilmId());
+    public boolean updateBelong(Integer filmId, String oldType, String newType) {
+        String sql = "update belong set filmType=? where filmId=? and filmType= ?";
+        int flag = jdbcTemplate.update(sql, filmId, oldType, newType);
         return flag > 0;
     }
 
