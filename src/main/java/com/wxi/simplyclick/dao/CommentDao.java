@@ -27,7 +27,6 @@ public interface CommentDao {
 
     boolean delCommentByUsername(String username);
 
-    boolean delCommentByFilmId(int filmId);
 
     // 更新一条评价
     boolean updateComment(Comment comment);

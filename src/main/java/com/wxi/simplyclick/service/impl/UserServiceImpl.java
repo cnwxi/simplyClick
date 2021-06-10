@@ -19,9 +19,8 @@ public class UserServiceImpl implements UserService {
     CommentDao commentDao;
 
     @Override
-    public User userInfo(String username) {
-        List<User> list = userDao.queryByUsername(username);
-        return list.get(0);
+    public List<User> userInfo(String username) {
+        return userDao.queryByUsername(username);
     }
 
     @Override

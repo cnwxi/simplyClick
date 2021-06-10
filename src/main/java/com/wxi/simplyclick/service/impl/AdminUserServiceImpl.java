@@ -7,12 +7,21 @@ import com.wxi.simplyclick.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
     @Autowired
     UserDao userDao;
     @Autowired
     CommentDao commentDao;
+
+    @Override
+    public Integer addUser(User user) {
+        if (!userDao.queryByUsername(user.getUsername()).isEmpty()) return -1;//主键用户名重复
+        if (userDao.addUser(user)) return 1;
+        return 0;
+    }
 
     @Override
     public Integer updateUser(User user) {
@@ -22,12 +31,21 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
+    public List<User> queryUser() {
+
+        return userDao.queryUser();
+    }
+
+    @Override
+    public List<User> queryAdmin() {
+        return userDao.queryAdmin();
+    }
+
+    @Override
     public Integer delUser(String username) {
         if (userDao.queryByUsername(username).isEmpty()) return -1;//没有这样的记录
         commentDao.delCommentByUsername(username);
         if (userDao.delUser(username)) return 1;
         return 0;
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.wxi.simplyclick.service.impl;
 
 import com.wxi.simplyclick.bean.Belong;
+import com.wxi.simplyclick.bean.Cast;
 import com.wxi.simplyclick.bean.Film;
 import com.wxi.simplyclick.bean.Participation;
 import com.wxi.simplyclick.dao.*;
@@ -20,6 +21,8 @@ public class AdminFilmServiceImpl implements AdminFilmService {
     FilmDao filmDao;
     @Autowired
     TypeDao typeDao;
+    @Autowired
+    CastDao castDao;
 
     @Override
     public Integer addFilm(Film film) {
@@ -39,7 +42,7 @@ public class AdminFilmServiceImpl implements AdminFilmService {
     }
 
     @Override
-    public Integer delFilm(int filmId) {
+    public Integer delFilm(Integer filmId) {
         if (filmDao.queryFilmById(filmId).isEmpty()) return -1;//没有这样的记录
         belongDao.delBelongByFilmId(filmId);//删除所属记录
         participationDao.delParticipationByFilmId(filmId);//删除参演记录
@@ -120,6 +123,27 @@ public class AdminFilmServiceImpl implements AdminFilmService {
         if (participationDao.queryByParticipation(oldParticipation).isEmpty()) return -1;//没有这样的旧记录
         if (!participationDao.queryByParticipation(newParticipation).isEmpty()) return -2;//已经有这样的新记录
         if (participationDao.updateParticipation(oldParticipation, newParticipation)) return 1;
+        return 0;
+    }
+
+    @Override
+    public Integer addCast(Cast cast) {
+        if (!castDao.queryById(cast.getCastId()).isEmpty()) return -1;
+        if (castDao.addCast(cast)) return 1;
+        return 0;
+    }
+
+    @Override
+    public Integer delCast(Integer castId) {
+        if (castDao.queryById(castId).isEmpty()) return -1;
+        if (castDao.delCast(castId)) return 1;
+        return 0;
+    }
+
+    @Override
+    public Integer updateCast(Cast cast) {
+        if (castDao.queryById(cast.getCastId()).isEmpty()) return -1;
+        if (castDao.update(cast)) return 1;
         return 0;
     }
 }

@@ -19,7 +19,7 @@ public interface CommentService {
 
     Integer addComment(Comment comment);
 
-    Integer delComment(Integer filmId,String username);
+    Integer delComment(Integer filmId, String username);
 
     Integer updateComment(Comment comment);
 }

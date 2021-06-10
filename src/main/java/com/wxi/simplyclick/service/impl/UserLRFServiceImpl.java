@@ -6,6 +6,7 @@ import com.wxi.simplyclick.service.UserLRFService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,10 +36,10 @@ public class UserLRFServiceImpl implements UserLRFService {
     }
 
     @Override
-    public Integer checkAcount(User user) {
-        List<User> list = userDao.queryByUsername(user.getUsername());
+    public Integer checkAccount(String username, Date date) {
+        List<User> list = userDao.queryByUsername(username);
         if (list.isEmpty()) return -1;//没有对应账户
-        if (list.get(0).getBirthday().getTime() == user.getBirthday().getTime()) return 1;//验证成功
+        if (list.get(0).getBirthday().getTime() == date.getTime()) return 1;//验证成功
         return 0;//验证失败
     }
 

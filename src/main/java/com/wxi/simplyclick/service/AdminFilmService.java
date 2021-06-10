@@ -1,6 +1,7 @@
 package com.wxi.simplyclick.service;
 
 import com.wxi.simplyclick.bean.Belong;
+import com.wxi.simplyclick.bean.Cast;
 import com.wxi.simplyclick.bean.Film;
 import com.wxi.simplyclick.bean.Participation;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public interface AdminFilmService {
     Integer addFilm(Film film);
 
     // 删除电影，要对应先删除评论、参演、belong
-    Integer delFilm(int filmId);
+    Integer delFilm(Integer filmId);
 
     // 修改电影信息
     Integer updateFilm(Film film);
@@ -34,4 +35,11 @@ public interface AdminFilmService {
     Integer delParticipation(Participation participation);
 
     Integer updateParticipation(Participation oldParticipation, Participation newParticipation);
+
+    Integer addCast(Cast cast);
+
+    Integer delCast(Integer castId);
+
+    Integer updateCast(Cast cast);
+
 }

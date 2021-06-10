@@ -1,8 +1,0 @@
-实体类
-使用了Lombok，简化代码
-添加@Data注释后，无需写getter、setter等方法
-不确定是否一个@Data就可以完成所有工作，所以把所有相关的注释都写上了
-@Data               ——getter、setter
-@NoArgsConstructor  ——无参构造
-@AllArgsConstructor ——有参构造
-@ToString           ——tostring方法
