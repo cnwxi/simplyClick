@@ -1,6 +1,6 @@
 # 网页设计
 
-> thymeleaf、html
+> <p>thymeleaf、html</p>
 
 > <h2>分工</h2>
 > <p>李华林：</p>
