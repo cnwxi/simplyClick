@@ -62,6 +62,6 @@
 >
 > <h3>forward</h3>
 > - /forward/userManger `跳转至用户管理页`
-> - /forward/FilmManage `跳转至电影管理页`
-> - /forward/CastManage `跳转至演职人员管理页`
+> - /forward/filmManage `跳转至电影管理页`
+> - /forward/castManage `跳转至演职人员管理页`
 > - /forward/index `跳转网站首页`

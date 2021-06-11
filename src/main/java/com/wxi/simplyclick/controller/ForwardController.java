@@ -37,8 +37,8 @@ public class ForwardController {
         return "用户管理界面";
     }
 
-    @RequestMapping("/forward/FilmManage")
-    public String FilmManage(Model model) {
+    @RequestMapping("/forward/filmManage")
+    public String filmManage(Model model) {
         List<Film> films = filmService.queryFilm();
         model.addAttribute("films", films);
         List<Type> types = typeService.queryType();
@@ -46,8 +46,8 @@ public class ForwardController {
         return "电影管理界面";
     }
 
-    @RequestMapping("/forward/CastManage")
-    public String CastManage(Model model) {
+    @RequestMapping("/forward/castManage")
+    public String castManage(Model model) {
         List<Cast> casts = castService.queryCast();
         model.addAttribute("casts", casts);
         return "演职人员管理界面";
