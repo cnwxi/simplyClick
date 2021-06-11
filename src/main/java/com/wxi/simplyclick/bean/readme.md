@@ -1,7 +1,7 @@
 # 实体类
 
 > <h2>Lombok</h2>
-> <p>@Data               </p>
+> <p>@Data               ——getter、setter</p>
 > <p>@NoArgsConstructor  ——无参构造</p>
 > <p>@AllArgsConstructor ——有参构造</p>
 > <p>@ToString           ——tostring方法</p>

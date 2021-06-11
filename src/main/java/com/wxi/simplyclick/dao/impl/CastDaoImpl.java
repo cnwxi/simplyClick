@@ -15,6 +15,12 @@ public class CastDaoImpl implements CastDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    public List<Cast> query() {
+        String sql = "select * from cast";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Cast.class));
+    }
+
+    @Override
     public List<Cast> queryById(Integer castId) {
         String sql = "select * from cast where castId=?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Cast.class), castId);

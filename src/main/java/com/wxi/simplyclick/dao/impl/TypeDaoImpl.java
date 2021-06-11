@@ -23,7 +23,7 @@ public class TypeDaoImpl implements TypeDao {
 
     @Override
     public List<Type> queryTypeByType(String type) {
-        String sql = "select 8 from type where filmType = ?";
+        String sql = "select * from type where filmType = ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Type.class),type);
     }
 

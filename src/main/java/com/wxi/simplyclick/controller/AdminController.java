@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 @RestController
-public class adminController {
+public class AdminController {
     @Autowired
     AdminUserService adminUserService;
     @Autowired
@@ -26,7 +26,7 @@ public class adminController {
     电影信息的增删改入口
      */
     @RequestMapping("/admin/delFilm/{filmId}")
-    public Integer delFilm(@PathVariable Integer filmId, Model model) {
+    public String delFilm(@PathVariable Integer filmId, Model model) {
         Integer flag = adminFilmService.delFilm(filmId);
         switch (flag) {
             case -1:
@@ -42,19 +42,19 @@ public class adminController {
                 model.addAttribute("msg", "电影信息未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/addFilm")
-    public Integer addFilm(@RequestParam("filmId") Integer filmId,
-                           @RequestParam("filmName") String filmName,
-                           @RequestParam("area") String area,
-                           @RequestParam("language") String language,
-                           @RequestParam("footage") Integer footage,
-                           @RequestParam("posterPath") String posterPath,
-                           @RequestParam("profile") String profile,
-                           @RequestParam("avgScore") Float avgScore,
-                           Model model
+    public String addFilm(@RequestParam("filmId") Integer filmId,
+                          @RequestParam("filmName") String filmName,
+                          @RequestParam("area") String area,
+                          @RequestParam("language") String language,
+                          @RequestParam("footage") Integer footage,
+                          @RequestParam("posterPath") String posterPath,
+                          @RequestParam("profile") String profile,
+                          @RequestParam("avgScore") Float avgScore,
+                          Model model
     ) {
         Film film = new Film(filmId, filmName, area, language, footage, posterPath, profile, avgScore);
         Integer flag = adminFilmService.addFilm(film);
@@ -72,19 +72,19 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/updFilm")
-    public Integer updFilm(@RequestParam("filmId") Integer filmId,
-                           @RequestParam("filmName") String filmName,
-                           @RequestParam("area") String area,
-                           @RequestParam("language") String language,
-                           @RequestParam("footage") Integer footage,
-                           @RequestParam("posterPath") String posterPath,
-                           @RequestParam("profile") String profile,
-                           @RequestParam("avgScore") Float avgScore,
-                           Model model) {
+    public String updFilm(@RequestParam("filmId") Integer filmId,
+                          @RequestParam("filmName") String filmName,
+                          @RequestParam("area") String area,
+                          @RequestParam("language") String language,
+                          @RequestParam("footage") Integer footage,
+                          @RequestParam("posterPath") String posterPath,
+                          @RequestParam("profile") String profile,
+                          @RequestParam("avgScore") Float avgScore,
+                          Model model) {
         Film film = new Film(filmId, filmName, area, language, footage, posterPath, profile, avgScore);
         Integer flag = adminFilmService.updateFilm(film);
         switch (flag) {
@@ -101,16 +101,16 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     /*
     电影所属信息的增删改
      */
     @RequestMapping("/admin/addBelong")
-    public Integer addBelong(@RequestParam("filmId") Integer filmId,
-                             @RequestParam("filmType") String filmType,
-                             Model model) {
+    public String addBelong(@RequestParam("filmId") Integer filmId,
+                            @RequestParam("filmType") String filmType,
+                            Model model) {
         Belong belong = new Belong(filmId, filmType);
         Integer flag = adminFilmService.addBelong(belong);
         switch (flag) {
@@ -127,11 +127,11 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/delBelong/{filmId}&{filmType}")
-    public Integer delBelong(@PathVariable Integer filmId, @PathVariable String filmType, Model model) {
+    public String delBelong(@PathVariable Integer filmId, @PathVariable String filmType, Model model) {
         Integer flag = adminFilmService.delBelong(filmId, filmType);
         switch (flag) {
             case -1:
@@ -147,14 +147,14 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/updBelong")
-    public Integer updBelong(@RequestParam("filmId") Integer filmId,
-                             @RequestParam("filmType") String filmType,
-                             @RequestParam("newFilmType") String newFilmType,
-                             Model model) {
+    public String updBelong(@RequestParam("filmId") Integer filmId,
+                            @RequestParam("filmType") String filmType,
+                            @RequestParam("newFilmType") String newFilmType,
+                            Model model) {
         Integer flag = adminFilmService.updateBelong(filmId, filmType, newFilmType);
         switch (flag) {
             case -1:
@@ -173,14 +173,14 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     /*
     类别的增删改
      */
     @RequestMapping("/admin/addType/{type}")
-    public Integer addType(@PathVariable String type, Model model) {
+    public String addType(@PathVariable String type, Model model) {
         Integer flag = adminFilmService.addType(type);
         switch (flag) {
             case -1:
@@ -196,11 +196,11 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/delType/{type}")
-    public Integer delType(@PathVariable String type, Model model) {
+    public String delType(@PathVariable String type, Model model) {
         Integer flag = adminFilmService.delType(type);
         switch (flag) {
             case -1:
@@ -216,13 +216,13 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/updType")
-    public Integer updType(@RequestParam("oldType") String oldType,
-                           @RequestParam("newType") String newType,
-                           Model model) {
+    public String updType(@RequestParam("oldType") String oldType,
+                          @RequestParam("newType") String newType,
+                          Model model) {
         Integer flag = adminFilmService.updateType(oldType, newType);
         switch (flag) {
             case -1:
@@ -241,18 +241,18 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     /*
     参演信息的增删改
      */
     @RequestMapping("/admin/addParticipation")
-    public Integer addParticipation(@RequestParam("filmId") Integer filmId,
-                                    @RequestParam("castId") Integer castId,
-                                    @RequestParam("role") String role,
-                                    @RequestParam("character") String character,
-                                    Model model) {
+    public String addParticipation(@RequestParam("filmId") Integer filmId,
+                                   @RequestParam("castId") Integer castId,
+                                   @RequestParam("role") String role,
+                                   @RequestParam("character") String character,
+                                   Model model) {
         Participation participation = new Participation(filmId, castId, role, character);
         Integer flag = adminFilmService.addParticipation(participation);
         switch (flag) {
@@ -269,15 +269,15 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/delParticipation/{filmId}&{castId}&{role}&{character}")
-    public Integer delParticipation(@PathVariable Integer filmId,
-                                    @PathVariable Integer castId,
-                                    @PathVariable String role,
-                                    @PathVariable String character,
-                                    Model model) {
+    public String delParticipation(@PathVariable Integer filmId,
+                                   @PathVariable Integer castId,
+                                   @PathVariable String role,
+                                   @PathVariable String character,
+                                   Model model) {
         Participation participation = new Participation(filmId, castId, role, character);
         Integer flag = adminFilmService.delParticipation(participation);
         switch (flag) {
@@ -294,17 +294,17 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/updParticipation")
-    public Integer updParticipation(@RequestParam("filmId") Integer filmId,
-                                    @RequestParam("castId") Integer castId,
-                                    @RequestParam("oldRole") String oldRole,
-                                    @RequestParam("newRole") String newRole,
-                                    @RequestParam("oldCharacter") String oldCharacter,
-                                    @RequestParam("newCharacter") String newCharacter,
-                                    Model model) {
+    public String updParticipation(@RequestParam("filmId") Integer filmId,
+                                   @RequestParam("castId") Integer castId,
+                                   @RequestParam("oldRole") String oldRole,
+                                   @RequestParam("newRole") String newRole,
+                                   @RequestParam("oldCharacter") String oldCharacter,
+                                   @RequestParam("newCharacter") String newCharacter,
+                                   Model model) {
         Participation oldParticipation = new Participation(filmId, castId, oldRole, oldCharacter);
         Participation newParticipation = new Participation(filmId, castId, newRole, newCharacter);
         Integer flag = adminFilmService.updateParticipation(oldParticipation, newParticipation);
@@ -325,16 +325,16 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/addCast")
-    public Integer addCast(@RequestParam("castId") Integer castId,
-                           @RequestParam("castName") String castName,
-                           @RequestParam("sex") Boolean sex,
-                           @RequestParam("country") String country,
-                           @RequestParam("birthday") Date birthday,
-                           Model model) {
+    public String addCast(@RequestParam("castId") Integer castId,
+                          @RequestParam("castName") String castName,
+                          @RequestParam("sex") Boolean sex,
+                          @RequestParam("country") String country,
+                          @RequestParam("birthday") Date birthday,
+                          Model model) {
         Cast cast = new Cast(castId, castName, sex, country, birthday);
         Integer flag = adminFilmService.addCast(cast);
         switch (flag) {
@@ -351,11 +351,11 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/delCast/{castId}")
-    public Integer delCast(@PathVariable Integer castId, Model model) {
+    public String delCast(@PathVariable Integer castId, Model model) {
         Integer flag = adminFilmService.delCast(castId);
         switch (flag) {
             case -1:
@@ -371,16 +371,16 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return flag;
+        return model.getAttribute("msg").toString();
     }
 
     @RequestMapping("/admin/updCast")
-    public Integer updCast(@RequestParam("castId") Integer castId,
-                           @RequestParam("castName") String castName,
-                           @RequestParam("sex") Boolean sex,
-                           @RequestParam("country") String country,
-                           @RequestParam("birthday") Date birthday,
-                           Model model) {
+    public String updCast(@RequestParam("castId") Integer castId,
+                          @RequestParam("castName") String castName,
+                          @RequestParam("sex") Boolean sex,
+                          @RequestParam("country") String country,
+                          @RequestParam("birthday") Date birthday,
+                          Model model) {
         Cast cast = new Cast(castId, castName, sex, country, birthday);
         Integer flag = adminFilmService.updateCast(cast);
         switch (flag) {
@@ -397,6 +397,6 @@ public class adminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return 0;
+        return model.getAttribute("msg").toString();
     }
 }

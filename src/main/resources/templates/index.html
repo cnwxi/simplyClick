@@ -10,14 +10,16 @@
 <body>
 <div class="login-wrap">
     <h2>登录</h2>
-
-    <p align="center" style="color: red" th:text="${msg}"></p>
+    <!--    <p align="center" style="color: red" th:text="${msg}"></p>-->
     <form class="login" th:action="@{/user/login}">
         <div class="form">
             <input type="text" th:placeholder="用户名" name="username"/>
             <input type="password" th:placeholder="密码" name="password"/>
             <button th:type="submit"> 登录</button>
             <a href="#"><p> 没有账号？点击注册 </p></a>
+            <a href="#"><p> 忘记密码 </p></a>
+            <a href="#" onclick="document.cookie='username=admin'"><p> 测试 </p></a>
+            <a th:href="@{~/user/profile}"><p> cookie测试</p></a>
         </div>
     </form>
 </div>

@@ -7,8 +7,6 @@ import com.wxi.simplyclick.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
     @Autowired
@@ -30,16 +28,6 @@ public class AdminUserServiceImpl implements AdminUserService {
         return 0;//失败
     }
 
-    @Override
-    public List<User> queryUser() {
-
-        return userDao.queryUser();
-    }
-
-    @Override
-    public List<User> queryAdmin() {
-        return userDao.queryAdmin();
-    }
 
     @Override
     public Integer delUser(String username) {

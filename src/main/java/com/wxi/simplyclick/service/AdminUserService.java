@@ -17,7 +17,5 @@ public interface AdminUserService {
     // 删除用户信息,把评论先删了
     Integer delUser(String username);
 
-    List<User> queryUser();
 
-    List<User> queryAdmin();
 }

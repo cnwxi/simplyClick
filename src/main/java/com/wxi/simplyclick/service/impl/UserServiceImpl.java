@@ -1,6 +1,5 @@
 package com.wxi.simplyclick.service.impl;
 
-import com.wxi.simplyclick.bean.Comment;
 import com.wxi.simplyclick.bean.User;
 import com.wxi.simplyclick.dao.CommentDao;
 import com.wxi.simplyclick.dao.UserDao;
@@ -24,14 +23,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Comment> userComment(String username) {
-        return commentDao.queryByUsername(username);
-    }
-
-    @Override
     public Integer updateUserInfo(User user) {
         if (userDao.queryByUsername(user.getUsername()).isEmpty()) return -1;//没有这样的账户
         if (userDao.updateUser(user)) return 1;
         return 0;
     }
+
+    @Override
+    public List<User> queryUser() {
+
+        return userDao.queryUser();
+    }
+
+    @Override
+    public List<User> queryAdmin() {
+        return userDao.queryAdmin();
+    }
+
 }

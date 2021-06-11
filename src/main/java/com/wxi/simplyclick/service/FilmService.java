@@ -1,7 +1,8 @@
 package com.wxi.simplyclick.service;
 
+import com.wxi.simplyclick.bean.Belong;
 import com.wxi.simplyclick.bean.Film;
-import com.wxi.simplyclick.bean.Participation;
+import com.wxi.simplyclick.bean.extend.ExtendParticipation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface FilmService {
 
     // 查询最热门的k部电影
     // 按评分
-    List<Film> queryTop10Film(int k);
+    List<Film> queryTopKFilm(Integer k);
 
     // 查询所有电影
     // 分页？看情况
@@ -25,12 +26,15 @@ public interface FilmService {
     List<Film> queryFilmByCastName(String castName);
 
     // 列出电影信息
-    List<Film> queryFilmByFilmId(int filmId);
-
-    // 列出参演信息
-    // 查part……表，查cast表
-    List<Participation> queryCastByFilmId(int filmId);
+    List<Film> queryFilmByFilmId(Integer filmId);
 
     // 类型查询
     List<Film> queryFilmByType(String type);
+
+    // 列出参演信息
+    // 查part……表，查cast表
+    List<ExtendParticipation> queryParticipationByFilmId(Integer filmId, String role);
+
+    List<Belong> queryBelongByFilmId(Integer filmId);
+
 }

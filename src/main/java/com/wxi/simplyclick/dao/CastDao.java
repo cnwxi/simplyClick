@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 public interface CastDao {
 
+    List<Cast> query();
+
     // 根据演职人员编号查询演职人员信息
     List<Cast> queryById(Integer castId);
 

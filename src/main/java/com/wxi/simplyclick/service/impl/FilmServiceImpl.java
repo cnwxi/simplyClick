@@ -4,6 +4,7 @@ import com.wxi.simplyclick.bean.Belong;
 import com.wxi.simplyclick.bean.Cast;
 import com.wxi.simplyclick.bean.Film;
 import com.wxi.simplyclick.bean.Participation;
+import com.wxi.simplyclick.bean.extend.ExtendParticipation;
 import com.wxi.simplyclick.dao.*;
 import com.wxi.simplyclick.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class FilmServiceImpl implements FilmService {
     @Override
     // 查询最热门的k部电影
     // 按评分
-    public List<Film> queryTop10Film(int k) {
+    public List<Film> queryTopKFilm(Integer k) {
         return filmDao.queryFilmTopN(k);
     }
 
@@ -66,16 +67,29 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     // 根据电影id列出电影信息
-    public List<Film> queryFilmByFilmId(int filmId) {
+    public List<Film> queryFilmByFilmId(Integer filmId) {
         return filmDao.queryFilmById(filmId);
     }
 
     @Override
     // 列出参演信息
     //participation: filmId->castId cast: castId->*
-    public List<Participation> queryCastByFilmId(int filmId) {
+    public List<ExtendParticipation> queryParticipationByFilmId(Integer filmId, String role) {
         //participation: filmId->*
-        return participationDao.queryByFilmId(filmId);
+        List<Participation> participations = participationDao.queryByRole(filmId, role);
+        List<ExtendParticipation> extendParticipations = new ArrayList<>();
+        for (Participation participation : participations) {
+            Cast cast = castDao.queryById(participation.getCastId()).get(0);
+            ExtendParticipation extendParticipation = new ExtendParticipation(cast.getCastId(), cast.getCastName(), cast.getSex(), cast.getCountry(), participation.getRole(), participation.getCharacter());
+            extendParticipations.add(extendParticipation);
+        }
+        return extendParticipations;
+    }
+
+
+    @Override
+    public List<Belong> queryBelongByFilmId(Integer filmId) {
+        return belongDao.queryByFilmId(filmId);
     }
 
     @Override
@@ -91,4 +105,6 @@ public class FilmServiceImpl implements FilmService {
         }
         return list;
     }
+
+
 }
