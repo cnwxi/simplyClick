@@ -1,4 +1,4 @@
-# controller层
+# controller
 
 > <h2>常用注释</h2>
 > <p>@Controller ——调用mvc返回网页</p>
