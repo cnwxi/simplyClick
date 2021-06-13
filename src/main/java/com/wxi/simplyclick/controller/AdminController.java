@@ -7,15 +7,19 @@ import com.wxi.simplyclick.bean.Participation;
 import com.wxi.simplyclick.service.AdminFilmService;
 import com.wxi.simplyclick.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
-@RestController
+@Controller
 public class AdminController {
     @Autowired
     AdminUserService adminUserService;
@@ -176,73 +180,6 @@ public class AdminController {
         return model.getAttribute("msg").toString();
     }
 
-    /*
-    类别的增删改
-     */
-    @RequestMapping("/admin/addType/{type}")
-    public String addType(@PathVariable String type, Model model) {
-        Integer flag = adminFilmService.addType(type);
-        switch (flag) {
-            case -1:
-                model.addAttribute("msg", "类型信息已存在");
-                break;
-            case 1:
-                model.addAttribute("msg", "类型信息添加成功");
-                break;
-            case 0:
-                model.addAttribute("msg", "类型信息添加失败");
-                break;
-            default:
-                model.addAttribute("msg", "未知错误");
-                break;
-        }
-        return model.getAttribute("msg").toString();
-    }
-
-    @RequestMapping("/admin/delType/{type}")
-    public String delType(@PathVariable String type, Model model) {
-        Integer flag = adminFilmService.delType(type);
-        switch (flag) {
-            case -1:
-                model.addAttribute("msg", "类型信息不存在");
-                break;
-            case 1:
-                model.addAttribute("msg", "类型信息删除成功");
-                break;
-            case 0:
-                model.addAttribute("msg", "类型信息删除失败");
-                break;
-            default:
-                model.addAttribute("msg", "未知错误");
-                break;
-        }
-        return model.getAttribute("msg").toString();
-    }
-
-    @RequestMapping("/admin/updType")
-    public String updType(@RequestParam("oldType") String oldType,
-                          @RequestParam("newType") String newType,
-                          Model model) {
-        Integer flag = adminFilmService.updateType(oldType, newType);
-        switch (flag) {
-            case -1:
-                model.addAttribute("msg", "原类型信息不存在");
-                break;
-            case -2:
-                model.addAttribute("msg", "新类型信息已存在");
-                break;
-            case 1:
-                model.addAttribute("msg", "类型信息更新成功");
-                break;
-            case 0:
-                model.addAttribute("msg", "类型信息更新失败");
-                break;
-            default:
-                model.addAttribute("msg", "未知错误");
-                break;
-        }
-        return model.getAttribute("msg").toString();
-    }
 
     /*
     参演信息的增删改
@@ -253,6 +190,11 @@ public class AdminController {
                                    @RequestParam("role") String role,
                                    @RequestParam("character") String character,
                                    Model model) {
+        if (filmId == null || castId == null || !StringUtils.hasLength(role)) {
+            model.addAttribute("msg", "输入信息错误");
+            return model.getAttribute("msg").toString();
+        }
+        if (!StringUtils.hasLength(character)) character = role;
         Participation participation = new Participation(filmId, castId, role, character);
         Integer flag = adminFilmService.addParticipation(participation);
         switch (flag) {
@@ -333,9 +275,13 @@ public class AdminController {
                           @RequestParam("castName") String castName,
                           @RequestParam("sex") Boolean sex,
                           @RequestParam("country") String country,
-                          @RequestParam("birthday") Date birthday,
+                          @RequestParam("birthday") String birthday,
                           Model model) {
-        Cast cast = new Cast(castId, castName, sex, country, birthday);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("CST"));/*我的数据库默认是CST时区*/
+        Date date = dateFormat.parse(birthday, pos);
+        Cast cast = new Cast(castId, castName, sex, country, date);
         Integer flag = adminFilmService.addCast(cast);
         switch (flag) {
             case -1:
@@ -379,9 +325,13 @@ public class AdminController {
                           @RequestParam("castName") String castName,
                           @RequestParam("sex") Boolean sex,
                           @RequestParam("country") String country,
-                          @RequestParam("birthday") Date birthday,
+                          @RequestParam("birthday") String birthday,
                           Model model) {
-        Cast cast = new Cast(castId, castName, sex, country, birthday);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("CST"));/*我的数据库默认是CST时区*/
+        Date date = dateFormat.parse(birthday, pos);
+        Cast cast = new Cast(castId, castName, sex, country, date);
         Integer flag = adminFilmService.updateCast(cast);
         switch (flag) {
             case -1:
@@ -392,6 +342,74 @@ public class AdminController {
                 break;
             case 0:
                 model.addAttribute("msg", "演职人员信息更新失败");
+                break;
+            default:
+                model.addAttribute("msg", "未知错误");
+                break;
+        }
+        return model.getAttribute("msg").toString();
+    }
+
+    /*
+    类别的增删改
+    */
+    @RequestMapping("/admin/addType/{type}")
+    public String addType(@PathVariable String type, Model model) {
+        Integer flag = adminFilmService.addType(type);
+        switch (flag) {
+            case -1:
+                model.addAttribute("msg", "类型信息已存在");
+                break;
+            case 1:
+                model.addAttribute("msg", "类型信息添加成功");
+                break;
+            case 0:
+                model.addAttribute("msg", "类型信息添加失败");
+                break;
+            default:
+                model.addAttribute("msg", "未知错误");
+                break;
+        }
+        return model.getAttribute("msg").toString();
+    }
+
+    @RequestMapping("/admin/delType/{type}")
+    public String delType(@PathVariable String type, Model model) {
+        Integer flag = adminFilmService.delType(type);
+        switch (flag) {
+            case -1:
+                model.addAttribute("msg", "类型信息不存在");
+                break;
+            case 1:
+                model.addAttribute("msg", "类型信息删除成功");
+                break;
+            case 0:
+                model.addAttribute("msg", "类型信息删除失败");
+                break;
+            default:
+                model.addAttribute("msg", "未知错误");
+                break;
+        }
+        return model.getAttribute("msg").toString();
+    }
+
+    @RequestMapping("/admin/updType")
+    public String updType(@RequestParam("oldType") String oldType,
+                          @RequestParam("newType") String newType,
+                          Model model) {
+        Integer flag = adminFilmService.updateType(oldType, newType);
+        switch (flag) {
+            case -1:
+                model.addAttribute("msg", "原类型信息不存在");
+                break;
+            case -2:
+                model.addAttribute("msg", "新类型信息已存在");
+                break;
+            case 1:
+                model.addAttribute("msg", "类型信息更新成功");
+                break;
+            case 0:
+                model.addAttribute("msg", "类型信息更新失败");
                 break;
             default:
                 model.addAttribute("msg", "未知错误");

@@ -36,7 +36,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean addUser(User user) {
         String sql = "insert into user values(?,?,?,?,?,?)";
-        Object[] objects = {user.getUsername(), user.getNickname(), user.getPassword(), user.getBirthday(), user.getSex(), user.getPassword()};
+        Object[] objects = {user.getUsername(), user.getNickname(), user.getPassword(), user.getBirthday(), user.getSex(), user.getPermission()};
         int update = jdbcTemplate.update(sql, objects);
         return update > 0;
     }

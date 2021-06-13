@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息修改</title>
+    <link rel="stylesheet" th:href="@{css/base.css}">
+    <link rel="stylesheet" th:href="@{css/user-modify.css}">
+</head>
+<style type="text/css">
+    a:link {color: black} /* 未访问的链接 */
+    a:visited {color: black} /* 已访问的链接 */
+    a:hover {color: gray} /* 鼠标移动到链接上 */
+    a:active {color: gray} /* 选定的链接 */
+    a{ text-decoration:none}/*去掉链接下划线/
+    a:hover{ text-decoration:none}
+</style>
+<body>
+<div class="container">
+    <div class="top">
+        <div class="header" >
+            <!--网站logo,点击logo返回主页-->
+            <div class="logo">
+                <a th:href="@{/forward/homePage}">
+                    <img th:src="@{~/images/logo.png}" alt="" style="width:100px;height: 80px;">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <header>
+            <hr/>
+            <h1>用户信息修改</h1>
+            <hr/>
+        </header>
+        <div class="information-page">
+            <form th:action="@{/user/update}">
+                <div class="information">
+                    <p>用户名：<span class="a2" ><input type="text" required="required" th:placeholder="${user.getUsername()}"></span></p>
+                </div>
+                <div class="information">
+                    <p>用户昵称：<span class="a1" ><input type="text" required="required" th:placeholder="${user.getNickname()}"/></span></p>
+                </div>
+                <div class="information">
+                    <p>用户密码：<span class="a1" ><input type="text" required="required" th:placeholder="${user.getPassword()}"/></span></p>
+                </div>
+                <div class="information">
+                    <p>用户生日：<span class="a1" ><input class="date" required="required" type="date" th:placeholder="${user.getBirthday()}"/></span></p>
+                </div>
+                <div class="information">
+                    <p>性别：<span class="a3">男<input type="radio"  value="true" name="sex">
+                            女 <input type="radio" value="false" name="sex"> </span>
+                    </p>
+                </div>
+                <button  id="modify">保存修改</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <hr>
+        <a th:href="@{/developerPage}">开发人员</a>
+        <hr>
+    </div>
+</div>
+</body>
+</html>

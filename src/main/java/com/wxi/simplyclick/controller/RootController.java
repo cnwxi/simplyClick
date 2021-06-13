@@ -6,15 +6,15 @@ import com.wxi.simplyclick.service.AdminUserService;
 import com.wxi.simplyclick.service.UserLRFService;
 import com.wxi.simplyclick.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
-@RestController
+@Controller
 public class RootController {
     @Autowired
     UserService userService;
@@ -27,7 +27,7 @@ public class RootController {
 
     //root/delUser
     @RequestMapping("/root/delUser/{username}")
-    public Integer delUser(@PathVariable String username, Model model) {
+    public String delUser(@PathVariable String username, Model model) {
         Integer flag = adminUserService.delUser(username);
         switch (flag) {
             case -1: {
@@ -48,18 +48,18 @@ public class RootController {
             }
 
         }
-        return flag;
+        return "forward:/forward/userOP";
     }
 
     //root/updUser
     @RequestMapping("/root/updUser")
-    public Integer udpUser(@RequestParam("username") String username,
-                           @RequestParam("nickname") String nickname,
-                           @RequestParam("password") String password,
-                           @RequestParam("birthday") Date birthday,
-                           @RequestParam("sex") Boolean sex,
-                           @RequestParam("permission") Integer permission,
-                           Model model) {
+    public String udpUser(@RequestParam("username") String username,
+                          @RequestParam("nickname") String nickname,
+                          @RequestParam("password") String password,
+                          @RequestParam("birthday") Date birthday,
+                          @RequestParam("sex") Boolean sex,
+                          @RequestParam("permission") Integer permission,
+                          Model model) {
         User user = new User(username, nickname, password, birthday, sex, permission);
         Integer flag = adminUserService.updateUser(user);
         switch (flag) {
@@ -80,18 +80,18 @@ public class RootController {
                 break;
             }
         }
-        return flag;
+        return "forward:/search/userByUsername/" + username;
     }
 
     //root/addUser---？
     @RequestMapping("/root/addUser")
-    public Integer addUser(@RequestParam("username") String username,
-                           @RequestParam("nickname") String nickname,
-                           @RequestParam("password") String password,
-                           @RequestParam("birthday") Date birthday,
-                           @RequestParam("sex") Boolean sex,
-                           @RequestParam("permission") Integer permission,
-                           Model model) {
+    public String addUser(@RequestParam("username") String username,
+                          @RequestParam("nickname") String nickname,
+                          @RequestParam("password") String password,
+                          @RequestParam("birthday") Date birthday,
+                          @RequestParam("sex") Boolean sex,
+                          @RequestParam("permission") Integer permission,
+                          Model model) {
         User user = new User(username, nickname, password, birthday, sex, permission);
         Integer flag = userLRFService.register(user);
         switch (flag) {
@@ -112,12 +112,12 @@ public class RootController {
                 break;
             }
         }
-        return flag;
+        return "forward:/forward/userOP";
     }
 
     //delComment
     @RequestMapping("/root/delComment/{username}&{filmId}")
-    public Integer delComment(@PathVariable String username, @PathVariable Integer filmId, Model model) {
+    public String delComment(@PathVariable String username, @PathVariable Integer filmId, Model model) {
         Integer flag = adminCommentService.delComment(username, filmId);
         switch (flag) {
             case -1: {
@@ -137,12 +137,12 @@ public class RootController {
                 break;
             }
         }
-        return flag;
+        return "forward:/search/userByUsername/" + username;
     }
 
     //banComment
     @RequestMapping("/root/banComment/{username}&{filmId}")
-    public Integer banComment(@PathVariable String username, @PathVariable Integer filmId, Model model) {
+    public String banComment(@PathVariable String username, @PathVariable Integer filmId, Model model) {
         Integer flag = adminCommentService.banComment(username, filmId);
         switch (flag) {
             case -1: {
@@ -162,6 +162,6 @@ public class RootController {
                 break;
             }
         }
-        return flag;
+        return "forward:/search/userByUsername/" + username;
     }
 }

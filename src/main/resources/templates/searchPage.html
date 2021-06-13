@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索界面</title>
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/search-page.css}">
+</head>
+<style type="text/css">
+    a:link {
+        color: black
+    }
+
+    /* 未访问的链接 */
+    a:visited {
+        color: black
+    }
+
+    /* 已访问的链接 */
+    a:hover {
+        color: gray
+    }
+
+    /* 鼠标移动到链接上 */
+    a:active {
+        color: gray
+    }
+
+    /* 选定的链接 */
+    a {
+        text-decoration: none
+    }
+
+    /*去掉链接下划线/
+          a:hover{ text-decoration:none}
+</style>
+<body>
+<div class="container">
+    <!--顶部-->
+    <div class="top">
+        <div class="header">
+            <!--网站logo,点击logo返回主页-->
+            <div class="logo">
+                <a th:href="@{/forward/homePage}">
+                    <img th:src="@{~/images/logo.png}" alt="" style="width:100px;height: 80px;">
+                </a>
+            </div>
+
+            <form th:action="@{/search/filmByFilmName1}">
+                <div class="search">
+                    <select>
+                        <option value="">电影名称</option>
+                        <option value="">演职人员名称</option>
+                    </select>
+                    <input type="text" placeholder="输入电影关键字" name="filmName"/>
+
+                    <button type="submit">搜索</button>
+                </div>
+            </form>
+
+            <div class="user">
+                <a th:href="@{~/user/profile}">用户名</a>
+                <!--                从cookie中取值-->
+            </div>
+        </div>
+    </div>
+    <!--中间区域的主体，左右撑开-->
+    <div class="main">
+        <!--电影搜索结果区-->
+        <div class="left-search-results">
+            <div class="movie" th:each="film: ${films}" style="border-bottom: 2px solid darksalmon">
+                <div class="movie-poster">
+                    <img th:src="${film.getPosterPath()}" style="width:100px;height: 150px;">
+                </div>
+                <div class="movie-information">
+                    <a th:href="@{~/search/filmDetail/{filmId}(filmId=${film.getFilmId()})}"
+                       th:text="${film.getFilmName()}">战狼2</a>
+                    <p th:text="'电影评分：'+${film.getAvgScore()}">电影评分：7.1</p>
+                    <p class="content" th:text="'电影简介：'+${film.getProfile()}">电影简介：</p>
+                </div>
+            </div>
+        </div>
+        <!--右侧电影类型导航栏-->
+        <div class=" right-movie-type ">
+            <ul>
+                <a href="/search/filmByType/{}">电影类型</a>
+                <a href="searchPage.html">电影类型</a>
+                <a href="searchPage.html">电影类型</a>
+                <a href="searchPage.html">电影类型</a>
+            </ul>
+        </div>
+    </div>
+    <div class="footer">
+        <hr>
+        <a th:href="@{/developerPage}">开发人员</a>
+        <hr>
+    </div>
+</div>
+</body>
+</html>

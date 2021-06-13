@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>开发人员</title>
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/developer-page.css}">
+</head>
+<body>
+<div class="container">
+    <div class="top">
+        <div class="header">
+            <!--网站logo,点击logo返回主页-->
+            <div class="logo">
+                <a th:href="@{/forward/homePage}">
+                    <img th:src="@{~/images/logo.png}" alt="" style="width:100px;height: 80px;">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <header>
+            <hr/>
+            <h1>开发人员</h1>
+            <hr/>
+        </header>
+        <div class="information-page">
+            <div class="developer-behind">
+                <h3>前端组</h3>
+                <div class="information">
+                    <p>姓名：史安妮</p>
+                    <p>班级：数媒1802</p>
+                    <p>学号：201826010107</p>
+                </div>
+            </div>
+            <div class="developer-behind">
+                <div class="information">
+                    <p>姓名：李鑫</p>
+                    <p>班级：数媒1801</p>
+                    <p>学号：201826010211</p>
+                </div>
+            </div>
+            <div class="developer-behind">
+                <div class="information">
+                    <p>姓名：李华林</p>
+                    <p>班级：数媒1801</p>
+                    <p>学号：201826010212</p>
+                </div>
+            </div>
+            <div class="developer-back">
+                <h3>后端组</h3>
+                <div class="information">
+                    <p>姓名：王向宇</p>
+                    <p>班级：数媒1801</p>
+                    <p>学号：201826010221</p>
+                </div>
+            </div>
+            <div class="developer-back">
+                <div class="information">
+                    <p>姓名：陈奇</p>
+                    <p>班级：数媒1801</p>
+                    <p>学号：201826010205</p>
+                </div>
+            </div>
+            <div class="developer-back">
+                <div class="information">
+                    <p>姓名：兰金荣</p>
+                    <p>班级：数媒1801</p>
+                    <p>学号：201826010207</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <hr>
+        <a href="https://github.com/cnwxi/simplyClick">Check out This Project On GitHub</a>
+        <hr>
+    </div>
+</div>
+</body>
+</html>

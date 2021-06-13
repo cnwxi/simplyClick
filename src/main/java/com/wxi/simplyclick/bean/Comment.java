@@ -1,5 +1,6 @@
 package com.wxi.simplyclick.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,6 @@ public class Comment {
     private Integer filmId;     // 电影编号
     private String content;     // 用户评论
     private Float score;        // 用户评分
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date modified;      // 修改时间
 }

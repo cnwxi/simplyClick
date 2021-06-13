@@ -13,6 +13,7 @@ public class ExtendComment {
     private String filmName;    // 电影名称
     private String content;     // 用户评论
     private Float score;        // 用户评分
+//    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date modified;      // 修改时间
 
     public ExtendComment(Comment comment, String nickname, String filmName) {

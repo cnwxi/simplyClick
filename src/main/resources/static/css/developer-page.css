@@ -1,0 +1,74 @@
+html,body {
+    margin: 0;
+    padding:0;
+    height: 100%;
+}
+.container {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%; /*IE6不识别min-height*/
+    position: relative;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 20px;/*脚部的高度*/
+    clear:both;
+    background-color: moccasin;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+.top{
+    background-color:moccasin ;
+}
+.header{
+    width:995px;
+    margin:0 auto;
+    padding-top:17px;
+    overflow:hidden;
+}
+.logo{
+    float: left;
+}
+.main{
+    background-color: #f0ece9;
+}
+header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+header h1 {
+    color: #9a9897;
+}
+header hr {
+    margin: 20px 20px 0;
+    background-color: #bc9470;
+    border: 2px solid #bc9470;
+    width: 30%;
+    height: 0;
+}
+.information-page{
+    width: 600px;
+    height: 600px;
+    margin: auto;
+    padding-top: 10px;
+}
+.information{
+    padding-top: 5px;
+    padding-left: 5px;
+}
+.developer-back{
+    padding-left: 200px;
+    padding-top: 15px;
+}
+.developer-behind{
+    padding-left: 200px;
+    padding-top: 15px;
+}
+.developer-behind h3,.developer-back h3{
+    padding-left: 70px;
+    color:burlywood;
+}

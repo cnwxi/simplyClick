@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/user-page.css}">
+</head>
+<style type="text/css">
+    a:link {
+        color: black
+    }
+
+    /* 未访问的链接 */
+    a:visited {
+        color: black
+    }
+
+    /* 已访问的链接 */
+    a:hover {
+        color: gray
+    }
+
+    /* 鼠标移动到链接上 */
+    a:active {
+        color: gray
+    }
+
+    /* 选定的链接 */
+    a {
+        text-decoration: none
+    }
+
+    /*去掉链接下划线/
+        a:hover{ text-decoration:none}
+</style>
+<body>
+<div class="container">
+    <div class="top">
+        <div class="header">
+            <!--网站logo,点击logo返回主页-->
+            <div class="logo">
+                <a th:href="@{/forward/homePage}">
+                    <img th:src="@{~/images/logo.png}" alt="" style="width:100px;height: 80px;">
+                </a>
+            </div>
+            <h2>个人主页</h2>
+        </div>
+    </div>
+    <div class="main">
+        <div class="user">
+            <div class="information">
+                <h3 th:text="${user.getUsername()}">用户名</h3>
+                <!--cookie-->
+                <p th:text="'昵称：'+${user.getNickname()}">昵称：</p>
+                <hr>
+                <p th:text="${user.getSex()} ? ${'性别：男'} : ${'性别：女'}">性别：</p>
+                <hr>
+                <p th:text="'生日：'+${user.getBirthday()}">生日：</p>
+                <hr>
+                <a th:href="@{~/forward/userModify}">
+                    <button class="left">修改</button>
+                </a>
+            </div>
+        </div>
+        <div class="comments" th:each="comment:${comments}">
+            <div class="details">
+                <p th:text="'电影名称：'+${comment.getFilmName()}">电影名称:</p>
+                <p th:text="'电影评分：'+${comment.getScore()}">电影评分</p>
+                <p th:text="'评论内容：'+${comment.getContent()}">评论内容:</p>
+                <p th:text="'评论时间：'+${comment.getModified()}">评论时间</p>
+                <a th:href="@{~/user/comment/del/{filmId}(filmId=${comment.getFilmId()})}">
+                    <button class="right">删除</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <hr>
+        <a th:href="@{/developerPage}">开发人员</a>
+        <hr>
+    </div>
+</div>
+</body>
+</body>
+</html>

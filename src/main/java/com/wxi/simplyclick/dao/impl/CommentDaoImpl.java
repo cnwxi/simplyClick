@@ -38,7 +38,7 @@ public class CommentDaoImpl implements CommentDao {
     // 添加一条评价
     public boolean addComment(Comment comment) {
         String sql = "insert into comment(username,filmId,content,score,modified) values(?,?,?,?,?)";
-        Object[] objects = {comment.getContent(), comment.getUsername(), comment.getFilmId(), comment.getModified()};
+        Object[] objects = {comment.getUsername(), comment.getFilmId(), comment.getContent(), comment.getScore(), comment.getModified()};
         int result = jdbcTemplate.update(sql, objects);
         return result > 0;
     }
