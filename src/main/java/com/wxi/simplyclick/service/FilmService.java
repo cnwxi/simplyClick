@@ -35,6 +35,8 @@ public interface FilmService {
     // 查part……表，查cast表
     List<ExtendParticipation> queryParticipationByFilmId(Integer filmId, String role);
 
+    List<ExtendParticipation> queryParticipation(Integer filmId);
+
     List<Belong> queryBelongByFilmId(Integer filmId);
 
 }

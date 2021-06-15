@@ -16,4 +16,9 @@ public class CastService implements com.wxi.simplyclick.service.CastService {
     public List<Cast> queryCast() {
         return castDao.query();
     }
+
+    @Override
+    public List<Cast> queryCastById(Integer castId) {
+        return castDao.queryById(castId);
+    }
 }

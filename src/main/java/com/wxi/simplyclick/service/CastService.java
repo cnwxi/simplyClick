@@ -9,4 +9,6 @@ import java.util.List;
 public interface CastService {
 
     List<Cast> queryCast();
+
+    List<Cast> queryCastById(Integer castId);
 }

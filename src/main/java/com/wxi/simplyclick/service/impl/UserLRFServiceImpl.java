@@ -39,7 +39,9 @@ public class UserLRFServiceImpl implements UserLRFService {
     public Integer checkAccount(String username, Date date) {
         List<User> list = userDao.queryByUsername(username);
         if (list.isEmpty()) return -1;//没有对应账户
-        if (list.get(0).getBirthday().getTime() == date.getTime()) return 1;//验证成功
+        Date date1 = list.get(0).getBirthday();
+        if (date1.getYear() == date.getYear() && date1.getMonth() == date.getMonth() && date1.getDay() == date.getDay())
+            return 1;//验证成功
         return 0;//验证失败
     }
 

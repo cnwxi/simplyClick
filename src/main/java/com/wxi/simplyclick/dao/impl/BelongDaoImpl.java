@@ -55,8 +55,8 @@ public class BelongDaoImpl implements BelongDao {
 
     @Override
     public boolean addBelong(Belong belong) {
-        String sql = "insert into belong values(?,?)";
-        int flag = jdbcTemplate.update(sql, belong.getFilmId(), belong.getFilmType());
+        String sql = "insert into belong(filmType, filmId) values(?,?)";
+        int flag = jdbcTemplate.update(sql, belong.getFilmType(), belong.getFilmId());
         return flag > 0;
     }
 

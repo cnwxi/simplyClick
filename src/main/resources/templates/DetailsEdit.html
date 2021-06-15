@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/header.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
+    <title>电影详情修改</title>
+</head>
+<style type="text/css">
+    .top {
+        background-color: moccasin;
+    }
+
+    .header {
+        width: 995px;
+        margin: 0 auto;
+        padding-top: 17px;
+        overflow: hidden;
+    }
+
+    .logo {
+        float: left;
+    }
+
+    /*搜索栏区域*/
+    .search {
+        float: left;
+        width: 520px;
+        height: 42px;
+        padding-top: 17px;
+        margin-left: 200px;
+    }
+
+    .search select {
+        float: left;
+        width: 100px;
+        height: 42px;
+        border: 1px solid lightsalmon;
+        color: #bfbfbf;
+        font-size: 14px;
+        padding-left: 10px;
+    }
+
+    .search input {
+        float: left;
+        width: 350px;
+        height: 40px;
+        border: 1px solid lightsalmon;
+        /*border-right: 0;*/
+        color: #bfbfbf;
+        font-size: 14px;
+        padding-left: 15px;
+    }
+
+    .search button {
+        float: left;
+        width: 50px;
+        height: 42px;
+        /* 去掉按钮默认边框 */
+        border: 0;
+        background-color: lightsalmon;
+        color: #666;
+    }
+
+    /*登录用户名称*/
+    .user {
+        float: left;
+        margin-left: 120px;
+    }
+
+    .user p {
+        font-size: 15px;
+        color: #95a5a6;
+    }
+
+    .LB { /* 图片居中 */
+        /*text-align: center;*/
+        float: left;
+        margin: 92px;
+
+    }
+
+    .filmType {
+        position: fixed;
+        left: 80%;
+        margin-top: 92px;
+    }
+
+    /* 第四层级 */
+    #img { /* 图片宽度、高度 */
+        width: 828px;
+        height: 690px;
+
+    }
+
+    #ol {
+        /*position:absolute;  /* 绝对定位 */
+        bottom: 85px; /* 高度 */
+        width: 100%; /* 宽度 */
+        text-align: center; /* 居中 */
+        right: 15px;
+    }
+
+    #filmsType {
+        /*去掉列表的样式*/
+        /*list-style-type: none;*/
+        width: 200px;
+        background-color: moccasin;
+        border-radius: 12px;
+    }
+
+    a:link {
+        color: black
+    }
+
+    /* 未访问的链接 */
+    a:visited {
+        color: black
+    }
+
+    /* 已访问的链接 */
+    a:hover {
+        color: gray
+    }
+
+    /* 鼠标移动到链接上 */
+    a:active {
+        color: gray
+    }
+
+    /* 选定的链接 */
+    a {
+        text-decoration: none
+    }
+
+    /*!*去掉链接下划线*!*/
+    a:hover {
+        text-decoration: none
+    }
+
+    li a {
+        /*将<a>内联元素转换为块级元素，便于padding设定*/
+        display: block;
+        /*去掉链接默认样式*/
+        text-decoration: none;
+        color: #000000;
+        padding: 8px 16px;
+    }
+
+
+</style>
+
+
+<div class="top">
+    <div class="header">
+        <!--网站logo,点击logo返回主页-->
+        <div class="logo">
+            <a th:href="@{/forward/homePage}">
+                <img th:src="@{~/images/logo.png}" alt="" style="width:100px;height: 80px;">
+            </a>
+        </div>
+
+        <form th:action="@{/search/film}">
+            <div class="search">
+                <select name="what">
+                    <option value="filmName">电影名称</option>
+                    <option value="castName">演职人员名称</option>
+                </select>
+                <input type="text" placeholder="输入电影关键字" name="name"/>
+
+                <button type="submit">搜索</button>
+            </div>
+        </form>
+        <div class="user" style="text-align: center">
+            <p style="align-content: center">
+                <a th:href="@{/user/profile}">
+                    <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                          th:if="${cookie.getName().equals('nickname')}"
+                          th:text="${cookie.getValue()}"
+                    >虫子</span>
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<!--主要信息显示区域-->
+<div class="main">
+    <!--基本信息介绍-->
+    <div class="jieshao" style="left: 20%">
+        <div class="haibao" style="border-radius: 12px">
+            <img th:src="${film.getPosterPath()}" style="width:120px; border-radius: 12px"><br/>
+        </div>
+        <!--/*@thymesVar id="cast" type="com.wxi.simplyclick.bean.extend.ExtendParticipation"*/-->
+        <form th:action="@{/admin/updFilm/{filmId}(filmId=${film.getFilmId()})}"
+              style="left: 200px;position: absolute;width: 400px;">
+            <table>
+                <tr>
+                    <th>电影名</th>
+                    <th><input type="text" name="filmName" required="required"
+                               th:placeholder="${film.getFilmName() != null ? film.getFilmName():'请输入电影名'}"/></th>
+                </tr>
+                <tr>
+                    <th>制片地区</th>
+                    <th><input type="text" name="area" required="required"
+                               th:placeholder="${film.getArea() != null ? film.getArea():'请输入制片地区'}"/></th>
+                </tr>
+                <tr>
+                    <th>语言</th>
+                    <th><input type="text" name="language" required="required"
+                               th:placeholder="${film.getLanguage() != null ? film.getLanguage():'请输入语言'}"/></th>
+                </tr>
+                <tr>
+                    <th>片长</th>
+                    <th><input type="text" name="footage" required="required"
+                               th:placeholder="${film.getFootage() != null ? film.getFootage():'请输入语言'}"/></th>
+                </tr>
+                <tr>
+                    <th>海报路径</th>
+                    <!--                <tb><input type="text" name="posterPath" required="required"-->
+                    <!--                           th:placeholder="${film.getPosterPath() != null ? film.getPosterPath():'请输入海报路径'}"/></tb>-->
+                    <th>
+                        <select name="posterPath">
+                            <option th:each="path:${paths}" th:text="${path.getPath()}"
+                                    th:value="${path.getPath()}"></option>
+                        </select>
+                    </th>
+                </tr>
+                <tr>
+                    <th>片长</th>
+                    <th><input type="text" name="profile" required="required"
+                               th:placeholder="${film.getProfile() != null ? film.getProfile():'请输入语言'}"/></th>
+                </tr>
+            </table>
+
+            <button type="submit">提交</button>
+            <br/>
+        </form>
+        <div style="position: relative;top: 200px;left: 200px;">
+            <div>
+                <a th:href="@{/forward/adminFilmPage}">
+                    <button>返回</button>
+                </a>
+            </div>
+            <form th:action="@{/admin/addBelong/{filmId}(filmId=${film.getFilmId()})}">
+                <select required="required" name="filmType">
+                    <option value="剧情">剧情</option>
+                    <option value="动作">动作</option>
+                    <option value="喜剧">喜剧</option>
+                    <option value="悬疑">悬疑</option>
+                    <option value="惊悚">惊悚</option>
+                    <option value="爱情">爱情</option>
+                    <option value="科幻">科幻</option>
+                </select>
+                <button>添加</button>
+            </form>
+            <p style="color: red" th:text="${msg}"></p>
+            <br>
+            <br>
+            <p>本片所属类型</p>
+            <p th:each="belong:${belongs}">
+                <span th:text="'● '+${belong.getFilmType()}"></span>
+                <a th:href="@{'/admin/delBelong/'+${belong.getFilmId()}+'/'+${belong.getFilmType()}}"> ×</a>
+            </p>
+        </div>
+
+    </div>
+    <!--简介/故事概要-->
+    <div class="actorinformation">
+        <!--/*@thymesVar id="cast" type="com.wxi.simplyclick.bean.extend.ExtendParticipation"*/-->
+        <tr>
+            <!--            <td><a th:text="'演职人员：'"></a></td>-->
+            <!--            </br>-->
+            <td th:text="导演"></td>
+            </br>
+            <td th:each="cast:${directors}" th:text="${directors}==null?'无演员信息':''">
+                <!--                <a th:text="${cast.getRole()}"></a>-->
+                <a th:text="${cast.getCastName()}"
+                   th:href="@{search/filmByCastName/{castName}(castName=${cast.getCastName()})}"></a>
+                <a th:text="${cast.getSex()?'男':'女'}"></a>
+                <a th:text="${cast.getCountry()}"></a>
+                <a th:text="${cast.getCharacter()}"></a>
+                <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">
+                    <button>删除</button>
+                </a>
+                </br>
+            </td>
+            <td th:text="编剧"></td>
+            </br>
+            <td th:each="cast:${editor}">
+                <!--                <a th:text="${cast.getRole()}"></a>-->
+                <a th:text="${cast.getCastName()}"
+                   th:href="@{search/filmByCastName/{castName}(castName=${cast.getCastName()})}"></a>
+                <a th:text="${cast.getSex()?'男':'女'}"></a>
+                <a th:text="${cast.getCountry()}"></a>
+                <a th:text="${cast.getCharacter()}"></a>
+                <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">
+                    <button>删除</button>
+                </a>
+                </br>
+            </td>
+            <td th:text="主演"></td>
+            </br>
+            <td th:each="cast:${mainActors}">
+                <!--                <a th:text="${cast.getRole()}"></a>-->
+                <a th:text="${cast.getCastName()}"
+                   th:href="@{search/filmByCastName/{castName}(castName=${cast.getCastName()})}"></a>
+                <a th:text="${cast.getSex()?'男':'女'}"></a>
+                <a th:text="${cast.getCountry()}"></a>
+                <a th:text="${cast.getCharacter()}"></a>
+                <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">
+                    <button>删除</button>
+                </a>
+                </a>
+                </br>
+            </td>
+            <td th:text="演员"></td>
+            </br>
+            <td th:each="cast:${actors}">
+                <!--                <a th:text="${cast.getRole()}"></a>-->
+                <a th:text="${cast.getCastName()}"
+                   th:href="@{search/filmByCastName/{castName}(castName=${cast.getCastName()})}"></a>
+                <a th:text="${cast.getSex()?'男':'女'}"></a>
+                <a th:text="${cast.getCountry()}"></a>
+                <a th:text="${cast.getCharacter()}"></a>
+                <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">
+                    <button>删除</button>
+                </a>
+                </br>
+            </td>
+        </tr>
+    </div>
+</div>
+<!--<div class="comments">-->
+<!--</div>-->
+</body>
+</html>

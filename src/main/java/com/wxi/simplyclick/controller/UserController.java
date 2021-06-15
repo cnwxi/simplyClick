@@ -13,11 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,7 +42,7 @@ public class UserController {
     登录接口，用户返回网站主页，admin返回电影管理页，root返回用户管理页
      */
     @RequestMapping("/user/login")
-    public String login(HttpServletResponse response, @RequestParam("username") String username, @RequestParam("password") String password, Model model) {
+    public String login(HttpSession session, HttpServletResponse response, @RequestParam("username") String username, @RequestParam("password") String password, Model model) {
         Integer flag;
         if (!StringUtils.hasLength(username) || !StringUtils.hasLength(password)) {
             model.addAttribute("msg", "账户或密码有误");
@@ -63,6 +66,7 @@ public class UserController {
                 cookie.setPath("/");
                 cookie1 = new Cookie("nickname", nickname);
                 cookie1.setPath("/");
+                session.setAttribute("username", username);
                 response.addCookie(cookie);
                 response.addCookie(cookie1);
                 model.addAttribute("username", username);
@@ -75,9 +79,10 @@ public class UserController {
                 cookie.setPath("/");
                 cookie1 = new Cookie("nickname", nickname);
                 cookie1.setPath("/");
+                session.setAttribute("username", username);
                 response.addCookie(cookie);
                 response.addCookie(cookie1);
-                return "redirect:/forward/filmOP";
+                return "redirect:/forward/adminFilmPage";
             case 0:
                 model.addAttribute("msg", "root登录成功");
                 nickname = userService.userInfo(username).get(0).getNickname();
@@ -85,13 +90,28 @@ public class UserController {
                 cookie.setPath("/");
                 cookie1 = new Cookie("nickname", nickname);
                 cookie1.setPath("/");
+                session.setAttribute("username", username);
                 response.addCookie(cookie);
                 response.addCookie(cookie1);
-                return "redirect:/forward/userOP";
+                return "redirect:/forward/rootUserPage";
             default:
                 model.addAttribute("msg", "未知错误");
                 return "index";
         }
+    }
+
+    @RequestMapping("/user/logout")
+    public String logout(HttpSession session, HttpServletResponse response) {
+        Cookie cookie = new Cookie("username", "");
+        Cookie cookie1 = new Cookie("nickname", "");
+        cookie.setMaxAge(0);
+        cookie1.setMaxAge(0);
+        cookie.setPath("/");
+        cookie1.setPath("/");
+        session.removeAttribute("username");
+        response.addCookie(cookie);
+        response.addCookie(cookie1);
+        return "index";
     }
 
     /*
@@ -101,15 +121,19 @@ public class UserController {
     public String register(@RequestParam("username") String username,
                            @RequestParam("nickname") String nickname,
                            @RequestParam("password") String password,
-                           @RequestParam("birthday") Date birthday,
+                           @RequestParam("birthday") String birthday1,
                            @RequestParam("sex") Boolean sex,
                            Model model) {
         if (!StringUtils.hasLength(username)
                 || !StringUtils.hasLength(nickname)
                 || !StringUtils.hasLength(password)
-                || birthday == null) {
+                || birthday1 == null) {
             model.addAttribute("msg", "输入信息有误");
         } else {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");//日期格式
+            ParsePosition pos = new ParsePosition(0);
+            format.setTimeZone(TimeZone.getTimeZone("CST"));
+            Date birthday = format.parse(birthday1, pos);
             User user = new User(username, nickname, password, birthday, sex, 2);
             Integer flag = userLRFService.register(user);
             switch (flag) {
@@ -135,44 +159,48 @@ public class UserController {
      */
     @RequestMapping("/user/forget")
     public String forget(@RequestParam("username") String username,
-                         @RequestParam("birthday") Date birthday,
+                         @RequestParam("birthday") String birthday1,
                          @RequestParam("password") String password, Model model) {
         if (!StringUtils.hasLength(username)) {
             model.addAttribute("msg", "用户名出错");
 //            return model.getAttribute("msg").toString();
         } else {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");//日期格式
+            ParsePosition pos = new ParsePosition(0);
+            format.setTimeZone(TimeZone.getTimeZone("CST"));
+            Date birthday = format.parse(birthday1, pos);
             Integer flag = userLRFService.checkAccount(username, birthday);
             switch (flag) {
                 case -1:
                     model.addAttribute("msg", "用户不存在");
-                    break;
+                    return "forgetPassword";
                 case 1:
 //                    model.addAttribute("msg", "验证成功");
                     flag = userLRFService.resetPassword(username, password);
                     switch (flag) {
                         case -2:
                             model.addAttribute("msg", "新密码与旧密码重复");
-                            break;
+                            return "forgetPassword";
                         case -1:
                             model.addAttribute("msg", "用户不存在");
-                            break;
+                            return "forgetPassword";
                         case 1:
                             model.addAttribute("msg", "密码修改成功");
                             break;
                         case 0:
                             model.addAttribute("msg", "密码修改失败");
-                            break;
+                            return "forgetPassword";
                         default:
                             model.addAttribute("msg", "未知错误");
-                            break;
+                            return "forgetPassword";
                     }
                     break;
                 case 0:
                     model.addAttribute("msg", "验证失败");
-                    break;
+                    return "forgetPassword";
                 default:
                     model.addAttribute("msg", "未知错误");
-                    break;
+                    return "forgetPassword";
             }
 
         }
@@ -209,7 +237,7 @@ public class UserController {
     public String update(@CookieValue("username") String username,
                          @RequestParam("nickname") String nickname,
                          @RequestParam("password") String password,
-                         @RequestParam("birthday") Date birthday,
+                         @RequestParam("birthday") String birthday1,
                          @RequestParam("sex") Boolean sex,
                          Model model) {
         if (!StringUtils.hasLength(username)) {
@@ -224,7 +252,10 @@ public class UserController {
 //                return model.getAttribute("msg").toString();
             return "404";
         }
-
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");//日期格式
+        ParsePosition pos = new ParsePosition(0);
+        format.setTimeZone(TimeZone.getTimeZone("CST"));
+        Date birthday = format.parse(birthday1, pos);
         User theUser = user.get(0);
         theUser.setNickname(nickname);
         theUser.setPassword(password);
@@ -249,11 +280,11 @@ public class UserController {
     }
 
 
-    @RequestMapping("/user/comment/add")
+    @RequestMapping("/user/comment/add/{filmId}")
     public String comment_add(@CookieValue("username") String username,
-                              @RequestParam("filmId") Integer filmId,
+                              @PathVariable("filmId") Integer filmId,
                               @RequestParam("content") String content,
-                              @RequestParam("score") Float score,
+                              @RequestParam("score") String score1,
                               Model model) {
         /*
         用于测试
@@ -262,13 +293,17 @@ public class UserController {
         String content = "hhahhaha";
         Float score = 1.0f;
          */
+        System.out.println(score1.getClass());
+        System.out.println(score1);
+        Float score = Float.valueOf(score1);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         ParsePosition pos = new ParsePosition(0);
         dateFormat.setTimeZone(TimeZone.getTimeZone("CST"));/*我的数据库默认是CST时区*/
         Date x = new Date();
         String text = dateFormat.format(x);
         Date modified = dateFormat.parse(text, pos);
-        if ((!StringUtils.hasLength(username)) || (filmService.queryFilmByFilmId(filmId).isEmpty()) || score <= 0.0f || score > 5.0f) {
+//        Float v = score.floatValue();
+        if ((!StringUtils.hasLength(username)) || (filmService.queryFilmByFilmId(filmId).isEmpty()) || score <= 0.0f || score > 5.0f || score == null) {
             model.addAttribute("msg", "输入信息有误");
 //            return "redirect:/search/filmDetail/" + filmId;
         } else {
@@ -296,13 +331,13 @@ public class UserController {
     }
 
 
-    @RequestMapping("/user/comment/del")
+    @RequestMapping("/user/comment/del/{filmId}")
     public String comment_del(@CookieValue("username") String username,
-                              @RequestParam("filmId") int filmId,
+                              @PathVariable("filmId") int filmId,
                               Model model) {
         if (!StringUtils.hasLength(username)) {
             model.addAttribute("msg", "用户名出错");
-            return "redirect:/search/filmDetail/" + filmId;
+            return "redirect:/user/logout";
         }
         Integer flag = commentService.delComment(filmId, username);
         switch (flag) {

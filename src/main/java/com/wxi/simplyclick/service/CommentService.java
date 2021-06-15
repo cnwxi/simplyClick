@@ -17,6 +17,8 @@ public interface CommentService {
     // comment->评论；遍历List<comment>，查询对应的film信息（海报、名称）
     List<ExtendComment> queryCommentByUsername(String username);
 
+    Comment queryCommentByUsernameFilmId(Integer filmId, String username);
+
     Integer addComment(Comment comment);
 
     Integer delComment(Integer filmId, String username);

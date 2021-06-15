@@ -16,7 +16,7 @@ class SimplyClickApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println(commentService.queryCommentByFilmId(1));
-        System.out.println(commentService.queryCommentByUsername("admin"));
+        String a="1";
+        System.out.println(Float.valueOf(a));
     }
 }

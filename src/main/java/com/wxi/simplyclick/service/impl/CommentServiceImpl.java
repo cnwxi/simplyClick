@@ -39,6 +39,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Comment queryCommentByUsernameFilmId(Integer filmId, String username) {
+        List<Comment> comments = commentDao.queryByUsernameFilmId(username, filmId);
+        if (comments.isEmpty()) {
+            return new Comment();
+        }
+        return comments.get(0);
+    }
+
+    @Override
     public List<ExtendComment> queryCommentByUsername(String username) {
         String nickname = userDao.queryByUsername(username).get(0).getNickname();
         List<Comment> comments = commentDao.queryByUsername(username);

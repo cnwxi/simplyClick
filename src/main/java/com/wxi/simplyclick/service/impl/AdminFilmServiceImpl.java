@@ -136,6 +136,7 @@ public class AdminFilmServiceImpl implements AdminFilmService {
     @Override
     public Integer delCast(Integer castId) {
         if (castDao.queryById(castId).isEmpty()) return -1;
+        participationDao.delParticipationByCastId(castId);
         if (castDao.delCast(castId)) return 1;
         return 0;
     }

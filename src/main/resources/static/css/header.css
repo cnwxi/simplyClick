@@ -1,0 +1,49 @@
+/*顶部导航栏*/
+.top{
+    background-color:moccasin ;
+}
+.header{
+    width:995px;
+    margin:0 auto;
+    padding-top:17px;
+    overflow:hidden;
+}
+.logo{
+    float: left;
+}
+/*搜索栏区域*/
+.search{
+    float: left;
+    width: 520px;
+    height: 42px;
+    padding-top: 17px;
+    margin-left: 200px;
+}
+.search select{
+    float: left;
+    width: 100px;
+    height: 42px;
+    border: 1px solid lightsalmon;
+    color: #bfbfbf;
+    font-size: 14px;
+    padding-left: 10px;
+}
+.search input{
+    float: left;
+    width: 350px;
+    height: 40px;
+    border: 1px solid lightsalmon;
+    /*border-right: 0;*/
+    color: #bfbfbf;
+    font-size: 14px;
+    padding-left: 15px;
+}
+.search button {
+    float: left;
+    width: 50px;
+    height: 42px;
+    /* 去掉按钮默认边框 */
+    border: 0;
+    background-color: lightsalmon;
+    color:#666;
+}

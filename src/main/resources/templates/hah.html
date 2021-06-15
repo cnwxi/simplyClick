@@ -5,14 +5,15 @@
     <title>测试</title>
 </head>
 <body>
-<div style="border-bottom:1px solid black;" >
-  <p>hhah</p>
+
+<div style="border-bottom:1px solid black;">
+    <p>hhah</p>
+    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+          th:if="${cookie.getName().equals('nickname')}"
+          th:text="${cookie.getValue()}"
+          th:href="@{~/user/profile}"
+    ></span>
 </div>
-<div th:border="8">
-  <p>hhah</p>
-</div>
-<div >
-  <p>hhah</p>
-</div>
+<!--<p th:onclick="#httpSer"></p>-->
 </body>
 </html>

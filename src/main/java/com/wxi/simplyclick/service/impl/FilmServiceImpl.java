@@ -72,20 +72,33 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    // 列出参演信息
-    //participation: filmId->castId cast: castId->*
-    public List<ExtendParticipation> queryParticipationByFilmId(Integer filmId, String role) {
-        //participation: filmId->*
-        List<Participation> participations = participationDao.queryByRole(filmId, role);
+    public List<ExtendParticipation> queryParticipation(Integer filmId) {
+        List<Participation> participations = participationDao.queryByFilmId(filmId);
+        Film film = filmDao.queryFilmById(filmId).get(0);
         List<ExtendParticipation> extendParticipations = new ArrayList<>();
         for (Participation participation : participations) {
             Cast cast = castDao.queryById(participation.getCastId()).get(0);
-            ExtendParticipation extendParticipation = new ExtendParticipation(cast.getCastId(), cast.getCastName(), cast.getSex(), cast.getCountry(), participation.getRole(), participation.getCharacter());
+            ExtendParticipation extendParticipation = new ExtendParticipation(filmId, film.getFilmName(),cast.getCastId(), cast.getCastName(), cast.getSex(), cast.getCountry(), participation.getRole(), participation.getCharacter());
             extendParticipations.add(extendParticipation);
         }
         return extendParticipations;
     }
 
+    @Override
+    // 列出参演信息
+    //participation: filmId->castId cast: castId->*
+    public List<ExtendParticipation> queryParticipationByFilmId(Integer filmId, String role) {
+        //participation: filmId->*
+        List<Participation> participations = participationDao.queryByRole(filmId, role);
+        Film film = filmDao.queryFilmById(filmId).get(0);
+        List<ExtendParticipation> extendParticipations = new ArrayList<>();
+        for (Participation participation : participations) {
+            Cast cast = castDao.queryById(participation.getCastId()).get(0);
+            ExtendParticipation extendParticipation = new ExtendParticipation(filmId, film.getFilmName(), cast.getCastId(), cast.getCastName(), cast.getSex(), cast.getCountry(), participation.getRole(), participation.getCharacter());
+            extendParticipations.add(extendParticipation);
+        }
+        return extendParticipations;
+    }
 
     @Override
     public List<Belong> queryBelongByFilmId(Integer filmId) {
@@ -105,6 +118,4 @@ public class FilmServiceImpl implements FilmService {
         }
         return list;
     }
-
-
 }

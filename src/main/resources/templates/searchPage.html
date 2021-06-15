@@ -31,6 +31,23 @@
         text-decoration: none
     }
 
+    #filmsType {
+        /*去掉列表的样式*/
+        /*list-style-type: none;*/
+        width: 200px;
+        background-color: moccasin;
+        border-radius: 12px;
+    }
+
+    li a {
+        /*将<a>内联元素转换为块级元素，便于padding设定*/
+        display: block;
+        /*去掉链接默认样式*/
+        text-decoration: none;
+        color: #000000;
+        padding: 8px 16px;
+    }
+
     /*去掉链接下划线/
           a:hover{ text-decoration:none}
 </style>
@@ -46,47 +63,78 @@
                 </a>
             </div>
 
-            <form th:action="@{/search/filmByFilmName1}">
+            <form th:action="@{/search/film}">
                 <div class="search">
-                    <select>
-                        <option value="">电影名称</option>
-                        <option value="">演职人员名称</option>
+                    <select name="what">
+                        <option value="filmName">电影名称</option>
+                        <option value="castName">演职人员名称</option>
                     </select>
-                    <input type="text" placeholder="输入电影关键字" name="filmName"/>
+                    <input type="text" placeholder="输入电影关键字" name="name"/>
 
                     <button type="submit">搜索</button>
                 </div>
             </form>
 
-            <div class="user">
-                <a th:href="@{~/user/profile}">用户名</a>
-                <!--                从cookie中取值-->
+            <div class="user" style="text-align: center">
+                <p style="align-content: center">
+                    <a th:href="@{/user/profile}">
+                        <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                        <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                              th:if="${cookie.getName().equals('nickname')}"
+                              th:text="${cookie.getValue()}"
+                        >虫子</span>
+                    </a>
+                </p>
             </div>
         </div>
     </div>
     <!--中间区域的主体，左右撑开-->
     <div class="main">
+        <h2 style="text-align:center" th:text="${msg}"></h2>
         <!--电影搜索结果区-->
         <div class="left-search-results">
-            <div class="movie" th:each="film: ${films}" style="border-bottom: 2px solid darksalmon">
+            <div class="movie" th:each="film: ${films}">
                 <div class="movie-poster">
-                    <img th:src="${film.getPosterPath()}" style="width:100px;height: 150px;">
+                    <img th:src="${film.getPosterPath()}" style="width:100px;height: 150px; border-radius: 12px;">
                 </div>
                 <div class="movie-information">
                     <a th:href="@{~/search/filmDetail/{filmId}(filmId=${film.getFilmId()})}"
                        th:text="${film.getFilmName()}">战狼2</a>
-                    <p th:text="'电影评分：'+${film.getAvgScore()}">电影评分：7.1</p>
+                    <p th:text="'电影评分：'+${#numbers.formatDecimal(film.getAvgScore(),1,1)}">电影评分：7.1</p>
                     <p class="content" th:text="'电影简介：'+${film.getProfile()}">电影简介：</p>
                 </div>
             </div>
+            <div style="top: 100px;position: relative;float: left;height: 50px;width: 100%;"></div>
         </div>
         <!--右侧电影类型导航栏-->
-        <div class=" right-movie-type ">
-            <ul>
-                <a href="/search/filmByType/{}">电影类型</a>
-                <a href="searchPage.html">电影类型</a>
-                <a href="searchPage.html">电影类型</a>
-                <a href="searchPage.html">电影类型</a>
+        <div class="filmType" style="position: fixed;left: 80%;margin-top: 92px;">
+            <ul id="filmsType">
+                <li style="
+    border-bottom: 1px solid silver;
+"><a th:href="@{/search/filmByType/剧情}" class="active">剧情</a></li>
+                <li style="
+    border-bottom: 1px solid silver;
+"><a th:href="@{/search/filmByType/动作}">动作</a></li>
+                <li style="
+    border-bottom: 1px solid silver;
+"><a th:href="@{/search/filmByType/喜剧}">喜剧</a></li>
+                <li style="
+    border-bottom: 1px solid silver;
+"><a th:href="@{/search/filmByType/爱情}">爱情</a></li>
+                <li style="
+    border-bottom: 1px solid silver;
+"><a th:href="@{/search/filmByType/科幻}">科幻</a></li>
+                <li style="
+    border-bottom: 1px solid silver;
+"><a th:href="@{/search/filmByType/悬疑}">悬疑</a></li>
+                <li ><a th:href="@{/search/filmByType/惊悚}">惊悚</a></li>
+                <!-- <li><a th:href="@{/search/tpye/${msg}}" >科幻</a></li>-->
             </ul>
         </div>
     </div>

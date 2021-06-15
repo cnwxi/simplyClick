@@ -66,8 +66,8 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     // 根据用户名和电影id更新一条评价
     public boolean updateComment(Comment comment) {
-        String sql = "update comment set content=?,modified=? where username=? and filmId=? ";
-        Object[] objects = {comment.getContent(), comment.getModified(), comment.getUsername(), comment.getFilmId()};
+        String sql = "update comment set content=?,modified=?,score=? where username=? and filmId=? ";
+        Object[] objects = {comment.getContent(), comment.getModified(), comment.getScore(), comment.getUsername(), comment.getFilmId()};
         int result = jdbcTemplate.update(sql, objects);
         return result > 0;
     }

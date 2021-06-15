@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>电影信息管理</title>
+    <!--    <link rel="stylesheet" th:href="@{/css/styleOP.css}">-->
+    <style type="text/css">
+        .top {
+            background-color: moccasin;
+        }
+
+        .header {
+            width: 995px;
+            margin: 0 auto;
+            padding-top: 17px;
+            overflow: hidden;
+        }
+
+        .logo {
+            float: left;
+        }
+
+        body {
+            background-color: #f0ece9;
+        }
+
+        header {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+        }
+
+        header h1 {
+            color: #9a9897;
+        }
+
+        header hr {
+            margin: 20px 20px 0;
+            background-color: #bc9470;
+            border: 2px solid #bc9470;
+            width: 30%;
+            height: 0;
+        }
+
+        /*搜索栏区域*/
+        .search {
+            float: left;
+            width: 520px;
+            height: 42px;
+            padding-top: 17px;
+            margin-left: 200px;
+        }
+
+        .search select {
+            float: left;
+            width: 100px;
+            height: 42px;
+            border: 1px solid lightsalmon;
+            color: #bfbfbf;
+            font-size: 14px;
+            padding-left: 10px;
+        }
+
+        .search input {
+            float: left;
+            width: 350px;
+            height: 40px;
+            border: 1px solid lightsalmon;
+            /*border-right: 0;*/
+            color: #bfbfbf;
+            font-size: 14px;
+            padding-left: 15px;
+        }
+
+        .search button {
+            float: left;
+            width: 50px;
+            height: 42px;
+            /* 去掉按钮默认边框 */
+            border: 0;
+            background-color: lightsalmon;
+            color: #666;
+        }
+
+        /*登录用户名称*/
+        .user {
+            float: left;
+            margin-left: 120px;
+        }
+
+        .user p {
+            font-size: 15px;
+            color: #95a5a6;
+        }
+
+        main #buildbutton {
+            margin-left: 70px;
+        }
+
+        main button {
+            margin: 20px;
+            /*text-align: center;*/
+            /*float:right;*/
+            display: block;
+            margin: 0 auto;
+            width: 85px;
+            height: 40px;
+            color: rosybrown;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 90%;
+            text-align: center;
+            border-spacing: 0;
+        }
+
+        table tbody tr:first-of-type {
+            background-color: #dadee1 !important;
+            height: 60px;
+        }
+
+        table tbody tr {
+            height: 45px;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: #eef1f8;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        table tbody tr:not([id=thead]):hover {
+            cursor: pointer;
+            background-color: #e9e9e9;
+        }
+    </style>
+</head>
+
+<body onkeypress="enter()">
+<div class="top">
+    <div class="header">
+
+        <div div class="logo">
+            <a th:href="@{/homePage.html}">
+                <img th:src="@{/images/logo.png}" style="width:100px;height: 80px;">
+            </a>
+        </div>
+
+        <form th:action="@{/search/filmByFilmName2}">
+            <div class="search">
+                <input type="text" placeholder="输入电影关键字" name="fileName"/>
+                <button>搜索</button>
+            </div>
+        </form>
+
+        <div class="user">
+            <p>
+                <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                      th:if="${cookie.getName().equals('nickname')}"
+                      th:text="${cookie.getValue()}"
+                ></span>
+            </p>
+        </div>
+    </div>
+</div>
+<div>
+    <header>
+        <hr/>
+        <h1>新增电影信息</h1>
+        <hr/>
+    </header>
+
+    <main>
+        <div>
+            <form th:action="@{/admin/addFilm}">
+                <table id="addFilm">
+                    <tr>
+                        <td class="addTableTd1">编号</td>
+                        <td class="addTableTd2"><input type="text" required="required" name="filmId"/></td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">名称</td>
+                        <td class="addTableTd2"><input type="text" required="required" name="filmName"/></td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">制片地区</td>
+                        <td class="addTableTd2"><input type="text" required="required" name="area"/></td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">语言</td>
+                        <td class="addTableTd2"><input type="text" required="required" name="language"/></td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">片长（分钟）</td>
+                        <td class="addTableTd2"><input type="text" required="required" name="footage"/></td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">海报路径</td>
+                        <td class="addTableTd2">
+                            <select name="posterPath" required="required">
+                                <option th:each="path:${paths}" th:text="${path.getPath()}"
+                                        th:value="${path.getPath()}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">简介</td>
+                        <td class="addTableTd2"><input type="text" name="profile" required="required"/></td>
+                    </tr>
+                </table>
+                <div>
+                    <!--            <--点击提交按钮返回电影信息管理页面 这个按钮要写在form里面-->
+                    <button id="submit">提交</button>
+                </div>
+            </form>
+            <div style="text-align: center">
+                <a th:href="@{/forward/adminFilmPage}">
+                    <button>返回</button>
+                </a>
+                <br>
+                <p th:text="${msg}"></p>
+            </div>
+        </div>
+
+    </main>
+</div>
+</body>
+</html>

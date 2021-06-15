@@ -60,13 +60,12 @@
                 <p th:text="'生日：'+${#dates.format(user.getBirthday(),'yyyy-MM-dd')}">生日：</p>
 
                 <hr>
-                <a th:href="@{/user/logout}">
-                    <button class="left">退出</button>
-                </a>
-                <a th:href="@{/forward/userModify}">
-                    <button class="left">修改</button>
-                </a>
-
+                                <a th:href="@{/forward/rootUserPage}">
+                                    <button class="left">返回</button>
+                                </a>
+                <!--                <a th:href="@{/forward/userModify}">-->
+                <!--                    <button class="left">修改</button>-->
+                <!--                </a>-->
             </div>
         </div>
         <div class="comments" th:each="comment:${comments}">
@@ -75,13 +74,15 @@
                 <p th:text="'电影评分：'+${comment.getScore()}">电影评分</p>
                 <p th:text="'评论内容：'+${comment.getContent()}">评论内容:</p>
                 <p th:text="'评论时间：'+${#dates.format(comment.getModified(),'yyyy-MM-dd')}">评论时间</p>
-                <a th:href="@{/user/comment/del/{filmId}(filmId=${comment.getFilmId()})}">
+                <a th:href="@{'/root/banComment/'+${comment.getUsername()}+'/'+${comment.getFilmId()}}">
+                    <button class="right">屏蔽</button>
+                </a>
+                <a th:href="@{'/root/delComment/'+${comment.getUsername()}+'/'+${comment.getFilmId()}}">
                     <button class="right">删除</button>
                 </a>
             </div>
         </div>
         <div style="top: 100px;position: relative;float: left;height: 50px;width: 100%;"></div>
-
     </div>
     <div class="footer">
         <hr>

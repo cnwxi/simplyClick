@@ -1,10 +1,8 @@
 package com.wxi.simplyclick.controller;
 
 import com.wxi.simplyclick.bean.User;
-import com.wxi.simplyclick.service.AdminCommentService;
-import com.wxi.simplyclick.service.AdminUserService;
-import com.wxi.simplyclick.service.UserLRFService;
-import com.wxi.simplyclick.service.UserService;
+import com.wxi.simplyclick.bean.extend.ExtendComment;
+import com.wxi.simplyclick.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 @Controller
 public class RootController {
@@ -24,6 +27,8 @@ public class RootController {
     AdminUserService adminUserService;
     @Autowired
     UserLRFService userLRFService;
+    @Autowired
+    CommentService commentService;
 
     //root/delUser
     @RequestMapping("/root/delUser/{username}")
@@ -48,18 +53,23 @@ public class RootController {
             }
 
         }
-        return "forward:/forward/userOP";
+        return "forward:/forward/rootUserPage";
     }
 
     //root/updUser
-    @RequestMapping("/root/updUser")
-    public String udpUser(@RequestParam("username") String username,
+    @RequestMapping("/root/updUser/{username}")
+    public String udpUser(@PathVariable("username") String username,
                           @RequestParam("nickname") String nickname,
                           @RequestParam("password") String password,
-                          @RequestParam("birthday") Date birthday,
+                          @RequestParam("birthday") String birthday1,
                           @RequestParam("sex") Boolean sex,
-                          @RequestParam("permission") Integer permission,
+                          @RequestParam("permission") String permission1,
                           Model model) {
+        Integer permission = Integer.parseInt(permission1);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");//日期格式
+        ParsePosition pos = new ParsePosition(0);
+        format.setTimeZone(TimeZone.getTimeZone("CST"));
+        Date birthday = format.parse(birthday1, pos);
         User user = new User(username, nickname, password, birthday, sex, permission);
         Integer flag = adminUserService.updateUser(user);
         switch (flag) {
@@ -80,7 +90,8 @@ public class RootController {
                 break;
             }
         }
-        return "forward:/search/userByUsername/" + username;
+        model.addAttribute("user", user);
+        return "userUpdate";
     }
 
     //root/addUser---？
@@ -88,23 +99,28 @@ public class RootController {
     public String addUser(@RequestParam("username") String username,
                           @RequestParam("nickname") String nickname,
                           @RequestParam("password") String password,
-                          @RequestParam("birthday") Date birthday,
+                          @RequestParam("birthday") String birthday1,
                           @RequestParam("sex") Boolean sex,
-                          @RequestParam("permission") Integer permission,
+                          @RequestParam("permission") String permission1,
                           Model model) {
+        Integer permission = Integer.parseInt(permission1);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");//日期格式
+        ParsePosition pos = new ParsePosition(0);
+        format.setTimeZone(TimeZone.getTimeZone("CST"));
+        Date birthday = format.parse(birthday1, pos);
         User user = new User(username, nickname, password, birthday, sex, permission);
         Integer flag = userLRFService.register(user);
         switch (flag) {
             case -1: {
-                model.addAttribute("msg", "user不存在");
+                model.addAttribute("msg", "username已存在");
                 break;
             }
             case 1: {
-                model.addAttribute("msg", "user更新成功");
+                model.addAttribute("msg", "user添加成功");
                 break;
             }
             case 0: {
-                model.addAttribute("msg", "user更新失败");
+                model.addAttribute("msg", "user添加失败");
                 break;
             }
             default: {
@@ -112,11 +128,12 @@ public class RootController {
                 break;
             }
         }
-        return "forward:/forward/userOP";
+        model.addAttribute("user", user);
+        return "userAdd";
     }
 
     //delComment
-    @RequestMapping("/root/delComment/{username}&{filmId}")
+    @RequestMapping("/root/delComment/{username}/{filmId}")
     public String delComment(@PathVariable String username, @PathVariable Integer filmId, Model model) {
         Integer flag = adminCommentService.delComment(username, filmId);
         switch (flag) {
@@ -137,11 +154,15 @@ public class RootController {
                 break;
             }
         }
-        return "forward:/search/userByUsername/" + username;
+        List<User> users = userService.userInfo(username);
+        List<ExtendComment> extendComments = commentService.queryCommentByUsername(username);
+        model.addAttribute("user", users.get(0));
+        model.addAttribute("comments", extendComments);
+        return "userPageForRoot";
     }
 
     //banComment
-    @RequestMapping("/root/banComment/{username}&{filmId}")
+    @RequestMapping("/root/banComment/{username}/{filmId}")
     public String banComment(@PathVariable String username, @PathVariable Integer filmId, Model model) {
         Integer flag = adminCommentService.banComment(username, filmId);
         switch (flag) {
@@ -162,6 +183,10 @@ public class RootController {
                 break;
             }
         }
-        return "forward:/search/userByUsername/" + username;
+        List<User> users = userService.userInfo(username);
+        List<ExtendComment> extendComments = commentService.queryCommentByUsername(username);
+        model.addAttribute("user", users.get(0));
+        model.addAttribute("comments", extendComments);
+        return "userPageForRoot";
     }
 }

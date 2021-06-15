@@ -79,8 +79,8 @@ public class FilmDaoImpl implements FilmDao {
     @Override
     //根据电影id修改电影信息；
     public boolean updateFilm(Film film) {
-        String sql = "update film set filmName=?,posterPath=?,area=?,language=?,footage=?,avgScore=?,profile=? where filmId=?";
-        Object[] objects = {film.getFilmId(), film.getFilmName(), film.getPosterPath(), film.getArea(), film.getLanguage(), film.getFootage(), film.getAvgScore(), film.getProfile(), film.getFilmId()};
+        String sql = "update film set filmName=?,posterPath=?,area=?,language=?,footage=?,profile=? where filmId=?";
+        Object[] objects = {film.getFilmName(), film.getPosterPath(), film.getArea(), film.getLanguage(), film.getFootage(), film.getProfile(), film.getFilmId()};
         int result = jdbcTemplate.update(sql, objects);
         return result > 0;
     }

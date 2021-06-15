@@ -1,0 +1,182 @@
+.main {
+    height: 55%;
+    width: 100%;
+    text-align: center;
+    line-height: 100px;
+    position: absolute;
+    top: 18%;
+}
+
+.main .haibao {
+    height: 60%;
+    width: 15%;
+
+    text-align: center;
+    line-height: 100px;
+    position: absolute;
+    top: 2%;
+    left: 10%;
+}
+
+.main .jieshao {
+    height: 40%;
+    width: 30%;
+    text-align: left;
+    line-height: 20px;
+    position: absolute;
+    left: 30%;
+    top: 1%;
+}
+
+
+.main .jianjie {
+
+}
+
+
+.main .area {
+    width: 580px;
+    text-align: left;
+    line-height: 21px;
+    position: relative;
+    top: 380px;
+    left: 10%;
+    max-width: 580px;
+    height: 100%;
+    /*border-top: 2px solid silver;*/
+    border-radius: 10px;
+    /* border-right: 2px solid; */
+}
+
+.actorinformation {
+    height: 0%;
+    width: 20%;
+    text-align: center;
+    background-color: white;
+    line-height: 30px;
+    position: absolute;
+    top: 2%;
+    right: 12%;
+}
+
+.comments {
+    border-radius: 10px;
+    border: 2px solid silver;
+}
+
+.box {
+    float: left;
+    width: 100%;
+    height: 42px;
+    padding-top: 17px;
+    margin-left: 200px;
+}
+
+.box select {
+    float: left;
+    width: 100px;
+    height: 42px;
+    border: 1px solid lightsalmon;
+    color: #bfbfbf;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.box .input {
+    float: left;
+    width: 350px;
+    height: 40px;
+    border: 1px solid lightsalmon;
+    /*border-right: 0;*/
+    color: #bfbfbf;
+    font-size: 14px;
+    padding-left: 15px;
+}
+
+.box .button {
+    float: left;
+    width: 50px;
+    height: 42px;
+    /* 去掉按钮默认边框 */
+    border: 0;
+    background-color: lightsalmon;
+    color: #666;
+}
+
+/*!*显示评论*!*/
+/*.comments .area {*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*    text-align: center;*/
+/*    line-height: 21px;*/
+/*    position: absolute;*/
+/*    border: 2px cadetblue;*/
+/*    top: 40%;*/
+/*}*/
+/*顶部导航栏*/
+.top {
+    background-color: moccasin;
+    border-bottom: 1px solid lightcoral;
+}
+
+.header {
+    width: 995px;
+    margin: 0 auto;
+    padding-top: 17px;
+    overflow: hidden;
+}
+
+.logo {
+    float: left;
+}
+
+/*搜索栏区域*/
+.search {
+    float: left;
+    width: 520px;
+    height: 42px;
+    padding-top: 17px;
+    margin-left: 200px;
+}
+
+.search select {
+    float: left;
+    width: 120px;
+    height: 42px;
+    border: 1px solid lightsalmon;
+    color: #bfbfbf;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.search input {
+    float: left;
+    width: 300px;
+    height: 40px;
+    border: 1px solid lightsalmon;
+    /*border-right: 0;*/
+    color: #bfbfbf;
+    font-size: 14px;
+    padding-left: 15px;
+}
+
+.search button {
+    float: left;
+    width: 50px;
+    height: 42px;
+    /* 去掉按钮默认边框 */
+    border: 0;
+    background-color: lightsalmon;
+    color: #666;
+}
+
+/*登录用户名称*/
+.user {
+    float: left;
+    margin-left: 120px;
+}
+
+.user p {
+    font-size: 15px;
+    color: #95a5a6;
+}
