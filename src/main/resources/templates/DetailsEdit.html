@@ -136,7 +136,8 @@
                 <button type="submit">搜索</button>
             </div>
         </form>
-        <div class="user"  style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
+        <div class="user"
+             style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
             <p style="align-content: center">
                 <a th:href="@{/user/profile}">
                     <img th:src="@{/images/user.png}" style="width: 34px;
@@ -197,15 +198,14 @@
                 </tr>
                 <tr>
                     <th>简介</th>
-                    <th><input type="text" name="profile" required="required"
-                               th:placeholder="${film.getProfile() != null ? film.getProfile():'请输入简介'}"/>
-                    <textarea>
-
-                    </textarea>
+                    <th>
+                        <!--                        <input type="text" name="profile" required="required"-->
+                        <!--                               th:placeholder="${film.getProfile() != null ? film.getProfile():'请输入简介'}"/>-->
+                        <textarea name="profile" required="required" th:placeholder="${film.getProfile()}">
+                        </textarea>
                     </th>
                 </tr>
             </table>
-
             <button type="submit">提交</button>
             <br/>
         </form>
@@ -245,89 +245,89 @@
 
     </div>
     <!--简介/故事概要-->
-<!--    <div >-->
-<!--        &lt;!&ndash;/*@thymesVar id="cast" type="com.wxi.simplyclick.bean.extend.ExtendParticipation"*/&ndash;&gt;-->
-<!--            <td><p th:text="'演职人员：'"></p>-->
-<!--            </td>-->
-<!--            &lt;!&ndash;            </br>&ndash;&gt;-->
-<!--            </br>-->
-<!--            <table>-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <td>名称</td>-->
-<!--                    <td>性别</td>-->
-<!--                    <td>国籍</td>-->
-<!--                    <td>职务</td>-->
-<!--                    <td>角色</td>-->
-<!--                    <td>操作</td>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                <tr th:each="cast:${directors}">-->
-<!--                    <td th:text="${cast.getCastName()}"></td>-->
-<!--                    <td th:text="${cast.getSex()?'男':'女'}"></td>-->
-<!--                    <td th:text="${cast.getCountry()}"></td>-->
-<!--                    <td th:text="${cast.getRole()}"></td>-->
-<!--                    <td th:text="${cast.getCountry()}"></td>-->
-<!--                    <td>-->
-<!--                        <a th:href="#">-->
-<!--                            <button id="update">修改</button>-->
-<!--                        </a>-->
-<!--                        <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
-<!--                            <button id="delete">删除</button>-->
-<!--                        </a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr th:each="cast:${mainActors}">-->
-<!--                    <td th:text="${cast.getCastName()}"></td>-->
-<!--                    <td th:text="${cast.getSex()?'男':'女'}"></td>-->
-<!--                    <td th:text="${cast.getCountry()}"></td>-->
-<!--                    <td th:text="${cast.getRole()}"></td>-->
-<!--                    <td th:text="${cast.getCountry()}"></td>-->
-<!--                    <td>-->
-<!--                        <a th:href="#">-->
-<!--                            <button id="update">修改</button>-->
-<!--                        </a>-->
-<!--                        <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
-<!--                            <button id="delete">删除</button>-->
-<!--                        </a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr th:each="cast:${actors}">-->
-<!--                    <td th:text="${cast.getCastName()}"></td>-->
-<!--                    <td th:text="${cast.getSex()?'男':'女'}"></td>-->
-<!--                    <td th:text="${cast.getCountry()}"></td>-->
-<!--                    <td th:text="${cast.getRole()}"></td>-->
-<!--                    <td th:text="${cast.getCountry()}"></td>-->
-<!--                    <td>-->
-<!--                        <a th:href="#">-->
-<!--                            <button id="update">修改</button>-->
-<!--                        </a>-->
-<!--                        <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
-<!--                            <button id="delete">删除</button>-->
-<!--                        </a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr th:each="cast:${editors}">-->
-<!--                    <td th:text="${cast.getCastName()}"></td>-->
-<!--                    <td th:text="${cast.getSex()?'男':'女'}"></td>-->
-<!--                    <td th:text="${cast.getCountry()}"></td>-->
-<!--                    <td th:text="${cast.getRole()}"></td>-->
-<!--                    <td th:text="${cast.getCountry()}"></td>-->
-<!--                    <td>-->
-<!--                        <a th:href="#">-->
-<!--                            <button id="update">修改</button>-->
-<!--                        </a>-->
-<!--                        <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
-<!--                            <button id="delete">删除</button>-->
-<!--                        </a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
+    <!--    <div >-->
+    <!--        &lt;!&ndash;/*@thymesVar id="cast" type="com.wxi.simplyclick.bean.extend.ExtendParticipation"*/&ndash;&gt;-->
+    <!--            <td><p th:text="'演职人员：'"></p>-->
+    <!--            </td>-->
+    <!--            &lt;!&ndash;            </br>&ndash;&gt;-->
+    <!--            </br>-->
+    <!--            <table>-->
+    <!--                <thead>-->
+    <!--                <tr>-->
+    <!--                    <td>名称</td>-->
+    <!--                    <td>性别</td>-->
+    <!--                    <td>国籍</td>-->
+    <!--                    <td>职务</td>-->
+    <!--                    <td>角色</td>-->
+    <!--                    <td>操作</td>-->
+    <!--                </tr>-->
+    <!--                </thead>-->
+    <!--                <tbody>-->
+    <!--                <tr th:each="cast:${directors}">-->
+    <!--                    <td th:text="${cast.getCastName()}"></td>-->
+    <!--                    <td th:text="${cast.getSex()?'男':'女'}"></td>-->
+    <!--                    <td th:text="${cast.getCountry()}"></td>-->
+    <!--                    <td th:text="${cast.getRole()}"></td>-->
+    <!--                    <td th:text="${cast.getCountry()}"></td>-->
+    <!--                    <td>-->
+    <!--                        <a th:href="#">-->
+    <!--                            <button id="update">修改</button>-->
+    <!--                        </a>-->
+    <!--                        <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
+    <!--                            <button id="delete">删除</button>-->
+    <!--                        </a>-->
+    <!--                    </td>-->
+    <!--                </tr>-->
+    <!--                <tr th:each="cast:${mainActors}">-->
+    <!--                    <td th:text="${cast.getCastName()}"></td>-->
+    <!--                    <td th:text="${cast.getSex()?'男':'女'}"></td>-->
+    <!--                    <td th:text="${cast.getCountry()}"></td>-->
+    <!--                    <td th:text="${cast.getRole()}"></td>-->
+    <!--                    <td th:text="${cast.getCountry()}"></td>-->
+    <!--                    <td>-->
+    <!--                        <a th:href="#">-->
+    <!--                            <button id="update">修改</button>-->
+    <!--                        </a>-->
+    <!--                        <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
+    <!--                            <button id="delete">删除</button>-->
+    <!--                        </a>-->
+    <!--                    </td>-->
+    <!--                </tr>-->
+    <!--                <tr th:each="cast:${actors}">-->
+    <!--                    <td th:text="${cast.getCastName()}"></td>-->
+    <!--                    <td th:text="${cast.getSex()?'男':'女'}"></td>-->
+    <!--                    <td th:text="${cast.getCountry()}"></td>-->
+    <!--                    <td th:text="${cast.getRole()}"></td>-->
+    <!--                    <td th:text="${cast.getCountry()}"></td>-->
+    <!--                    <td>-->
+    <!--                        <a th:href="#">-->
+    <!--                            <button id="update">修改</button>-->
+    <!--                        </a>-->
+    <!--                        <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
+    <!--                            <button id="delete">删除</button>-->
+    <!--                        </a>-->
+    <!--                    </td>-->
+    <!--                </tr>-->
+    <!--                <tr th:each="cast:${editors}">-->
+    <!--                    <td th:text="${cast.getCastName()}"></td>-->
+    <!--                    <td th:text="${cast.getSex()?'男':'女'}"></td>-->
+    <!--                    <td th:text="${cast.getCountry()}"></td>-->
+    <!--                    <td th:text="${cast.getRole()}"></td>-->
+    <!--                    <td th:text="${cast.getCountry()}"></td>-->
+    <!--                    <td>-->
+    <!--                        <a th:href="#">-->
+    <!--                            <button id="update">修改</button>-->
+    <!--                        </a>-->
+    <!--                        <a th:href="@{'/admin/delParticipation/'+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
+    <!--                            <button id="delete">删除</button>-->
+    <!--                        </a>-->
+    <!--                    </td>-->
+    <!--                </tr>-->
+    <!--                </tbody>-->
+    <!--            </table>-->
 
-<!--    </div>-->
-<!--    <div>-->
+    <!--    </div>-->
+    <!--    <div>-->
     <!--        <p><a th:href="@{/forward/participationAdd1/{filmId}(filmId=${film.getFilmId()})}">-->
     <!--            <button>新增</button>-->
     <!--        </a></p>-->

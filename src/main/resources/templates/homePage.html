@@ -3,6 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>SimplyClick</title>
+    <style>
+        #container1 {
+            width: 400px;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        #photo {
+            width: 1200px;
+            animation: switch 5s ease-out infinite;
+        }
+
+        #photo > img {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+
+        @keyframes switch {
+            0%, 25% {
+                margin-left: 0;
+            }
+            35%, 60% {
+                margin-left: -400px;
+            }
+            70%, 100% {
+                margin-left: -800px;
+            }
+        }
+    </style>
     <style type="text/css">
         .top {
             background-color: moccasin;
@@ -70,12 +100,6 @@
             color: #95a5a6;
         }
 
-        .LB { /* 图片居中 */
-            /*text-align: center;*/
-            float: left;
-            margin: 92px;
-
-        }
 
         .filmType {
             position: fixed;
@@ -83,20 +107,7 @@
             margin-top: 92px;
         }
 
-        /* 第四层级 */
-        #img { /* 图片宽度、高度 */
-            width: 828px;
-            height: 690px;
 
-        }
-
-        #ol {
-            /*position:absolute;  /* 绝对定位 */
-            bottom: 85px; /* 高度 */
-            width: 100%; /* 宽度 */
-            text-align: center; /* 居中 */
-            right: 15px;
-        }
 
         #filmsType {
             /*去掉列表的样式*/
@@ -150,44 +161,6 @@
     <link rel="stylesheet" th:href="@{/css/search-page.css}">
 </head>
 
-<script type="text/javascript">
-    <!--
-    图片自动切换部分-->
-    var index = 0;
-    var imgs = ["images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg"]; <!--图片的地址 -->
-    function qiehuan() {
-        document.getElementById("img").src = imgs[index];
-        index++;
-        if (index > 3) {
-            index = 0;    <!--只有四张图片，当为3的时候重置为0 -->
-        }
-    }
-
-    setInterval("qiehuan()", 2000);  <!--*每3秒重新运行函数qiehuan()-->
-
-    <!--图片点击切换部分：-->
-    window.onload = function () {
-        //获取四张图片id
-        var c1 = document.getElementById("clk1");
-        var c2 = document.getElementById("clk2");
-        var c3 = document.getElementById("clk3");
-        var c4 = document.getElementById("clk4");
-
-        //点击相应按钮，则显示相应图片
-        c1.οnclick = function () {
-            document.getElementById("img").src = imgs[0];
-        }
-        c2.οnclick = function () {
-            document.getElementById("img").src = imgs[1];
-        }
-        c3.οnclick = function () {
-            document.getElementById("img").src = imgs[2];
-        }
-        c4.οnclick = function () {
-            document.getElementById("img").src = imgs[3];
-        }
-    }
-</script>
 
 <body>
 <div class="top">
@@ -231,20 +204,72 @@
 </div>
 
 <!--<div class="main1">&lt;!&ndash;主体：电影展示海报图片轮播&ndash;&gt;-->
-<div class="LB">
-    <img src="images/1.jpg" id="img"/>
-    <ul id="ol">
-        <!--设置图片为一行 ；设置图片间隔 -->
-        <li style="display: inline-block;margin: 0 5px;"><img src="images/circle.png" id="clk1"></li>
-        <li style="display: inline-block;margin: 0 5px;"><img src="images/circle.png" id="clk2"></li>
-        <li style="display: inline-block;margin: 0 5px;"><img src="images/circle.png" id="clk3"></li>
-        <li style="display: inline-block;margin: 0 5px;"><img src="images/circle.png" id="clk4"></li>
-    </ul>
+<!--<div class="LB">-->
+<!--    <img th:src="@{/images/情书.png}" id="img"/>-->
+<!--    <ul id="ol">-->
+<!--        &lt;!&ndash;设置图片为一行 ；设置图片间隔 &ndash;&gt;-->
+<!--        <li style="display: inline-block;margin: 0 5px;"><img src="/images/circle.png" id="clk1"></li>-->
+<!--        <li style="display: inline-block;margin: 0 5px;"><img src="/images/circle.png" id="clk2"></li>-->
+<!--        <li style="display: inline-block;margin: 0 5px;"><img src="/images/circle.png" id="clk3"></li>-->
+<!--        <li style="display: inline-block;margin: 0 5px;"><img src="/images/circle.png" id="clk4"></li>-->
+<!--    </ul>-->
+<!--</div>-->
+
+<!--<script type="text/javascript">-->
+<!--    &lt;!&ndash;-->
+<!--    图片自动切换部分&ndash;&gt;-->
+<!--    var index = 0;-->
+<!--    var imgs = ["/images/情书.png", "/images/我不是药神.png", "/images/楚门的世界.png", "images/泰坦尼克号.png"]; &lt;!&ndash;图片的地址 &ndash;&gt;-->
+<!--    function qiehuan() {-->
+<!--        document.getElementById("img").src = imgs[index];-->
+<!--        index++;-->
+<!--        if (index > 3) {-->
+<!--            index = 0;    &lt;!&ndash;只有四张图片，当为3的时候重置为0 &ndash;&gt;-->
+<!--        }-->
+<!--    }-->
+
+<!--    setInterval("qiehuan()", 2000);  &lt;!&ndash;*每3秒重新运行函数qiehuan()&ndash;&gt;-->
+<!--    &lt;!&ndash;图片点击切换部分：&ndash;&gt;-->
+<!--    window.onload = function () {-->
+<!--        //获取四张图片id-->
+<!--        var c1 = document.getElementById("clk1");-->
+<!--        var c2 = document.getElementById("clk2");-->
+<!--        var c3 = document.getElementById("clk3");-->
+<!--        var c4 = document.getElementById("clk4");-->
+
+<!--        //点击相应按钮，则显示相应图片-->
+<!--        c1.οnclick = function () {-->
+<!--            document.getElementById("img").src = imgs[0];-->
+<!--        }-->
+<!--        c2.οnclick = function () {-->
+<!--            document.getElementById("img").src = imgs[1];-->
+<!--        }-->
+<!--        c3.οnclick = function () {-->
+<!--            document.getElementById("img").src = imgs[2];-->
+<!--        }-->
+<!--        c4.οnclick = function () {-->
+<!--            document.getElementById("img").src = imgs[3];-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+
+
+<div id="container1" class="mian1" style="left: 30% ;position: relative">
+    <div id="photo">
+        <img th:src="@{${topKFilms.get(0).getPosterPath()}}" alt="No. 1"/>
+        <img th:src="@{${topKFilms.get(1).getPosterPath()}}" alt="No. 2"/>
+        <img th:src="@{${topKFilms.get(2).getPosterPath()}}" alt="No. 3"/>
+    </div>
 </div>
 
+<!--<div class="carousel-inner">-->
+<!--    <div class="item" th:each="banner,stat:${topKFilms}" th:classappend="${stat.index == 0}? 'active'">-->
+<!--        <img th:src="${banner.getPosterPath()}" alt="First slide">-->
+<!--        <div class="carousel-caption"></div>-->
+<!--    </div>-->
+<!--</div>-->
+
 <div class="container">
-
-
     <div class="main">
         <!--电影搜索结果区-->
         <div class="left-search-results">
@@ -270,7 +295,8 @@
     </div>
 </div>
 
-<div class="filmType">
+<div class="filmType" style="    top: 40%;
+    position: fixed;">
     <ul id="filmsType">
         <li><a th:href="@{/search/filmByType/剧情}" class="active">剧情</a></li>
         <li><a th:href="@{/search/filmByType/动作}">动作</a></li>
