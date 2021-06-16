@@ -151,8 +151,7 @@
 
         <form th:action="@{/search/filmByFilmName2}">
             <div class="search">
-                <input type="text" placeholder="输入电影关键字" maxlength="16"  name="fileName"/>
-                <button>搜索</button>
+                <input type="text" placeholder="输入电影关键字(中文1-16)" pattern="^[\u4E00-\u9FA5]{1,16}$" name="name"/>                <button>搜索</button>
             </div>
         </form>
 

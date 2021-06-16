@@ -154,8 +154,7 @@
                     <option value="filmName">电影名称</option>
                     <option value="castName">演职人员名称</option>
                 </select>
-                <input type="text" placeholder="输入电影关键字" name="name"/>
-
+                <input type="text" placeholder="输入电影关键字(中文1-16)" pattern="^[\u4E00-\u9FA5]{1,16}$" name="name"/>
                 <button type="submit">搜索</button>
             </div>
         </form>
