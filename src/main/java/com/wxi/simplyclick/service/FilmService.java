@@ -37,6 +37,8 @@ public interface FilmService {
 
     List<ExtendParticipation> queryParticipation(Integer filmId);
 
+    List<ExtendParticipation> queryAllParticipation();
+
     List<Belong> queryBelongByFilmId(Integer filmId);
 
 }

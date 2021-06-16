@@ -10,7 +10,9 @@ public interface UserDao {
 
     // 列出所有用户
     List<User> queryUser();
+
     List<User> queryAdmin();
+
     // 按用户名查询用户
     // List<Map<String, Object>> queryByUsername(String username);
     List<User> queryByUsername(String username);
@@ -23,4 +25,6 @@ public interface UserDao {
 
     // 更新用户信息
     boolean updateUser(User user);
+
+    boolean resetPass(String username, String password);
 }

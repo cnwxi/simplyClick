@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ExtendParticipation {
-    private Integer fileId;
+    private Integer filmId;
     private String filmName;
     private Integer castId;     // 演职人员编号
     private String castName;    // 演职人员姓名

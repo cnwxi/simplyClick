@@ -19,6 +19,8 @@ public interface ParticipationDao {
     // 查询某个演职人员的所有参演信息
     List<Participation> queryByCastId(Integer castId);
 
+    List<Participation> queryAll();
+
     // 增加一条参演信息
     boolean addParticipation(Participation participation);
 
@@ -31,4 +33,6 @@ public interface ParticipationDao {
 
     // 更新某部电影某个人员的参演信息
     boolean updateParticipation(Participation oldParticipation, Participation newParticipation);
+
+
 }

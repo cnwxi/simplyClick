@@ -35,12 +35,13 @@
                     <option value="filmName">电影名称</option>
                     <option value="castName">演职人员名称</option>
                 </select>
-                <input type="text" placeholder="输入电影关键字" name="name"/>
+                <input type="text" placeholder="输入电影关键字" maxlength="16"  name="name"/>
 
                 <button type="submit">搜索</button>
             </div>
         </form>
-        <div class="user" style="text-align: center">
+        <div class="user"
+             style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
             <p style="align-content: center">
                 <a th:href="@{/user/profile}">
                     <img th:src="@{/images/user.png}" style="width: 34px;
@@ -100,8 +101,15 @@
                 </select>
                 <!--            <input type="number" min="1" max="5" required="required"-->
                 <!--                   th:placeholder="${myComment.getScore()==null? myComment.getScore():''}" name="score"/>-->
-                <input type="text"
-                       th:placeholder="${myComment.getContent()==null? myComment.getContent():'请输入评论'}" name="content"/>
+                <!--                <textarea class="comment-send-input" name="content" text="测试" cols="80" rows="5"-->
+                <!--                          placeholder="请输入评论，严禁发布色情、暴力、反动的言论。"></textarea>-->
+                <br>
+                <textarea required="required" rows="3" cols="20" name="content" placeholder="请输入评论" maxlength="200">
+
+                </textarea>
+
+                <!--                <input type="text"-->
+                <!--                       th:placeholder="${myComment.getContent()==null? myComment.getContent():'请输入评论'}" name="content"/>-->
                 <button th:type="submit">发表</button>
                 <!--                <button>??</button>-->
             </form>
@@ -126,54 +134,55 @@
         </hr>
     </div>
 
-    <div class="actorinformation">
+    <div class="actorinformation" style="text-align: left">
         <!--/*@thymesVar id="cast" type="com.wxi.simplyclick.bean.extend.ExtendParticipation"*/-->
         <tr>
             <!--            <td><a th:text="'演职人员：'"></a></td>-->
             <!--            </br>-->
-            <td th:text="导演"></td>
             </br>
-            <td th:each="cast:${directors}">
+            <td th:each="director:${directors}">
                 <!--                <a th:text="${cast.getRole()}"></a>-->
-                <a th:text="${cast.getCastName()}"
-                   th:href="@{/search/filmByCastName/{castName}(castName=${cast.getCastName()})}"></a>
-                <a th:text="${cast.getSex()?'男':'女'}"></a>
-                <a th:text="${cast.getCountry()}"></a>
-                <a th:text="${cast.getCharacter()}"></a>
+                <a th:text="${director.getCastName()}"
+                   th:href="@{/search/filmByCastName/{castName}(castName=${director.getCastName()})}"></a>
+                <a th:text="${director.getSex()?'男':'女'}"></a>
+                <a th:text="${director.getCountry()}"></a>
+                <a th:text="${director.getRole()}"></a>
+                <a th:text="${director.getCharacter()}"></a>
                 </br>
             </td>
-            <td th:text="编剧"></td>
             </br>
-            <td th:each="cast:${editor}">
+            <!--/*@thymesVar id="editors" type="com.wxi.simplyclick.bean.extend.ExtendParticipation"*/-->
+            <td th:each="editor:${editors}">
                 <!--                <a th:text="${cast.getRole()}"></a>-->
-                <a th:text="${cast.getCastName()}"
-                   th:href="@{/search/filmByCastName/{castName}(castName=${cast.getCastName()})}"></a>
-                <a th:text="${cast.getSex()?'男':'女'}"></a>
-                <a th:text="${cast.getCountry()}"></a>
-                <a th:text="${cast.getCharacter()}"></a>
+                <a th:text="${editor.getCastName()}"
+                   th:href="@{/search/filmByCastName/{castName}(castName=${editor.getCastName()})}"></a>
+                <a th:text="${editor.getSex()?'男':'女'}"></a>
+                <a th:text="${editor.getCountry()}"></a>
+                <a th:text="${editor.getRole()}"></a>
+                <a th:text="${editor.getCharacter()}"></a>
 
                 </br>
             </td>
-            <td th:text="主演"></td>
             </br>
-            <td th:each="cast:${mainActors}">
+            <td th:each="mainActor:${mainActors}">
                 <!--                <a th:text="${cast.getRole()}"></a>-->
-                <a th:text="${cast.getCastName()}"
-                   th:href="@{/search/filmByCastName/{castName}(castName=${cast.getCastName()})}"></a>
-                <a th:text="${cast.getSex()?'男':'女'}"></a>
-                <a th:text="${cast.getCountry()}"></a>
-                <a th:text="${cast.getCharacter()}"></a>
+                <a th:text="${mainActor.getCastName()}"
+                   th:href="@{/search/filmByCastName/{castName}(castName=${mainActor.getCastName()})}"></a>
+                <a th:text="${mainActor.getSex()?'男':'女'}"></a>
+                <a th:text="${mainActor.getCountry()}"></a>
+                <a th:text="${mainActor.getRole()}"></a>
+                <a th:text="${mainActor.getCharacter()}"></a>
                 </br>
             </td>
-            <td th:text="演员"></td>
             </br>
-            <td th:each="cast:${actors}">
+            <td th:each="actor:${actors}">
                 <!--                <a th:text="${cast.getRole()}"></a>-->
-                <a th:text="${cast.getCastName()}"
-                   th:href="@{/search/filmByCastName/{castName}(castName=${cast.getCastName()})}"></a>
-                <a th:text="${cast.getSex()?'男':'女'}"></a>
-                <a th:text="${cast.getCountry()}"></a>
-                <a th:text="${cast.getCharacter()}"></a>
+                <a th:text="${actor.getCastName()}"
+                   th:href="@{/search/filmByCastName/{castName}(castName=${actor.getCastName()})}"></a>
+                <a th:text="${actor.getSex()?'男':'女'}"></a>
+                <a th:text="${actor.getCountry()}"></a>
+                <a th:text="${actor.getRole()}"></a>
+                <a th:text="${actor.getCharacter()}"></a>
                 </br>
             </td>
         </tr>

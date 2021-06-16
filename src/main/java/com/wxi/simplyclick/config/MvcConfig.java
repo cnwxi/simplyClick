@@ -1,6 +1,7 @@
 package com.wxi.simplyclick.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,15 +18,15 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/registerPage").setViewName("registerPage");
         registry.addViewController("/filmEdit").setViewName("filmEdit");
         registry.addViewController("/castAdd").setViewName("castAdd");
-        registry.addViewController("/hah").setViewName("hah");
         registry.addViewController("/forgetPassword").setViewName("forgetPassword");
 
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
-//                .excludePathPatterns("/", "/index.html", "/css/**", "/user/login", "/static/**");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns("/", "/index.html", "/css/**", "/user/login", "/static/**","/images/**"
+                        , "/user/register", "/user/forget", "/user/**", "/registerPage", "/forgetPassword");
+    }
 
 }

@@ -41,6 +41,12 @@ public class ParticipationDaoImpl implements ParticipationDao {
     }
 
     @Override
+    public List<Participation> queryAll() {
+        String sql = "select * from participation";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Participation.class));
+    }
+
+    @Override
     public boolean addParticipation(Participation participation) {
         String sql = "insert into participation values(?,?,?,?)";
         Object[] objects = {participation.getFilmId(), participation.getCastId(), participation.getRole(), participation.getCharacter()};
@@ -70,9 +76,11 @@ public class ParticipationDaoImpl implements ParticipationDao {
     @Override
     public boolean updateParticipation(Participation oldParticipation, Participation newParticipation) {
 //        String sql = "replace into participation values(?,?,?)";
-        String sql = "update  Participation set role=? ,`character`=? where filmId=? and castId=? and  role=? and `character`=?";
+        String sql = "update  participation set role=? ,`character`=? where filmId=? and castId=? and  role=? and `character`=?";
         Object[] objects = {newParticipation.getRole(), newParticipation.getCharacter(), oldParticipation.getFilmId(), oldParticipation.getCastId(), oldParticipation.getRole(), oldParticipation.getCharacter()};
         int update = jdbcTemplate.update(sql, objects);
         return update > 0;
     }
+
+
 }

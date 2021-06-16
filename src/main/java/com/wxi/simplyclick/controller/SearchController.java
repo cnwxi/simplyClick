@@ -126,7 +126,7 @@ public class SearchController {
         List<ExtendParticipation> directors = filmService.queryParticipationByFilmId(filmId, "导演");
         List<ExtendParticipation> mainActors = filmService.queryParticipationByFilmId(filmId, "主演");
         List<ExtendParticipation> actors = filmService.queryParticipationByFilmId(filmId, "演员");
-        List<ExtendParticipation> editor = filmService.queryParticipationByFilmId(filmId, "编剧");
+        List<ExtendParticipation> editors = filmService.queryParticipationByFilmId(filmId, "编剧");
         List<ExtendComment> extendComments = commentService.queryCommentByFilmId(filmId);
         Comment comment = commentService.queryCommentByUsernameFilmId(filmId, username);
         model.addAttribute("film", film);               // 电影
@@ -134,7 +134,7 @@ public class SearchController {
         model.addAttribute("directors", directors);     // 导演
         model.addAttribute("mainActors", mainActors);   // 主演
         model.addAttribute("actors", actors);           // 演员
-        model.addAttribute("editor", editor);           // 编剧
+        model.addAttribute("editors", editors);           // 编剧
         model.addAttribute("comments", extendComments);  // 评论
         model.addAttribute("myComment", comment);
         return "filmdetails";

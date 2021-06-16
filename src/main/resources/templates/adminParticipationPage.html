@@ -140,24 +140,33 @@
     <div class="header">
 
         <div div class="logo">
-            <a th:href="@{/homePage.html}">
+            <a th:href="@{/forward/homePage}">
                 <img th:src="@{/images/logo.png}" style="width:100px;height: 80px;">
             </a>
         </div>
 
         <form th:action="@{/search/filmByFilmName2}">
             <div class="search">
-                <input type="text" placeholder="输入电影关键字" name="fileName"/>
+                <input type="text" placeholder="输入电影关键字" maxlength="16" name="fileName"/>
                 <button>搜索</button>
             </div>
         </form>
 
-        <div class="user">
-            <p>
-                <span th:each="cookie:${#httpServletRequest.getCookies()}"
-                      th:if="${cookie.getName().equals('nickname')}"
-                      th:text="${cookie.getValue()}"
-                ></span>
+        <div class="user"  style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
+            <p style="align-content: center">
+                <a th:href="@{/user/profile}">
+                    <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                          th:if="${cookie.getName().equals('nickname')}"
+                          th:text="${cookie.getValue()}"
+                    >虫子</span>
+                </a>
             </p>
         </div>
     </div>
@@ -172,10 +181,16 @@
     <main>
         <div>
             <div id="buildbutton">
-                <a th:href="@{/forward/participationAdd}">
-                    <button id="add">新增</button>
+                <a th:href="@{/forward/adminCastPage}">
+                    <button>演员管理</button>
                 </a>
-
+                <a th:href="@{/forward/adminFilmPage}">
+                    <button>电影管理</button>
+                </a>
+                <a th:href="@{/forward/participationAdd}">
+                    <button>新增</button>
+                </a>
+                <span th:text="${msg}"></span>
             </div>
             <table>
                 <thead>
@@ -195,8 +210,7 @@
                     <td th:text="${participation.getRole()}"></td>
                     <td th:text="${participation.getCharacter()}"></td>
                     <td>
-                        <!--            这里传出去的是哪个值？-->
-                        <a th:href="@{'/forward/participationUpdate/'+${participation.getFileId()}+'/'+${participation.getFilmName()}+
+                        <a th:href="@{'/forward/participationUpdate/'+${participation.getFilmId()}+'/'+${participation.getFilmName()}+
             '/'+${participation.getCastId()}+'/'+${participation.getCastName()}+'/'+${participation.getRole()}+'/'+${participation.getCharacter()}}">
                             <button>修改</button>
                         </a>
@@ -204,7 +218,7 @@
                         <!--            <a th:href="@{/admin/delParticipation/+${film.getFilmId()}+'/'+${cast.getCastId()}+'/'+${cast.getRole()}+'/'+${cast.getCharacter()}}">-->
                         <!--              <button id="delete" >删除</button>-->
                         <!--            </a>-->
-                        <a th:href="@{'/admin/delParticipation/'+${filmId}+'/'+${participation.getCastId()}+'/'+${participation.getRole()}+'/'+${participation.getCharacter()}}">
+                        <a th:href="@{'/admin/delParticipation/'+${participation.getFilmId()}+'/'+${participation.getCastId()}+'/'+${participation.getRole()}+'/'+${participation.getCharacter()}}">
                             <button>删除</button>
                         </a>
                 </tr>

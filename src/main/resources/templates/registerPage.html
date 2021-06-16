@@ -35,16 +35,16 @@
         <form th:action="@{/user/register}">
             <div class="information-page">
                 <div class="information">
-                    <p>用户名：<span class="a2" ><input type="text" name="username"/></span></p>
+                    <p>用户名：<span class="a2" ><input required="required" pattern="^[A-Za-z0-9]{4,16}$" placeholder="英文\数字4-16" type="text" name="username"/></span></p>
                 </div>
                 <div class="information">
-                    <p>用户昵称：<span class="a1" ><input type="text" name="nickname"/></span></p>
+                    <p>用户昵称：<span class="a1" ><input required="required" placeholder="中英文2-16" pattern="^[\u4E00-\u9FA5A-Za-z]{2,16}$" type="text" name="nickname"/></span></p>
                 </div>
                 <div class="information">
-                    <p>用户密码：<span class="a1" ><input type="text" name="password"/></span></p>
+                    <p>用户密码：<span class="a1" ><input required="required" placeholder="英文字母4-16" pattern="^[A-Za-z0-9]{4,16}$" type="text" name="password"/></span></p>
                 </div>
                 <div class="information">
-                    <p>用户生日：<span class="a1" ><input type="date" name="birthday"/></span></p>
+                    <p>用户生日：<span class="a1" ><input required="required" type="date" name="birthday"/></span></p>
                 </div>
                 <div class="information">
                     <p>性别：<span class="a3">男<input type="radio"  value="true" name="sex" checked/>

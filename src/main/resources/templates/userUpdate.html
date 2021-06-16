@@ -148,7 +148,6 @@
                 <img th:src="@{~/images/logo.png}" alt="" style="width:100px;height: 80px;">
             </a>
         </div>
-
         <form th:action="@{/search/film}">
             <div class="search">
                 <select name="what">
@@ -160,7 +159,8 @@
                 <button type="submit">搜索</button>
             </div>
         </form>
-        <div class="user" style="text-align: center">
+        <div class="user" style="text-align: center"
+             style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
             <p style="align-content: center">
                 <a th:href="@{/user/profile}">
                     <img th:src="@{/images/user.png}" style="width: 34px;
@@ -199,14 +199,14 @@
                     </tr>
                     <tr>
                         <td class="addTableTd1">昵称</td>
-                        <td class="addTableTd2"><input type="text" name="nickname" required="required"
+                        <td class="addTableTd2"><input type="text" name="nickname" required="required" pattern="^[\u4E00-\u9FA5A-Za-z]{2,16}$"
                                                        th:placeholder="${user.getNickname() != null ? user.getNickname():'输入新昵称'}"/>
                         </td>
                     </tr>
                     <tr>
                         <td class=" addTableTd1">密码
                         </td>
-                        <td class="addTableTd2"><input type="text" name="password" required="required"
+                        <td class="addTableTd2"><input type="text" name="password" required="required" pattern="^[A-Za-z0-9]{4,16}$"
                                                        th:placeholder="${user.getPassword() != null ? user.getPassword():'输入新密码'}"/>
                         </td>
                     </tr>

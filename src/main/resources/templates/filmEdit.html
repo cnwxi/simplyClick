@@ -144,24 +144,33 @@
     <div class="header">
 
         <div div class="logo">
-            <a th:href="@{/homePage.html}">
+            <a th:href="@{/forward/homePage}">
                 <img th:src="@{/images/logo.png}" style="width:100px;height: 80px;">
             </a>
         </div>
 
         <form th:action="@{/search/filmByFilmName2}">
             <div class="search">
-                <input type="text" placeholder="输入电影关键字" name="fileName"/>
+                <input type="text" placeholder="输入电影关键字"  maxlength="16" name="fileName"/>
                 <button>搜索</button>
             </div>
         </form>
 
-        <div class="user">
-            <p>
-                <span th:each="cookie:${#httpServletRequest.getCookies()}"
-                      th:if="${cookie.getName().equals('nickname')}"
-                      th:text="${cookie.getValue()}"
-                ></span>
+        <div class="user"  style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
+            <p style="align-content: center">
+                <a th:href="@{/user/profile}">
+                    <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                          th:if="${cookie.getName().equals('nickname')}"
+                          th:text="${cookie.getValue()}"
+                    >虫子</span>
+                </a>
             </p>
         </div>
     </div>
@@ -178,24 +187,24 @@
             <form th:action="@{/admin/addFilm}">
                 <table id="addFilm">
                     <tr>
-                        <td class="addTableTd1">编号</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="filmId"/></td>
+                        <td class="addTableTd1">编号(纯数字)</td>
+                        <td class="addTableTd2"><input type="text" pattern="^[0-9]*$" required="required" name="filmId"/></td>
                     </tr>
                     <tr>
-                        <td class="addTableTd1">名称</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="filmName"/></td>
+                        <td class="addTableTd1">名称(中文2-16)</td>
+                        <td class="addTableTd2"><input pattern="^[\u4E00-\u9FA5]{2,16}$" type="text" required="required" name="filmName"/></td>
                     </tr>
                     <tr>
-                        <td class="addTableTd1">制片地区</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="area"/></td>
+                        <td class="addTableTd1">制片地区(中文2-16)</td>
+                        <td class="addTableTd2"><input pattern="^[\u4E00-\u9FA5]{2,16}$" type="text" required="required" name="area"/></td>
                     </tr>
                     <tr>
-                        <td class="addTableTd1">语言</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="language"/></td>
+                        <td class="addTableTd1">语言(中文2-16)</td>
+                        <td class="addTableTd2"><input type="text" pattern="^[\u4E00-\u9FA5]{2,16}$" required="required" name="language"/></td>
                     </tr>
                     <tr>
                         <td class="addTableTd1">片长（分钟）</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="footage"/></td>
+                        <td class="addTableTd2"><input type="text" pattern="^[0-9]*$" required="required" name="footage"/></td>
                     </tr>
                     <tr>
                         <td class="addTableTd1">海报路径</td>
@@ -207,8 +216,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="addTableTd1">简介</td>
-                        <td class="addTableTd2"><input type="text" name="profile" required="required"/></td>
+                        <td class="addTableTd1">简介(300字)</td>
+                        <td class="addTableTd2"><textarea maxlength="300" name="profile" required="required"></textarea></td>
                     </tr>
                 </table>
                 <div>

@@ -30,7 +30,7 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public List<Comment> queryByUsernameFilmId(String username, Integer filmId) {
-        String sql = "select * from comment where username=? and filmId = ?";
+        String sql = "select * from comment where username=? and filmId = ? ORDER BY modified desc";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Comment.class), username, filmId);
     }
 

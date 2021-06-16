@@ -47,12 +47,11 @@ public class UserLRFServiceImpl implements UserLRFService {
 
     @Override
     public Integer resetPassword(String username, String password) {
-
         List<User> list = userDao.queryByUsername(username);
         if (list.isEmpty()) return -1; //没有这样的账户
         User newUser = list.get(0);
-        newUser.setPassword(password);
-        if (userDao.updateUser(newUser)) return 1;
+        if (newUser.getPassword().equals(password)) return -2;
+        if (userDao.resetPass(username, password)) return 1;
         return 0;
     }
 }

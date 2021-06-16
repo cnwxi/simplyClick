@@ -144,24 +144,33 @@
     <div class="header">
 
         <div div class="logo">
-            <a th:href="@{/homePage.html}">
+            <a th:href="@{/forward/homePage}">
                 <img th:src="@{/images/logo.png}" style="width:100px;height: 80px;">
             </a>
         </div>
 
         <form th:action="@{/search/filmByFilmName2}">
             <div class="search">
-                <input type="text" placeholder="输入电影关键字" name="fileName"/>
+                <input type="text" placeholder="输入电影关键字" maxlength="16"  name="fileName"/>
                 <button>搜索</button>
             </div>
         </form>
 
-        <div class="user">
-            <p>
-                <span th:each="cookie:${#httpServletRequest.getCookies()}"
-                      th:if="${cookie.getName().equals('nickname')}"
-                      th:text="${cookie.getValue()}"
-                ></span>
+        <div class="user"  style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
+            <p style="align-content: center">
+                <a th:href="@{/user/profile}">
+                    <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                          th:if="${cookie.getName().equals('nickname')}"
+                          th:text="${cookie.getValue()}"
+                    >虫子</span>
+                </a>
             </p>
         </div>
     </div>
@@ -183,8 +192,8 @@
                         <td class="addTableTd2"><p type="text" name="castId" th:text="${cast.getCastId()}"/></td>
                     </tr>
                     <tr>
-                        <td class="addTableTd1">姓名</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="castName"
+                        <td class="addTableTd1">姓名(中文2-16)</td>
+                        <td class="addTableTd2"><input type="text" required="required" pattern="^[\u4E00-\u9FA5]{2,16}$" name="castName"
                                                        th:placeholder="${cast.getCastName()}"/></td>
                     </tr>
                     <tr>
@@ -197,8 +206,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="addTableTd1">国籍</td>
-                        <td class="addTableTd2"><input type="text" name="country" required="required"
+                        <td class="addTableTd1">国籍(中文2-16)</td>
+                        <td class="addTableTd2"><input type="text" name="country" required="required" pattern="^[\u4E00-\u9FA5]{2,16}$"
                                                        th:placeholder="${cast.getCountry()}"/></td>
                     </tr>
                     <tr>

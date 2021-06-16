@@ -144,7 +144,7 @@
     <div class="header">
 
         <div div class="logo">
-            <a th:href="@{/homePage.html}">
+            <a th:href="@{/forward/homePage}">
                 <img th:src="@{/images/logo.png}" style="width:100px;height: 80px;">
             </a>
         </div>
@@ -156,12 +156,21 @@
             </div>
         </form>
 
-        <div class="user">
-            <p>
-                <span th:each="cookie:${#httpServletRequest.getCookies()}"
-                      th:if="${cookie.getName().equals('nickname')}"
-                      th:text="${cookie.getValue()}"
-                ></span>
+        <div class="user"  style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
+            <p style="align-content: center">
+                <a th:href="@{/user/profile}">
+                    <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                          th:if="${cookie.getName().equals('nickname')}"
+                          th:text="${cookie.getValue()}"
+                    >虫子</span>
+                </a>
             </p>
         </div>
     </div>
@@ -175,7 +184,7 @@
 
     <main>
         <div>
-            <form th:action="@{'/admin/updParticipation/'+${participation.getFileId()}+'/'+${participation.getFilmName()}
+            <form th:action="@{'/admin/updParticipation/'+${participation.getFilmId()}+'/'+${participation.getFilmName()}
             +'/'+${participation.getCastId()}+'/'+${participation.getCastName()}+'/'+${participation.getRole()}+'/'+${participation.getCharacter()}}">
                 <table id="updateParticipation">
                     <tr>
@@ -199,8 +208,8 @@
                         </select></td>
                     </tr>
                     <tr>
-                        <td class="addTableTd1">角色</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="character"
+                        <td class="addTableTd1">角色(中文2-16)</td>
+                        <td class="addTableTd2"><input type="text" pattern="^[\u4E00-\u9FA5]{2,16}$" required="required" name="character"
                                                        th:placeholder="${participation.getCharacter()}"/></td>
                     </tr>
                 </table>

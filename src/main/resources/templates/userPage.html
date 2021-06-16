@@ -71,7 +71,7 @@
         </div>
         <div class="comments" th:each="comment:${comments}">
             <div class="details">
-                <p th:text="'电影名称：'+${comment.getFilmName()}">电影名称:</p>
+                <a th:href="@{/search/filmDetail/{filmId}(filmId=${comment.getFilmId()})}"><p th:text="'电影名称：'+${comment.getFilmName()}">电影名称:</p></a>
                 <p th:text="'电影评分：'+${comment.getScore()}">电影评分</p>
                 <p th:text="'评论内容：'+${comment.getContent()}">评论内容:</p>
                 <p th:text="'评论时间：'+${#dates.format(comment.getModified(),'yyyy-MM-dd')}">评论时间</p>

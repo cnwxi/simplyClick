@@ -156,14 +156,24 @@
             </div>
         </form>
 
-        <div class="user">
-            <p>
-                <span th:each="cookie:${#httpServletRequest.getCookies()}"
-                      th:if="${cookie.getName().equals('nickname')}"
-                      th:text="${cookie.getValue()}"
-                ></span>
+        <div class="user"  style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
+            <p style="align-content: center">
+                <a th:href="@{/user/profile}">
+                    <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                          th:if="${cookie.getName().equals('nickname')}"
+                          th:text="${cookie.getValue()}"
+                    >虫子</span>
+                </a>
             </p>
         </div>
+
     </div>
 </div>
 <div>
@@ -179,15 +189,15 @@
                 <table id="addCast">
                     <tr>
                         <td class="addTableTd1">用户名</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="username"/></td>
+                        <td class="addTableTd2"><input placeholder="英文\数字4-16" pattern="^[A-Za-z0-9]{4,16}$" type="text" required="required" name="username"/></td>
                     </tr>
                     <tr>
                         <td class="addTableTd1">用户昵称</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="nickname"/></td>
+                        <td class="addTableTd2"><input type="text" placeholder="中英文2-16" pattern="^[\u4E00-\u9FA5A-Za-z]{2,16}$" required="required" name="nickname"/></td>
                     </tr>
                     <tr>
                         <td class="addTableTd1">密码</td>
-                        <td class="addTableTd2"><input type="text" required="required" name="password"/></td>
+                        <td class="addTableTd2"><input type="text" placeholder="英文\数字4-16" pattern="^[A-Za-z0-9]{4,16}$" required="required" name="password"/></td>
                     </tr>
                     <tr>
                         <td class="addTableTd1">生日</td>

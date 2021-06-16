@@ -49,6 +49,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean resetPass(String username, String password) {
+        String sql = "update User set password=?  where username=?";
+        return jdbcTemplate.update(sql, password, username) > 0;
+    }
+
+    @Override
     public boolean updateUser(User user) {
         String sql = "update User set nickname=?,password=?,birthday=?,sex=?,permission=? where username=?";
         Object[] objects = {user.getNickname(),

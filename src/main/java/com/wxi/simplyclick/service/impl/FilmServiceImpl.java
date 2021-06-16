@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -62,7 +63,7 @@ public class FilmServiceImpl implements FilmService {
                 list.add(film);
             }
         }
-        return list;
+        return list.stream().distinct().collect(Collectors.toList());
     }
 
     @Override
@@ -78,7 +79,7 @@ public class FilmServiceImpl implements FilmService {
         List<ExtendParticipation> extendParticipations = new ArrayList<>();
         for (Participation participation : participations) {
             Cast cast = castDao.queryById(participation.getCastId()).get(0);
-            ExtendParticipation extendParticipation = new ExtendParticipation(filmId, film.getFilmName(),cast.getCastId(), cast.getCastName(), cast.getSex(), cast.getCountry(), participation.getRole(), participation.getCharacter());
+            ExtendParticipation extendParticipation = new ExtendParticipation(filmId, film.getFilmName(), cast.getCastId(), cast.getCastName(), cast.getSex(), cast.getCountry(), participation.getRole(), participation.getCharacter());
             extendParticipations.add(extendParticipation);
         }
         return extendParticipations;
@@ -103,6 +104,19 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public List<Belong> queryBelongByFilmId(Integer filmId) {
         return belongDao.queryByFilmId(filmId);
+    }
+
+    @Override
+    public List<ExtendParticipation> queryAllParticipation() {
+        List<Participation> participations = participationDao.queryAll();
+        List<ExtendParticipation> extendParticipations = new ArrayList<>();
+        for (Participation participation : participations) {
+            Film film = filmDao.queryFilmById(participation.getFilmId()).get(0);
+            Cast cast = castDao.queryById(participation.getCastId()).get(0);
+            ExtendParticipation extendParticipation = new ExtendParticipation(film.getFilmId(), film.getFilmName(), cast.getCastId(), cast.getCastName(), null, null, participation.getRole(), participation.getCharacter());
+            extendParticipations.add(extendParticipation);
+        }
+        return extendParticipations;
     }
 
     @Override

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户信息管理</title>
+    <title>新增参演信息</title>
     <!--    <link rel="stylesheet" th:href="@{/css/styleOP.css}">-->
     <style type="text/css">
         .top {
@@ -98,7 +98,11 @@
         }
 
         main button {
-            margin: 20px 5px;
+            margin: 20px;
+            /*text-align: center;*/
+            /*float:right;*/
+            display: block;
+            margin: 0 auto;
             width: 85px;
             height: 40px;
             color: rosybrown;
@@ -147,7 +151,7 @@
 
         <form th:action="@{/search/filmByFilmName2}">
             <div class="search">
-                <input type="text" placeholder="输入电影关键字" maxlength="16" name="fileName"/>
+                <input type="text" placeholder="输入电影关键字" name="fileName"/>
                 <button>搜索</button>
             </div>
         </form>
@@ -174,53 +178,89 @@
 <div>
     <header>
         <hr/>
-        <h1>用户信息管理</h1>
+        <h1>新增参演信息</h1>
         <hr/>
     </header>
 
     <main>
         <div>
+            <form th:action="@{'/admin/addParticipation1/'+${film.getFilmId()}}">
+                <table id="addCast">
+                    <tr>
+                        <td class="addTableTd1">电影名称</td>
+                        <td class="addTableTd2">
+                            <p name="filmId" th:value="${film.getFilmId()}" th:text="${film.getFilmName()}">
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">演职人员</td>
+                        <td class="addTableTd2">
+                            <select name="castId">
+                                <option th:each="cast:${casts}" th:value="${cast.getCastId()}"
+                                        th:text="${cast.getCastName()}">
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">职务</td>
+                        <td class="addTableTd2"><select name="role">
+                            <option value="导演">导演</option>
+                            <option value="主演">主演</option>
+                            <option value="演员">演员</option>
+                            <option value="编剧">编剧</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td class="addTableTd1">角色</td>
+                        <td class="addTableTd2"><input placeholder="中文2-16" pattern="^[\u4E00-\u9FA5]{2,16}$" required="required" type="text" name="character"/></td>
+                    </tr>
+                </table>
+                <div>
+                    <!--            点击提交按钮返回参演信息管理页面-->
+                    <button id="submit">提交</button>
+                </div>
+            </form>
+            <div style="text-align: center">
+                <a th:href="@{/forward/DetailsEdit/{filmId}(filmId=${film.getFilmId()})}">
+                    <button>返回</button>
+                </a>
+                <br>
+                <p th:text="${msg}"></p>
+            </div>
+        </div>
+
+
+        <div>
+            <header>
+                <hr/>
+                <h1>参演人员信息</h1>
+                <hr/>
+            </header>
             <div id="buildbutton">
-                <!--                单独写一个useradd还是直接跳转注册界面？-->
-                <a th:href="@{/forward/userAdd}">
-                    <button id="add">新增</button>
+                <a th:href="@{/forward/adminCastPage}">
+                    <button id="update2" style="margin-left: 70px;">修改</button>
                 </a>
 
             </div>
             <table>
                 <thead>
                 <tr id="property">
-                    <td>用户名</td>
-                    <td>用户昵称</td>
-                    <td>密码</td>
-                    <td>生日</td>
-                    <td>性别</td>
-                    <td>权限</td>
-                    <td>操作</td>
+                    <td>编号</td>
+                    <td>姓名</td>
+                    <td>职务</td>
+                    <td>角色</td>
+                    <!--          <td>操作</td>-->
                 </tr>
                 </thead>
                 <tbody>
-                <!--                瞎写的暂时表示取值的意思-->
-                <tr th:each="user:${users}">
-                    <td th:text="${user.getUsername()}"></td>
-                    <td>
-                        <a th:text="${user.getNickname()}"
-                           th:href="@{/forward/userCommentRoot/{username}(username=${user.getUsername()})}"></a>
-                    </td>
-                    <td th:text="${user.getPassword()}"></td>
-                    <td th:text="${#dates.format(user.getBirthday(),'yyyy-MM-dd')}"></td>
-                    <td th:text="${user.getSex()?'男':'女'}"></td>
-                    <td th:text="${user.getPermission()==2?'用户':'管理员'}"></td>
-                    <td>
-                        <!--                        还没确定跳转到哪个页面，href不确定-->
-                        <a th:href="@{'/forward/userUpdate/'+${user.getUsername()}}">
-                            <button id="update">修改</button>
-                        </a>
-                        <a th:href="@{/root/delUser/{username}(username=${user.getUsername()})}">
-                            <button id="delete">删除</button>
-
-                        </a>
-                    </td>
+                <!--                ？获取cast信息失败-->
+                <tr th:each="participation:${participations}">
+                    <td th:text="${participation.getCastId()}"></td>
+                    <td th:text="${participation.getCastName()}"></td>
+                    <td th:text="${participation.getRole()}"></td>
+                    <td th:text="${participation.getCharacter()}"></td>
 
                 </tr>
                 </tbody>

@@ -51,7 +51,11 @@ public class AdminController {
                 model.addAttribute("msg", "电影信息未知错误");
                 break;
         }
-        return model.getAttribute("msg").toString();
+        List<Film> films = filmService.queryFilm();
+        model.addAttribute("films", films);
+//        List<Type> types = typeService.queryType();
+//        model.addAttribute("types", types);
+        return "adminFilmPage";
     }
 
     @RequestMapping("/admin/addFilm")
@@ -121,6 +125,15 @@ public class AdminController {
         model.addAttribute("belongs", belongs);
         List<Pic> query = picService.query();
         model.addAttribute("paths", query);
+//        List<ExtendParticipation> directors = filmService.queryParticipationByFilmId(filmId, "导演");
+//        System.out.println(directors);
+//        List<ExtendParticipation> mainActors = filmService.queryParticipationByFilmId(filmId, "主演");
+//        List<ExtendParticipation> actors = filmService.queryParticipationByFilmId(filmId, "演员");
+//        List<ExtendParticipation> editors = filmService.queryParticipationByFilmId(filmId, "编剧");
+//        model.addAttribute("directors", directors);
+//        model.addAttribute("mainActors", mainActors);
+//        model.addAttribute("actors", actors);
+//        model.addAttribute("editors", editors);
         return "DetailsEdit";
     }
 
@@ -205,10 +218,12 @@ public class AdminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        Film film1 = filmService.queryFilmByFilmId(filmId).get(0);
-        model.addAttribute("film", film1);
+        Film film = filmService.queryFilmByFilmId(filmId).get(0);
+        model.addAttribute("film", film);
         List<Belong> belongs = filmService.queryBelongByFilmId(filmId);
         model.addAttribute("belongs", belongs);
+        List<Pic> query = picService.query();
+        model.addAttribute("paths", query);
         return "DetailsEdit";
     }
 
@@ -255,6 +270,49 @@ public class AdminController {
         return "participationAdd";
     }
 
+    @RequestMapping("/admin/addParticipation1/{filmId}")
+    public String addParticipation1(@PathVariable("filmId") Integer filmId,
+                                    @RequestParam("castId") Integer castId,
+                                    @RequestParam("role") String role,
+                                    @RequestParam("character") String character,
+                                    Model model) {
+        if (filmId == null || castId == null || !StringUtils.hasLength(role)) {
+            model.addAttribute("msg", "输入信息错误");
+//            return model.getAttribute("msg").toString();
+            Film film = filmService.queryFilmByFilmId(filmId).get(0);
+            List<ExtendParticipation> extendParticipations = filmService.queryParticipation(filmId);
+            List<Cast> casts = castService.queryCast();
+            model.addAttribute("casts", casts);
+            model.addAttribute("film", film);
+            model.addAttribute("participations", extendParticipations);
+            return "participationAdd1";
+        }
+        if (!StringUtils.hasLength(character)) character = role;
+        Participation participation = new Participation(filmId, castId, role, character);
+        Integer flag = adminFilmService.addParticipation(participation);
+        switch (flag) {
+            case -1:
+                model.addAttribute("msg", "参演信息已存在");
+                break;
+            case 1:
+                model.addAttribute("msg", "参演信息添加成功");
+                break;
+            case 0:
+                model.addAttribute("msg", "参演信息添加失败");
+                break;
+            default:
+                model.addAttribute("msg", "未知错误");
+                break;
+        }
+        Film film = filmService.queryFilmByFilmId(filmId).get(0);
+        List<ExtendParticipation> extendParticipations = filmService.queryParticipation(filmId);
+        List<Cast> casts = castService.queryCast();
+        model.addAttribute("casts", casts);
+        model.addAttribute("film", film);
+        model.addAttribute("participations", extendParticipations);
+        return "participationAdd1";
+    }
+
     @RequestMapping("/admin/delParticipation/{filmId}/{castId}/{role}/{character}")
     public String delParticipation(@PathVariable Integer filmId,
                                    @PathVariable Integer castId,
@@ -277,10 +335,15 @@ public class AdminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        Film film1 = filmService.queryFilmByFilmId(filmId).get(0);
-        model.addAttribute("film", film1);
-        List<Belong> belongs = filmService.queryBelongByFilmId(filmId);
-        model.addAttribute("belongs", belongs);
+        List<Film> films = filmService.queryFilm();
+        List<ExtendParticipation> extendParticipations = new ArrayList<>();
+        for (Film film : films) {
+            extendParticipations.addAll(filmService.queryParticipation(film.getFilmId()));
+        }
+        List<Cast> casts = castService.queryCast();
+//        model.addAttribute("casts", casts);
+//        model.addAttribute("films", films);
+        model.addAttribute("participations", extendParticipations);
         return "adminParticipationPage";
     }
 
@@ -370,7 +433,9 @@ public class AdminController {
                 model.addAttribute("msg", "未知错误");
                 break;
         }
-        return "redirect:/forward/adminCastPage";
+        List<Cast> casts = castService.queryCast();
+        model.addAttribute("casts", casts);
+        return "adminCastPage";
     }
 
     @RequestMapping("/admin/updCast/{castId}")

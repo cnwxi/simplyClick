@@ -69,13 +69,14 @@
                         <option value="filmName">电影名称</option>
                         <option value="castName">演职人员名称</option>
                     </select>
-                    <input type="text" placeholder="输入电影关键字" name="name"/>
+                    <input type="text" placeholder="输入电影关键字(中文1-16)" pattern="^[\u4E00-\u9FA5]{1,16}$" name="name"/>
 
                     <button type="submit">搜索</button>
                 </div>
             </form>
 
-            <div class="user" style="text-align: center">
+            <div class="user"
+                 style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
                 <p style="align-content: center">
                     <a th:href="@{/user/profile}">
                         <img th:src="@{/images/user.png}" style="width: 34px;
@@ -106,7 +107,8 @@
                 <div class="movie-information">
                     <a th:href="@{~/search/filmDetail/{filmId}(filmId=${film.getFilmId()})}"
                        th:text="${film.getFilmName()}">战狼2</a>
-                    <p th:text="'电影评分：'+${#numbers.formatDecimal(film.getAvgScore(),1,1)}">电影评分：7.1</p>
+                    <p th:text="'电影评分：'+ (${film.getAvgScore()!=null? #numbers.formatDecimal(film.getAvgScore(),1,1) : '暂无'})">
+                        电影评分：7.1</p>
                     <p class="content" th:text="'电影简介：'+${film.getProfile()}">电影简介：</p>
                 </div>
             </div>
@@ -133,7 +135,7 @@
                 <li style="
     border-bottom: 1px solid silver;
 "><a th:href="@{/search/filmByType/悬疑}">悬疑</a></li>
-                <li ><a th:href="@{/search/filmByType/惊悚}">惊悚</a></li>
+                <li><a th:href="@{/search/filmByType/惊悚}">惊悚</a></li>
                 <!-- <li><a th:href="@{/search/tpye/${msg}}" >科幻</a></li>-->
             </ul>
         </div>

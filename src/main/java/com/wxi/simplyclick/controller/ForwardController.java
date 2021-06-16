@@ -46,8 +46,8 @@ public class ForwardController {
     public String filmOP(Model model) {
         List<Film> films = filmService.queryFilm();
         model.addAttribute("films", films);
-        List<Type> types = typeService.queryType();
-        model.addAttribute("types", types);
+//        List<Type> types = typeService.queryType();
+//        model.addAttribute("types", types);
         return "adminFilmPage";
     }
 
@@ -78,14 +78,13 @@ public class ForwardController {
     }
 
     @RequestMapping("/forward/homePage")
-    public String homePage(@CookieValue("username") String username,
-                           @CookieValue("nickname") String nickname, Model model) {
-        System.out.println(username);
-        System.out.println(nickname);
+    public String homePage( Model model) {
+//        System.out.println(username);
+//        System.out.println(nickname);
         List<Film> topKFilms = filmService.queryTopKFilm(5);
         model.addAttribute("topKFilms", topKFilms);
-        model.addAttribute("username", username);
-        model.addAttribute("nickname", nickname);
+//        model.addAttribute("username", username);
+//        model.addAttribute("nickname", nickname);
         return "homePage";
     }
 
@@ -105,31 +104,40 @@ public class ForwardController {
         model.addAttribute("belongs", belongs);
         List<Pic> query = picService.query();
         model.addAttribute("paths", query);
+//        List<ExtendParticipation> directors = filmService.queryParticipationByFilmId(filmId, "导演");
+//        System.out.println(directors);
+//        List<ExtendParticipation> mainActors = filmService.queryParticipationByFilmId(filmId, "主演");
+//        List<ExtendParticipation> actors = filmService.queryParticipationByFilmId(filmId, "演员");
+//        List<ExtendParticipation> editors = filmService.queryParticipationByFilmId(filmId, "编剧");
+//        model.addAttribute("directors", directors);
+//        model.addAttribute("mainActors", mainActors);
+//        model.addAttribute("actors", actors);
+//        model.addAttribute("editors", editors);
         return "DetailsEdit";
     }
 
-    @RequestMapping("/forward/filmEdit/{filmId}")
-    public String filmEdit(@PathVariable Integer filmId, Model model) {
-        List<Film> films = filmService.queryFilmByFilmId(filmId);
-//        if (films.isEmpty()) {
-//            model.addAttribute("msg", "没有此电影信息");
-//        }
-        Film film = films.get(0);
-        List<ExtendParticipation> directors = filmService.queryParticipationByFilmId(filmId, "导演");
-        List<ExtendParticipation> mainActors = filmService.queryParticipationByFilmId(filmId, "主演");
-        List<ExtendParticipation> actors = filmService.queryParticipationByFilmId(filmId, "演员");
-        List<ExtendParticipation> editor = filmService.queryParticipationByFilmId(filmId, "编剧");
-        List<ExtendComment> extendComments = commentService.queryCommentByFilmId(filmId);
-//        Comment comment = commentService.queryCommentByUsernameFilmId(filmId, username);
-        model.addAttribute("film", film);               // 电影
-        // 所属
-        model.addAttribute("directors", directors);     // 导演
-        model.addAttribute("mainActors", mainActors);   // 主演
-        model.addAttribute("actors", actors);           // 演员
-        model.addAttribute("editor", editor);           // 编剧
-//        model.addAttribute("comments", extendComments);  // 评论
-        return "DetailsEdit";
-    }
+//    @RequestMapping("/forward/filmEdit/{filmId}")
+//    public String filmEdit(@PathVariable Integer filmId, Model model) {
+//        List<Film> films = filmService.queryFilmByFilmId(filmId);
+////        if (films.isEmpty()) {
+////            model.addAttribute("msg", "没有此电影信息");
+////        }
+//        Film film = films.get(0);
+//        List<ExtendParticipation> directors = filmService.queryParticipationByFilmId(filmId, "导演");
+//        List<ExtendParticipation> mainActors = filmService.queryParticipationByFilmId(filmId, "主演");
+//        List<ExtendParticipation> actors = filmService.queryParticipationByFilmId(filmId, "演员");
+//        List<ExtendParticipation> editor = filmService.queryParticipationByFilmId(filmId, "编剧");
+//        List<ExtendComment> extendComments = commentService.queryCommentByFilmId(filmId);
+////        Comment comment = commentService.queryCommentByUsernameFilmId(filmId, username);
+//        model.addAttribute("film", film);               // 电影
+//        // 所属
+//        model.addAttribute("directors", directors);     // 导演
+//        model.addAttribute("mainActors", mainActors);   // 主演
+//        model.addAttribute("actors", actors);           // 演员
+//        model.addAttribute("editor", editor);           // 编剧
+////        model.addAttribute("comments", extendComments);  // 评论
+//        return "DetailsEdit";
+//    }
 
     //？adminCastPage中【修改】按钮跳转castUpdate
     @RequestMapping("/forward/castUpdate/{castId}")
@@ -166,14 +174,33 @@ public class ForwardController {
         return "participationAdd";
     }
 
+    @RequestMapping("/forward/participationAdd1/{filmId}")
+    public String participationAdd1(@PathVariable("filmId") Integer filmId, Model model) {
+        Film film = filmService.queryFilmByFilmId(filmId).get(0);
+        List<ExtendParticipation> extendParticipations = filmService.queryParticipation(filmId);
+        List<Cast> casts = castService.queryCast();
+        model.addAttribute("casts", casts);
+        model.addAttribute("film", film);
+        model.addAttribute("participations", extendParticipations);
+        return "participationAdd1";
+    }
+
     @RequestMapping("/forward/adminParticipationPage")
     public String participationPage(Model model) {
-        List<Film> films = filmService.queryFilm();
-        List<ExtendParticipation> extendParticipations = new ArrayList<>();
-        for (Film film : films) {
-            extendParticipations.addAll(filmService.queryParticipation(film.getFilmId()));
-        }
+        List<ExtendParticipation> extendParticipations = filmService.queryAllParticipation();
+
         List<Cast> casts = castService.queryCast();
+//        model.addAttribute("casts", casts);
+//        model.addAttribute("films", films);
+        model.addAttribute("participations", extendParticipations);
+        return "adminParticipationPage";
+    }
+
+    @RequestMapping("/forward/adminParticipationPage1/{filmId}")
+    public String participationPage1(@PathVariable("filmId") Integer filmId, Model model) {
+
+        List<ExtendParticipation> extendParticipations = filmService.queryParticipation(filmId);
+//        List<Cast> casts = castService.queryCast();
 //        model.addAttribute("casts", casts);
 //        model.addAttribute("films", films);
         model.addAttribute("participations", extendParticipations);

@@ -154,17 +154,26 @@
 
         <form th:action="@{/search/filmByFilmName2}">
             <div class="search">
-                <input type="text" placeholder="输入电影关键字" name="fileName"/>
+                <input type="text" placeholder="输入电影关键字" maxlength="16" name="fileName"/>
                 <button>搜索</button>
             </div>
         </form>
 
-        <div class="user">
-            <p>
-                <span th:each="cookie:${#httpServletRequest.getCookies()}"
-                      th:if="${cookie.getName().equals('nickname')}"
-                      th:text="${cookie.getValue()}"
-                ></span>
+        <div class="user"  style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
+            <p style="align-content: center">
+                <a th:href="@{/user/profile}">
+                    <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                          th:if="${cookie.getName().equals('nickname')}"
+                          th:text="${cookie.getValue()}"
+                    >虫子</span>
+                </a>
             </p>
         </div>
     </div>
@@ -179,13 +188,16 @@
     <main>
         <div>
             <div id="buildbutton">
+                <a th:href="@{/forward/adminParticipationPage}">
+                    <button id="add">参演管理</button>
+                </a>
+                <a th:href="@{/forward/adminFilmPage}">
+                    <button id="add">电影管理</button>
+                </a>
                 <a th:href="@{/forward/castAdd}">
                     <button id="add">新增</button>
                 </a>
-                <a th:href="@{/forward/adminParticipationPage}">
-                    <button id="load">查看参演信息</button>
-                </a>
-
+                <span th:text="${msg}"></span>
             </div>
             <table>
                 <thead>

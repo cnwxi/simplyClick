@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>电影信息管理</title>
-<!--    <link rel="stylesheet" th:href="@{/css/styleOP.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/css/styleOP.css}">-->
     <style type="text/css">
-        .top{
-            background-color:moccasin ;
+        .top {
+            background-color: moccasin;
         }
-        .header{
-            width:995px;
-            margin:0 auto;
-            padding-top:17px;
-            overflow:hidden;
+
+        .header {
+            width: 995px;
+            margin: 0 auto;
+            padding-top: 17px;
+            overflow: hidden;
         }
-        .logo{
+
+        .logo {
             float: left;
         }
 
@@ -27,9 +29,11 @@
             flex-flow: row nowrap;
             justify-content: space-between;
         }
+
         header h1 {
             color: #9a9897;
         }
+
         header hr {
             margin: 20px 20px 0;
             background-color: #bc9470;
@@ -37,15 +41,17 @@
             width: 30%;
             height: 0;
         }
+
         /*搜索栏区域*/
-        .search{
+        .search {
             float: left;
             width: 520px;
             height: 42px;
             padding-top: 17px;
             margin-left: 200px;
         }
-        .search select{
+
+        .search select {
             float: left;
             width: 100px;
             height: 42px;
@@ -54,7 +60,8 @@
             font-size: 14px;
             padding-left: 10px;
         }
-        .search input{
+
+        .search input {
             float: left;
             width: 350px;
             height: 40px;
@@ -64,6 +71,7 @@
             font-size: 14px;
             padding-left: 15px;
         }
+
         .search button {
             float: left;
             width: 50px;
@@ -71,16 +79,18 @@
             /* 去掉按钮默认边框 */
             border: 0;
             background-color: lightsalmon;
-            color:#666;
+            color: #666;
         }
+
         /*登录用户名称*/
-        .user{
+        .user {
             float: left;
             margin-left: 120px;
         }
-        .user p{
-            font-size:15px;
-            color:#95a5a6;
+
+        .user p {
+            font-size: 15px;
+            color: #95a5a6;
         }
 
         main #buildbutton {
@@ -100,19 +110,24 @@
             text-align: center;
             border-spacing: 0;
         }
+
         table tbody tr:first-of-type {
             background-color: #dadee1 !important;
             height: 60px;
         }
+
         table tbody tr {
             height: 45px;
         }
+
         table tbody tr:nth-child(odd) {
             background-color: #eef1f8;
         }
+
         table tbody tr:nth-child(even) {
             background-color: #ffffff;
         }
+
         table tbody tr:not([id=thead]):hover {
             cursor: pointer;
             background-color: #e9e9e9;
@@ -122,30 +137,39 @@
 
 <body onkeypress="enter()">
 <div class="top">
-  <div class="header">
+    <div class="header">
 
-    <div div class="logo">
-      <a th:href="@{/homePage.html}">
-        <img th:src="@{/images/logo.png}" style="width:100px;height: 80px;">
-      </a>
+        <div div class="logo">
+            <a th:href="@{/forward/homePage}">
+                <img th:src="@{/images/logo.png}" style="width:100px;height: 80px;">
+            </a>
+        </div>
+
+        <form th:action="@{/search/filmByFilmName2}">
+            <div class="search">
+                <input type="text" placeholder="输入电影关键字" maxlength="16" name="fileName"/>
+                <button>搜索</button>
+            </div>
+        </form>
+
+        <div class="user"  style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
+            <p style="align-content: center">
+                <a th:href="@{/user/profile}">
+                    <img th:src="@{/images/user.png}" style="width: 34px;
+                      height: 34px;
+                      display: flex;
+                      border-radius: 50%;
+                      justify-content: center;
+                      overflow: hidden;
+                        border: 1px solid silver" alt="">
+                    <span th:each="cookie:${#httpServletRequest.getCookies()}"
+                          th:if="${cookie.getName().equals('nickname')}"
+                          th:text="${cookie.getValue()}"
+                    >虫子</span>
+                </a>
+            </p>
+        </div>
     </div>
-
-    <form th:action="@{/search/filmByFilmName2}">
-      <div class="search">
-        <input type="text" placeholder="输入电影关键字" name="fileName"/>
-        <button>搜索</button>
-      </div>
-    </form>
-
-    <div class="user">
-      <p>
-                <span th:each="cookie:${#httpServletRequest.getCookies()}"
-                      th:if="${cookie.getName().equals('nickname')}"
-                      th:text="${cookie.getValue()}"
-                ></span>
-      </p>
-    </div>
-  </div>
 </div>
 <div>
     <header>
@@ -157,14 +181,18 @@
     <main>
         <div>
             <div id="buildbutton">
-                <a th:href="@{/forward/filmEdit}">
-                    <button id="add">新增</button>
-                </a>
                 <a th:href="@{/forward/adminCastPage}">
-                    <button id="load">查看演员</button>
+                    <button>演员管理</button>
                 </a>
-
+                <a th:href="@{/forward/adminParticipationPage}">
+                    <button>参演管理</button>
+                </a>
+                <a th:href="@{/forward/filmEdit}">
+                    <button>新增</button>
+                </a>
+                <span th:text="${msg}"></span>
             </div>
+
             <table>
                 <thead>
                 <tr id="property">
@@ -191,8 +219,8 @@
                         <a th:href="@{/forward/DetailsEdit/{filmId}(filmId=${film.getFilmId()})}">
                             <button id="update">修改</button>
                         </a>
-                        <a th:action="@{/admin/delFilm/{filmId}(filmId=${film.getFilmId()})}">
-                            <button id="delete" >删除</button>
+                        <a th:href="@{/admin/delFilm/{filmId}(filmId=${film.getFilmId()})}">
+                            <button id="delete">删除</button>
 
                         </a>
                     </td>

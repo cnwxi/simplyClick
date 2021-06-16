@@ -205,12 +205,13 @@
                     <option value="filmName">电影名称</option>
                     <option value="castName">演职人员名称</option>
                 </select>
-                <input type="text" placeholder="输入电影关键字" name="name"/>
+                <input type="text" placeholder="输入电影关键字" maxlength="16" name="name"/>
 
                 <button type="submit">搜索</button>
             </div>
         </form>
-        <div class="user" style="text-align: center">
+        <div class="user"
+             style="/* align-items: center; */left: 80%;/* float: right; */position: absolute;width: 100px;/* align-content: center; */text-align: -webkit-center;">
             <p style="align-content: center">
                 <a th:href="@{/user/profile}">
                     <img th:src="@{/images/user.png}" style="width: 34px;
@@ -251,7 +252,7 @@
             <h1>高分电影 TOP 5</h1>
             <div class="movie" th:each="film: ${topKFilms}">
                 <div class="movie-poster">
-                    <img th:src="${film.getPosterPath()()}" style="width:100px;height: 150px; border-radius: 12px">
+                    <img th:src="${film.getPosterPath()}" style="width:100px;height: 150px; border-radius: 12px">
                 </div>
                 <div class="movie-information">
                     <a th:href="@{~/search/filmDetail/{filmId}(filmId=${film.getFilmId()})}"
